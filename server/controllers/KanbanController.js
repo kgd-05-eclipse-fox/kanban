@@ -1,9 +1,9 @@
-const { Task } = require('../models/')
+const { Task, User } = require('../models/')
 
 class KanbanController {
     static async getAllTask (req, res, next) {
         try {
-            const allTask = await Task.findAll()
+            const allTask = await Task.findAll({ include: User })
             res.status(200).json({ allTask })
         } catch (error) {
             next(error)
