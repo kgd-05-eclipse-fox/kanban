@@ -1,0 +1,34 @@
+[
+    {
+        "title": "Deploy Server FancyTodo",
+        "description": "Deploy server ke heroku sebelum melewati deadline",
+        "status": 0,
+        "UserId": 1,
+        "createdAt": "2020-11-03T16:47:35.940Z",
+        "updatedAt": "2020-11-03T16:47:35.940Z"
+    },
+    {
+        "title": "Makan bersama anak Hacktiv8",
+        "description": "Makan bersama anak Hacktiv8 Kelapa Gading Batch-5 setelah semua tugas selesai",
+        "status": 1,
+        "UserId": 2,
+        "createdAt": "2020-11-03T16:47:35.940Z",
+        "updatedAt": "2020-11-03T16:47:35.940Z"
+    },
+    {
+        "title": "Fix Bugs Portofolio-1",
+        "description": "Memperbaiki Bugs Portofolio-1 dimana setelah logout sistem menambahkan event listener lagi",
+        "status": 2,
+        "UserId": 3,
+        "createdAt": "2020-11-03T16:47:35.940Z",
+        "updatedAt": "2020-11-03T16:47:35.940Z"
+    },
+    {
+        "title": "Belajar Untuk LC-1",
+        "description": "Belajar untuk LC-1 Week-2 Phase-2 agar mendapatkan nilai maksimal",
+        "status": 3,
+        "UserId": 3,
+        "createdAt": "2020-11-03T16:47:35.940Z",
+        "updatedAt": "2020-11-03T16:47:35.940Z"
+    }
+]

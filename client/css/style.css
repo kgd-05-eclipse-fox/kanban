@@ -1,0 +1,72 @@
+/* * ==================== Remove Margin and Paddings from default value =================== */
+* {
+    margin: 0;
+    padding: 0;
+}
+/* * ================ End Of Remove Margin and Paddings from default value ================ */
+
+/* * ================================= Import PT-Sans Font ================================ */
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@700&display=swap');
+
+body, html {
+    font-family: 'PT Sans', sans-serif;
+    height: 100%;
+}
+/* * ============================= End Of Import PT-Sans Font ============================= */
+
+/* * ==================================== Container CSS =================================== */
+section.container-todo {
+    margin: 50px 20px 20px 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+section.container-todo div.kanban div.card div.card-header {
+    text-align: center;
+    font-weight: bold;
+    font-size: large;
+}
+
+section.container-todo div.kanban div.card {
+    margin: 0px 20px 0px 20px;
+}
+/* * ================================ End Of Container CSS ================================ */
+
+/* * ==================================== Kanban Colors =================================== */
+.backlog {
+    color: #697279;
+}
+
+.todo {
+    color: #3498db;
+}
+
+.development {
+    color: #159DB3;
+}
+
+.done {
+    color: #27A243;
+}
+/* * Todo color sedikit berbeda dari bg-primary color */
+/* * ================================ End Of Kanban Colors ================================ */
+
+.bg-trello {
+    background-color: #026AA7;
+}
+
+.navbar-trello a {
+    color: white;
+    font-weight: bolder;
+}
+
+li.nav-item-kanban {
+    color: yellow;
+}
+
+.sm-info {
+    font-size: smaller;
+}
