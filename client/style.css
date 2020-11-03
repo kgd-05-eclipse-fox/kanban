@@ -34,6 +34,13 @@ nav .links a{
     margin-left: 25px;
 }
 
+nav .links p{
+    text-decoration: none;
+    font-size: 1.5em;
+    color: white;
+    margin-left: 25px;
+}
+
 nav .links .icons a{
     font-size: 20px;
 }
@@ -141,3 +148,17 @@ nav .links .icons a{
     color: white;
     background-color: #e68a00;
 }
+
+.sign-out{
+    background-color: blue;
+    border-color: blue;
+
+}
+
+.card-body ul li {
+    color: white;
+    font-size: 16px;
+    display: inline;
+    margin-left: 25px;
+}
+
