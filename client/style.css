@@ -11,7 +11,7 @@ nav .task li {
     display: inline;
 }
 
-.col-3 {
+.test-class {
     height: 50vh;
     overflow: auto;
 }
