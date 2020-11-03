@@ -88,3 +88,43 @@ body {
     background: #fff;
     color: red
 }
+
+.shadowcard{
+    box-shadow: 0px 0px 22px 0px rgba(27,126,202,1);
+}
+.shadowNav{
+    box-shadow: 0px 13px 15px -13px rgba(27,126,202,1)
+}
+.pContent{
+    font-size: 12px;
+    font-family: 'Source Code Pro', monospace;
+    color: snow;
+}
+.logo-nav{
+    width: 40px;
+}
+.logo-log{
+    width: 70px;
+}
+.c1{
+    background-color: rgb(19,119,197, 0.5)
+}
+.bgNav{
+    background-color: rgb(19,119,197, 0.5)
+}
+.titleCard{
+    font-size: 80%;
+    color: black;
+}
+.log-User{
+    width: 50%;
+}
+.log-option{
+    width: 40%;
+}
+.bg1{
+    background-color: snow;
+}
+.tOption{
+    color: snow;
+}
