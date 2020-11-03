@@ -1,0 +1,21 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+nav {
+    background-color: #95a5a6;
+    display: flex;
+    justify-content: space-between;
+}
+
+nav .task ul {
+    list-style: none;
+}
+
+nav .task li {
+    display: inline;
+}
+
+.col-3 {
+    height: 70vh;
+    overflow: auto;
+}
