@@ -63,8 +63,8 @@ nav .links .icons a{
 }
 
 .card {
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .login{
@@ -126,9 +126,18 @@ nav .links .icons a{
 }
 
 .bg-warning #title{
-    background-color: #ffa31a;
+    background-color: #e68a00;
 }
 
 .bg-warning #icon{
-    background-color: #ffa31a;
+    background-color: #e68a00;
+}
+
+.row-6 p{
+    font-size: 24px;
+}
+
+.warning{
+    color: white;
+    background-color: #e68a00;
 }
