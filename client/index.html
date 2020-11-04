@@ -24,18 +24,18 @@
                 <div class="links">
                     <ul>
                         <li>
-                            <a @click="changePage('home-page')" href="#">Home</a>
+                            <a @click.prevent="changePage('home-page')" href="#">Home</a>
                         </li>
                         <li>
-                            <a @click="changePage('kanbanboard-page')" href="#">Board</a>
+                            <a @click.prevent="changePage('kanbanboard-page')" href="#">Board</a>
                         </li>
                     </ul>
                 </div>
                 <div class="links icons">
                     <ul>
-                        <li> <a @click="changePage('login-page')" href="#">Sign In</a></li>
+                        <li> <a @click.prevent="changePage('login-page')" href="#">Sign In</a></li>
                         <li> 
-                            <a href="#"><button class="btn btn-primary btn-lg" @click="changePage('register-page')"
+                            <a href="#"><button class="btn btn-primary btn-lg" @click.prevent="changePage('register-page')"
                             style="background-color: #00b386; border-color: #00b386;">Sign Up</button>
                             </a>
                         </li>

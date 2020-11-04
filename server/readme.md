@@ -26,10 +26,11 @@
     ```json 
     {
     "id": 1,
-    "email": "example@mail.com",
-    "createdAt": "2020-11-03T19:31:50.930Z",
-    "updatedAt": "2020-11-03T19:31:50.930Z"
-    } 
+    "username": "jeplindm",
+    "email": "forexample@mail.co.id",
+    "createdAt": "2020-11-04T09:51:14.232Z",
+    "updatedAt": "2020-11-04T09:51:14.232Z"
+    }
  
 * **Error Response:**
 
@@ -37,4 +38,4 @@
     **Content:** 
     ```json
 
-    {  "msg": "Password minimun is 6 characters,Please fill with your email,Please write in format email,Please fill with your password" }
+    { "msg": "Password minimun is 6 characters,Please fill with your email,Please write in format email,Please fill with your password,Please fill your username" }
