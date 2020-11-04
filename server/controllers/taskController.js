@@ -5,7 +5,12 @@ class TaskController {
         try {
             const tasks = await Task.findAll({
                order: [['createdAt', 'desc']],
-               include: User
+               include: [
+                   {
+                       model: User,
+                       attributes: ['id', 'username', 'email']
+                   }
+               ]
             })
             res.status(200).json(tasks)
         } catch (error) {
@@ -72,11 +77,10 @@ class TaskController {
     static async editTask (req, res, next) {
         try {
             const id = +req.params.id
-            const {title, description, category} = req.body
+            const {title, description} = req.body
             const payload = {
                 title,
                 description,
-                category
             }
 
             const edited = await Task.update(payload, {

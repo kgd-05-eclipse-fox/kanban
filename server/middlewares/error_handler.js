@@ -6,6 +6,6 @@ module.exports = function (err, req, res, next) {
         status = 400
         message = err.errors.map(el => el.message).join(', ')
     }
-    console.log(status, message)
+    console.log(err)
     res.status(status).json({msg: message})
 }

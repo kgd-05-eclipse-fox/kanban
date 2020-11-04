@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-signin-client_id"
-        content="191086874630-8fcpf7tkkcd5gtor93p31og3mr97rfr6.apps.googleusercontent.com">
+    <meta name="google-signin-client_id" content="191086874630-8fcpf7tkkcd5gtor93p31og3mr97rfr6.apps.googleusercontent.com">
 
     <!-- BOOTSTRAP -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
@@ -27,38 +26,35 @@
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark shadow"
             style="justify-content: space-between;">
             <div>
-                <a @click.prevent="changePage('home-page')" class="navbar-brand text-light"><strong>KANBAN</strong></a>
-                <a @click.prevent="changePage('register-page')" href="#" class="navbar-brand text-light">Register</a>
-                <a @click.prevent="changePage('login-page')" href="#" class="navbar-brand text-light">Login</a>
+                <a class="navbar-brand text-light"><strong>KANBAN</strong></a>
+                <a @click.prevent="changePage('register-page')" v-show="!loggedIn.status" href="#" class="navbar-brand text-light">Register</a>
+                <a @click.prevent="changePage('login-page')" v-show="!loggedIn.status" href="#" class="navbar-brand text-light">Login</a>
+                <a @click.prevent="backBtn" v-show="loggedIn.status" href="#" class="navbar-brand text-light">{{loggedIn.user}}</a>
             </div>
             <div>
-                <a @click.prevent="logout" href="#" class="navbar-brand text-danger">Logout</a>
+                <a @click.prevent="logout" v-show="loggedIn.status" href="#" class="navbar-brand text-danger">Logout</a>
             </div>
         </nav>
 
         <section v-if="page === 'register-page'" class="container my-3 mx-5">
-            <div class="row justify-content-center" style="margin-top: 25em;">
+            <div class="row justify-content-center" style="margin-top: 10em;">
                 <div class="col-6">
                     <img src="./assets/private.png" alt="#" style="height: 50%; margin-left: 8em;">
                 </div>
                 <div class="col-6">
                     <h5 class="font-weight-light mb-3 text-center" style="margin-left: 2em;">Register</h5>
-                    <form @submit.prevent="register" class="form-signin bg-light rounded shadow text-dark"
-                        style="margin-right: 5em;">
+                    <form @submit.prevent="register" class="form-signin bg-light rounded shadow text-dark" style="margin-right: 5em;">
                         <div class="form-group">
                             <label for="register-username">Username</label>
-                            <input v-model="newUser.username" type="text" id="register-username"
-                                placeholder="username here" class="form-control" required>
+                            <input v-model="newUser.username" type="text" id="register-username" placeholder="username here" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="register-email">Email</label>
-                            <input v-model="newUser.email" type="email" id="register-email" placeholder="email here"
-                                class="form-control" required>
+                            <input v-model="newUser.email" type="email" id="register-email" placeholder="email here" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="register-password">Password</label>
-                            <input v-model="newUser.password" type="password" id="register-password"
-                                placeholder="password here" class="form-control" required>
+                            <input v-model="newUser.password" type="password" id="register-password" placeholder="password here" class="form-control" required>
                         </div>
                         <br>
                         <div class="container d-flex" style="justify-content: space-between;">
@@ -71,7 +67,7 @@
         </section>
 
         <section v-else-if="page === 'login-page'" class="container my-3 mx-5">
-            <div class="row justify-content-center" style="margin-top: 25em;">
+            <div class="row justify-content-center" style="margin-top: 10em;">
                 <div class="col-6">
                     <img src="./assets/login.png" alt="#" style="height: 50%; margin-left: 8em;">
                 </div>
@@ -80,13 +76,11 @@
                     <form @submit.prevent="login" class="form-signin bg-light rounded shadow text-dark">
                         <div class="form-group">
                             <label for="login-email">Email</label>
-                            <input v-model="user.email" type="email" id="login-email" placeholder="email here"
-                                class="form-control" required>
+                            <input v-model="user.email" type="email" id="login-email" placeholder="email here" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="login-password">Password</label>
-                            <input v-model="user.password" type="password" id="login-password"
-                                placeholder="password here" class="form-control" required>
+                            <input v-model="user.password" type="password" id="login-password" placeholder="password here" class="form-control" required>
                         </div>
                         <br>
                         <div class="container d-flex" style="justify-content: space-between;">
@@ -97,34 +91,39 @@
             </div>
         </section>
 
-        <section v-else-if="page === 'home-page'" class="container-fluid" style="width: 100%; height: 88%;">
-            <section style="margin-top: 2em;" id="board">
+        <section v-else-if="page === 'home-page'" class="container-fluid">
+            <section style="margin-top: 3em;" id="board">
                 <button @click="showForm" v-show="!form" class="btn btn-outline-primary">Add Task</button>
 
                 <br><br>
 
-                <div class="row" v-show="!form">
+                <div class="row mx-auto" v-show="!form">
                     <div class="col-3" id="backlog">
                         <div class="card card-bordered pb-2 mb-2 shadow">
-                            <div class="card-head bg-info">
-                                <h6 class="text-center"><strong>Back Log</strong></h6>
+                            <div style="height: 3em; background-color: #FF3300;" class="card-head">
+                                <h5 class="text-left ml-2 mt-2 text-light">Back Log</h5>
                             </div>
                             <div class="card-body">
-                                <div v-for="el in backlog" :key="el.id" class="card card-bordered py-2 mb-2">
+                                <div v-for="task in backlog" :key="task.id" class="card card-bordered py-2 mb-2">
                                     <div class="card-body">
-                                        <h6 class="card-title">{{el.title}}</h6>
+                                        <h6 class="card-title">{{task.title}}</h6>
                                         <hr>
                                         <p class="card-text">
-                                            {{el.description}} <br>
-                                            <span class="text-muted">createdBy: {{el.User.email}}</span>
+                                            {{task.description}} <br>
+                                            <span class="text-muted">createdBy: {{task.User.email}}</span>
                                         </p>
                                         <div class="d-flex container" style="justify-content: space-between;">
                                             <div>
-                                                <a href="#" class="card-link text-warning">Update</a>
-                                                <a href="#" class="card-link text-danger">Delete</a>
+                                                <i @click.prevent="updateTask(task.id)" class="fas fa-pencil-alt text-muted"></i>
+                                                <i @click.prevent="deleteTask(task.id)" class="fas fa-trash text-muted"></i>
                                             </div>
                                             <div>
-                                                <i class="fas fa-expand-arrows-alt"></i>
+                                                <i class="fas fa-arrows-alt text-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                                <div class="dropdown-menu">
+                                                    <a @click.prevent="changeCategory(task.id, 'todo')" href="#" class="dropdown-item">Move to todo</a>
+                                                    <a @click.prevent="changeCategory(task.id, 'progress')" href="#" class="dropdown-item">Move to progress</a>
+                                                    <a @click.prevent="changeCategory(task.id, 'completed')" href="#" class="dropdown-item">Move to completed</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -134,27 +133,32 @@
                     </div>
                     <div class="col-3" id="todo">
                         <div class="card card-bordered pb-2 mb-2 shadow">
-                            <div class="card-head bg-primary">
-                                <h6 class="text-center"><strong>To Do</strong></h6>
+                            <div style="height: 3em; background-color: #FF9900;" class="card-head bg-primary">
+                                <h5 class="text-left ml-2 mt-2 text-light">To Do</h5>
                             </div>
                             <div class="card-body">
-                                <div v-for="el in todo" :key="el.id"  class="card card-bordered py-2 mb-2">
+                                <div v-for="task in todo" :key="task.id" class="card card-bordered py-2 mb-2">
                                     <div class="card-body">
-                                        <h6 class="card-title">{{el.title}}</h6>
+                                        <h6 class="card-title">{{task.title}}</h6>
                                         <hr>
                                         <p class="card-text">
-                                            {{el.description}} <br>
-                                            <span class="text-muted">createdBy: {{el.User.email}}</span>
+                                            {{task.description}} <br>
+                                            <span class="text-muted">createdBy: {{task.User.email}}</span>
                                         </p>
-                                        <div class="d-flex container" style="justify-content: space-between;">
-                                            <div>
-                                                <a href="#" class="card-link text-warning">Update</a>
-                                                <a href="#" class="card-link text-danger">Delete</a>
+                                            <div class="d-flex container" style="justify-content: space-between;">
+                                                <div>
+                                                    <i @click.prevent="updateTask(task.id)" class="fas fa-pencil-alt text-muted"></i>
+                                                    <i @click.prevent="deleteTask(task.id)" class="fas fa-trash text-muted"></i>
+                                                </div>
+                                                <div>
+                                                    <i class="fas fa-arrows-alt text-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                                    <div class="dropdown-menu">
+                                                        <a @click.prevent="changeCategory(task.id, 'backlog')" href="#" class="dropdown-item">Move to backlog</a>
+                                                        <a @click.prevent="changeCategory(task.id, 'progress')" href="#" class="dropdown-item">Move to progress</a>
+                                                        <a @click.prevent="changeCategory(task.id, 'completed')" href="#" class="dropdown-item">Move to completed</a>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <i class="fas fa-expand-arrows-alt"></i>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -162,27 +166,32 @@
                     </div>
                     <div class="col-3" id="progress">
                         <div class="card card-bordered pb-2 mb-2 shadow">
-                            <div class="card-head bg-warning">
-                                <h6 class="text-center"><strong>Progress</strong></h6>
+                            <div style="height: 3em; background-color: #3399FF;" class="card-head bg-warning">
+                                <h5 class="text-left ml-2 mt-2 text-light">Progress</h5>
                             </div>
                             <div class="card-body">
-                                <div v-for="el in progress" :key="el.id" class="card card-bordered py-2 mb-2">
+                                <div v-for="task in progress" class="card card-bordered py-2 mb-2">
                                     <div class="card-body">
-                                        <h6 class="card-title">{{el.title}}</h6>
+                                        <h6 class="card-title">{{task.title}}</h6>
                                         <hr>
                                         <p class="card-text">
-                                            {{el.description}} <br>
-                                            <span class="text-muted">createdBy: {{el.User.email}}</span>
+                                            {{task.description}} <br>
+                                            <span class="text-muted">createdBy: {{task.User.email}}</span>
                                         </p>
-                                        <div class="d-flex container" style="justify-content: space-between;">
-                                            <div>
-                                                <a href="#" class="card-link text-warning">Update</a>
-                                                <a href="#" class="card-link text-danger">Delete</a>
+                                            <div class="d-flex container" style="justify-content: space-between;">
+                                                <div>
+                                                    <i @click.prevent="updateTask(task.id)" class="fas fa-pencil-alt text-muted"></i>
+                                                    <i @click.prevent="deleteTask(task.id)" class="fas fa-trash text-muted"></i>
+                                                </div>
+                                                <div>
+                                                    <i class="fas fa-arrows-alt text-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                                    <div class="dropdown-menu">
+                                                        <a @click.prevent="changeCategory(task.id, 'backlog')" href="#" class="dropdown-item">Move to backlog</a>
+                                                        <a @click.prevent="changeCategory(task.id, 'todo')" href="#" class="dropdown-item">Move to todo</a>
+                                                        <a @click.prevent="changeCategory(task.id, 'completed')" href="#" class="dropdown-item">Move to completed</a>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <i class="fas fa-expand-arrows-alt"></i>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -190,25 +199,30 @@
                     </div>
                     <div class="col-3" id="completed">
                         <div class="card card-bordered pb-2 mb-2 shadow">
-                            <div class="card-head bg-success">
-                                <h6 class="text-center"><strong>Completed</strong></h6>
+                            <div style="height: 3em; background-color: #00CC66;" class="card-head bg-success">
+                                <h5 class="text-left ml-2 mt-2 text-light">Completed</h5>
                             </div>
                             <div class="card-body">
-                                <div v-for="el in completed" :key="el.id" class="card card-bordered py-2 mb-2">
+                                <div v-for="task in completed" :key="task.id" class="card card-bordered py-2 mb-2">
                                     <div class="card-body">
-                                        <h6 class="card-title">{{el.title}}</h6>
+                                        <h6 class="card-title">{{task.title}}</h6>
                                         <hr>
                                         <p class="card-text">
-                                            {{el.description}} <br>
-                                            <span class="text-muted">createdBy: {{el.User.email}}</span>
+                                            {{task.description}} <br>
+                                            <span class="text-muted">createdBy: {{task.User.email}}</span>
                                         </p>
                                         <div class="d-flex container" style="justify-content: space-between;">
                                             <div>
-                                                <a href="#" class="card-link text-warning">Update</a>
-                                                <a href="#" class="card-link text-danger">Delete</a>
+                                                <i @click.prevent="updateTask(task.id)" class="fas fa-pencil-alt text-muted"></i>
+                                                <i @click.prevent="deleteTask(task.id)" class="fas fa-trash text-muted"></i>
                                             </div>
                                             <div>
-                                                <i class="fas fa-expand-arrows-alt"></i>
+                                                <i class="fas fa-arrows-alt text-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                                <div class="dropdown-menu">
+                                                    <a @click.prevent="changeCategory(task.id, 'backlog')" href="#" class="dropdown-item">Move to backlog</a>
+                                                    <a @click.prevent="changeCategory(task.id, 'todo')" href="#" class="dropdown-item">Move to todo</a>
+                                                    <a @click.prevent="changeCategory(task.id, 'progress')" href="#" class="dropdown-item">Move to progress</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -226,32 +240,38 @@
                         <form @submit="addTask">
                             <div class="form-group">
                                 <label for="add_title">Title</label>
-                                <input v-model="newTask.title" type="text" id="add_title" class="form-control" required
-                                    placeholder="something">
+                                <input v-model="newTask.title" type="text" id="add_title" class="form-control" required placeholder="something">
                             </div>
                             <div class="form-group">
                                 <label for="add_description">Description</label>
-                                <input v-model="newTask.description" type="text" id="add_description"
-                                    class="form-control" required placeholder="Lorem Ipsum Dolor">
+                                <input v-model="newTask.description" type="text" id="add_description" class="form-control" required placeholder="Lorem Ipsum Dolor">
                             </div>
                             <div class="form-group">
                                 <label for="add_category">Category</label>
                                 <select v-model="newTask.category" id="add_category" class="form-control" required>
-                                    <option selected value="backlog">Back log</option>
+                                    <option value="backlog">Back log</option>
                                     <option value="todo">To Do</option>
                                     <option value="progress">Progress</option>
                                     <option value="completed">Completed</option>
                                 </select>
                             </div>
-                            <button class="btn btn-outline-success" type="submit">Add</button>
+                            <button class="btn btn-outline-success" type="submit"><i class="fas fa-check"></i>Add</button>
+                            <button @click="backBtn" class="btn btn-outline-warning">Back</button>
                         </form>
                     </div>
                 </div>
             </section>
-
         </section>
     </div>
 
+    <!-- BOOTSTRAP -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" 
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" 
+    crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" 
+    crossorigin="anonymous"></script>
     <!-- VUE -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <!-- AXIOS -->

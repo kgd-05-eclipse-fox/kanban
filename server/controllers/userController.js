@@ -21,7 +21,7 @@ class UserController {
             
             const token = signToken(data)
             
-            res.status(201).json({access_token: token})
+            res.status(201).json({access_token: token, user: user})
         } catch (err) {
             next(err)
         }
@@ -41,16 +41,16 @@ class UserController {
             })
 
             if (!user) {
-                throw { msg: 'username or password is incorrect', status: 401 }
+                throw { msg: 'email or password is incorrect', status: 401 }
             } else if (!compare(payload.password, user.password)) {
-                throw { msg: 'username or password is incorrect', status: 401 }
+                throw { msg: 'email or password is incorrect', status: 401 }
             } else {
                 const payload = {
                     id: user.id,
                     email:user.email
                 }
                 const token = signToken(payload)
-                res.status(200).json({access_token: token})
+                res.status(200).json({access_token: token, user: user})
             }
 
         } catch (err) {
