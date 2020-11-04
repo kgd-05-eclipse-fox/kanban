@@ -16,11 +16,9 @@ class KanbanConteroller{
             let databody = req.body
             let UserId = req.acces_token
             databody.UserId = UserId.id
-            console.log(databody)
             let data = await Kanban.create(databody)
             res.status(201).json(data)
         } catch (err) {
-            console.log(err)
             res.status(500).json(err)
         }
     }

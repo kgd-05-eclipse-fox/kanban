@@ -49,7 +49,7 @@
               <ul class="navbar-nav ml-auto nav-flex-icons">
                   <!--Log out-->
                 <li class="nav-item">
-                    <a id="btn-logout" class="nav-link" href="#">Log Out</a>
+                    <a v-on:click.prevent="logout()" id="btn-logout" class="nav-link" href="#">Log Out</a>
                   </li>
                 <li class="nav-item avatar dropdown">
                   <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown"
@@ -74,20 +74,20 @@
             <div class="card">
                 <h4 class="text-center pt-4"><img class="logo-log" src="./img//klipartz.com.png" alt=""></h4> 
                 <span class="info">To all special dicounts and more <br> become to login!<span>
+                <div class="text-center container"> 
                 <div class="form-group container">
     
                     <!-- form login -->
-                    <form action="" method="post">
-                        <input type="email" name="email" placeholder="email address" class="form-control form mb-2"> 
-                        <input type="password" name="password" placeholder="password" class="form-control"> </div>
-                    <div class="text-center container"> 
-                        <button type="submit" class="btn">Login</button>
+                    <form>
+                        <input v-model="email" type="email" name="email" placeholder="email address" class="form-control form mb-2"> 
+                        <input v-model="password" type="password" name="password" placeholder="password" class="form-control"> </div>
+                        <button v-on:click.prevent="loginUser()" type="submit" class="btn">Login</button>
                     </form>
                     <!-- END form login -->
     
                     <div class="d-flex justify-content-between container strech">
                         <!-- goto login -->
-                            <span><a href="#" style="text-decoration: none; color: whitesmoke;">Go To Register</a></span>
+                            <span><a v-on:click.prevent="gantiHalaman('register-page')" href="#" style="text-decoration: none; color: whitesmoke;">Go To Register</a></span>
                         <!-- END goto login -->
                         <span>Forgot Password</span>
                     </div>
@@ -112,20 +112,20 @@
             <div class="card">
                 <h4 class="text-center pt-4"><img class="logo-log" src="./img//klipartz.com.png" alt=""></h4> 
                 <span class="info">To all special dicounts and more <br> become a member!<span>
+                <div class="text-center container"> 
                 <div class="form-group container">
     
                     <!-- form register -->
                     <form action="" method="post">
-                        <input type="email" name="email" placeholder="email address" class="form-control form mb-2"> 
-                        <input type="password" name="password" placeholder="password" class="form-control"> </div>
-                    <div class="text-center container"> 
-                        <button type="submit" class="btn">Register</button>
+                        <input v-model="addEmail" type="email" name="email" placeholder="email address" class="form-control form mb-2"> 
+                        <input v-model="addPassword" type="password" name="password" placeholder="password" class="form-control"> </div>
+                        <button v-on:click.prevent="register()" type="submit" class="btn">Register</button>
                     </form>
                     <!-- END form register -->
     
                     <div class="d-flex justify-content-between container strech">
                         <!-- goto login -->
-                            <span><a href="#" style="text-decoration: none; color: whitesmoke;">Go To Login</a></span>
+                            <span><a v-on:click.prevent="gantiHalaman('login-page')" href="#" style="text-decoration: none; color: whitesmoke;">Go To Login</a></span>
                         <!-- END goto login -->
                         <span>Forgot Password</span>
                     </div>
@@ -169,7 +169,7 @@
                                 <div class="col d-flex" style="padding-left: 0%; padding-right: 0%;">
                                 <!-- Options Card -->
                                 <div class="col" style="padding-left: 0%; padding-right: 0%;">
-                                    <a href="#"><img class="log-User mt-3" src="./img/l1.png" alt=""></a>
+                                    <a href="#"><img class="log-User mt-3" :src="el.imgUser" alt=""></a>
                                 </div>
                                 <div class="col d-flex mt-3 text-center" style="padding: 0%;">
                                     <a v-on:click.prevent="gantiHalaman('edit-page')" href="#"><p class="tOption rounded bg-info mx-1 py-2 px-1">e</p></a>
@@ -188,93 +188,21 @@
                     <div class="c1 shadowcard overflow-auto" style="height: 70vh;">
                         <div id="board-2" class=" card-body text-light">
                             <!-- CARD -->
-                            <div id="card-5" draggable="true" class=" card-body mb-2 text-center flex-column pb-0 px-0" style="border-bottom: solid;">
+                            <div v-for="el in kanban" :key="el.id" id="card-1" draggable="true" class=" card-body mb-2 text-center flex-column pb-0 px-0" style="border-bottom: solid;">
                                 <div class="hvr-grow">
                                     <!-- Title Card -->
                                     <div class="col titleCard bg-white">
-                                        Membuat Kanban
+                                        {{el.title}}
                                     </div>
                                     <div class="col bg-dark">
                                     <!-- Description Card -->
-                                        <p class="pContent">Membuat Kanban menggunakan Bootstrap</p>
+                                        <p class="pContent">{{el.description}}</p>
                                     </div>
                                 </div>
                                 <div class="col d-flex" style="padding-left: 0%; padding-right: 0%;">
                                 <!-- Options Card -->
                                 <div class="col" style="padding-left: 0%; padding-right: 0%;">
-                                    <a href="#"><img class="log-User mt-3" src="./img/l1.png" alt=""></a>
-                                </div>
-                                <div class="col d-flex mt-3 text-center" style="padding: 0%;">
-                                    <a v-on:click.prevent="gantiHalaman('edit-page')" href="#"><p class="tOption rounded bg-info mx-1 py-2 px-1">e</p></a>
-                                    <a href="#"><p class="tOption rounded bg-danger mx-1 py-2 px-1">d</p></a>
-                                    <a href="#"><p class="tOption rounded bg-success mx-1 py-2 px-1">m</p></a>
-                                </div>
-                                </div>
-                            </div>
-                            <!-- CARD -->
-                            <div id="card-6" draggable="true" class=" card-body mb-2 text-center flex-column pb-0 px-0" style="border-bottom: solid;">
-                                <div class="hvr-grow">
-                                    <!-- Title Card -->
-                                    <div class="col titleCard bg-white">
-                                       Membuat Kanban
-                                   </div>
-                                   <div class="col bg-dark">
-                                   <!-- Description Card -->
-                                       <p class="pContent">Membuat Kanban menggunakan Bootstrap</p>
-                                   </div>
-                                </div>
-                                <div class="col d-flex" style="padding-left: 0%; padding-right: 0%;">
-                                <!-- Options Card -->
-                                <div class="col" style="padding-left: 0%; padding-right: 0%;">
-                                    <a href="#"><img class="log-User mt-3" src="./img/l2.png" alt=""></a>
-                                </div>
-                                <div class="col d-flex mt-3 text-center" style="padding: 0%;">
-                                    <a v-on:click.prevent="gantiHalaman('edit-page')" href="#"><p class="tOption rounded bg-info mx-1 py-2 px-1">e</p></a>
-                                    <a href="#"><p class="tOption rounded bg-danger mx-1 py-2 px-1">d</p></a>
-                                    <a href="#"><p class="tOption rounded bg-success mx-1 py-2 px-1">m</p></a>
-                                </div>
-                                </div>
-                            </div>
-                            <!-- CARD -->
-                            <div id="card-7" draggable="true" class=" card-body mb-2 text-center flex-column pb-0 px-0" style="border-bottom: solid;">
-                                <div class="hvr-grow">
-                                    <!-- Title Card -->
-                                    <div class="col titleCard bg-white">
-                                        Membuat Kanban
-                                    </div>
-                                    <div class="col bg-dark">
-                                    <!-- Description Card -->
-                                        <p class="pContent">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa minima maiores pariatur nam? Mollitia, incidunt alias at pariatur tempore facilis repellat ex sequi atque ut sunt. Eaque error fugit aut?</p>
-                                    </div>
-                                </div>
-                                <div class="col d-flex" style="padding-left: 0%; padding-right: 0%;">
-                                <!-- Options Card -->
-                                <div class="col" style="padding-left: 0%; padding-right: 0%;">
-                                    <a href="#"><img class="log-User mt-3" src="./img/l3.png" alt=""></a>
-                                </div>
-                                <div class="col d-flex mt-3 text-center" style="padding: 0%;">
-                                    <a v-on:click.prevent="gantiHalaman('edit-page')" href="#"><p class="tOption rounded bg-info mx-1 py-2 px-1">e</p></a>
-                                    <a href="#"><p class="tOption rounded bg-danger mx-1 py-2 px-1">d</p></a>
-                                    <a href="#"><p class="tOption rounded bg-success mx-1 py-2 px-1">m</p></a>
-                                </div>
-                                </div>
-                            </div>
-                            <!-- CARD -->
-                            <div id="card-8" draggable="true" class=" card-body mb-2 text-center flex-column pb-0 px-0" style="border-bottom: solid;">
-                                <div class="hvr-grow">
-                                    <!-- Title Card -->
-                                    <div class="col titleCard bg-white">
-                                        Membuat Kanban
-                                    </div>
-                                    <div class="col bg-dark">
-                                    <!-- Description Card -->
-                                        <p class="pContent">Membuat Kanban menggunakan Bootstrap</p>
-                                    </div>
-                                </div>
-                                <div class="col d-flex" style="padding-left: 0%; padding-right: 0%;">
-                                <!-- Options Card -->
-                                <div class="col" style="padding-left: 0%; padding-right: 0%;">
-                                    <a href="#"><img class="log-User mt-3" src="./img/l4.png" alt=""></a>
+                                    <a href="#"><img class="log-User mt-3" :src="el.imgUser" alt=""></a>
                                 </div>
                                 <div class="col d-flex mt-3 text-center" style="padding: 0%;">
                                     <a v-on:click.prevent="gantiHalaman('edit-page')" href="#"><p class="tOption rounded bg-info mx-1 py-2 px-1">e</p></a>
@@ -293,93 +221,21 @@
                     <div class="c1 shadowcard overflow-auto" style="height: 70vh;">
                         <div id="board-3" class=" card-body text-light">
                             <!-- CARD -->
-                            <div id="card-9" draggable="true" class=" card-body mb-2 text-center flex-column pb-0 px-0" style="border-bottom: solid;">
+                            <div v-for="el in kanban" :key="el.id" id="card-1" draggable="true" class=" card-body mb-2 text-center flex-column pb-0 px-0" style="border-bottom: solid;">
                                 <div class="hvr-grow">
                                     <!-- Title Card -->
                                     <div class="col titleCard bg-white">
-                                        Membuat Kanban
+                                        {{el.title}}
                                     </div>
                                     <div class="col bg-dark">
                                     <!-- Description Card -->
-                                        <p class="pContent">Membuat Kanban menggunakan Bootstrap</p>
+                                        <p class="pContent">{{el.description}}</p>
                                     </div>
                                 </div>
                                 <div class="col d-flex" style="padding-left: 0%; padding-right: 0%;">
                                 <!-- Options Card -->
                                 <div class="col" style="padding-left: 0%; padding-right: 0%;">
-                                    <a href="#"><img class="log-User mt-3" src="./img/l1.png" alt=""></a>
-                                </div>
-                                <div class="col d-flex mt-3 text-center" style="padding: 0%;">
-                                    <a v-on:click.prevent="gantiHalaman('edit-page')" href="#"><p class="tOption rounded bg-info mx-1 py-2 px-1">e</p></a>
-                                    <a href="#"><p class="tOption rounded bg-danger mx-1 py-2 px-1">d</p></a>
-                                    <a href="#"><p class="tOption rounded bg-success mx-1 py-2 px-1">m</p></a>
-                                </div>
-                                </div>
-                            </div>
-                            <!-- CARD -->
-                            <div id="card-10" draggable="true" class=" card-body mb-2 text-center flex-column pb-0 px-0" style="border-bottom: solid;">
-                                <div class="hvr-grow">
-                                    <!-- Title Card -->
-                                    <div class="col titleCard bg-white">
-                                       Membuat Kanban
-                                   </div>
-                                   <div class="col bg-dark">
-                                   <!-- Description Card -->
-                                       <p class="pContent">Membuat Kanban menggunakan Bootstrap</p>
-                                   </div>
-                                </div>
-                                <div class="col d-flex" style="padding-left: 0%; padding-right: 0%;">
-                                <!-- Options Card -->
-                                <div class="col" style="padding-left: 0%; padding-right: 0%;">
-                                    <a href="#"><img class="log-User mt-3" src="./img/l2.png" alt=""></a>
-                                </div>
-                                <div class="col d-flex mt-3 text-center" style="padding: 0%;">
-                                    <a v-on:click.prevent="gantiHalaman('edit-page')" href="#"><p class="tOption rounded bg-info mx-1 py-2 px-1">e</p></a>
-                                    <a href="#"><p class="tOption rounded bg-danger mx-1 py-2 px-1">d</p></a>
-                                    <a href="#"><p class="tOption rounded bg-success mx-1 py-2 px-1">m</p></a>
-                                </div>
-                                </div>
-                            </div>
-                            <!-- CARD -->
-                            <div id="card-11" draggable="true" class=" card-body mb-2 text-center flex-column pb-0 px-0" style="border-bottom: solid;">
-                                <div class="hvr-grow">
-                                    <!-- Title Card -->
-                                    <div class="col titleCard bg-white">
-                                        Membuat Kanban
-                                    </div>
-                                    <div class="col bg-dark">
-                                    <!-- Description Card -->
-                                        <p class="pContent">Membuat Kanban menggunakan Bootstrap</p>
-                                    </div>
-                                </div>
-                                <div class="col d-flex" style="padding-left: 0%; padding-right: 0%;">
-                                <!-- Options Card -->
-                                <div class="col" style="padding-left: 0%; padding-right: 0%;">
-                                    <a href="#"><img class="log-User mt-3" src="./img/l3.png" alt=""></a>
-                                </div>
-                                <div class="col d-flex mt-3 text-center" style="padding: 0%;">
-                                    <a v-on:click.prevent="gantiHalaman('edit-page')" href="#"><p class="tOption rounded bg-info mx-1 py-2 px-1">e</p></a>
-                                    <a href="#"><p class="tOption rounded bg-danger mx-1 py-2 px-1">d</p></a>
-                                    <a href="#"><p class="tOption rounded bg-success mx-1 py-2 px-1">m</p></a>
-                                </div>
-                                </div>
-                            </div>
-                            <!-- CARD -->
-                            <div id="card-12" draggable="true" class=" card-body mb-2 text-center flex-column pb-0 px-0" style="border-bottom: solid;">
-                                <div class="hvr-grow">
-                                    <!-- Title Card -->
-                                    <div class="col titleCard bg-white">
-                                        Membuat Kanban
-                                    </div>
-                                    <div class="col bg-dark">
-                                    <!-- Description Card -->
-                                        <p class="pContent">Membuat Kanban menggunakan Bootstrap</p>
-                                    </div>
-                                </div>
-                                <div class="col d-flex" style="padding-left: 0%; padding-right: 0%;">
-                                <!-- Options Card -->
-                                <div class="col" style="padding-left: 0%; padding-right: 0%;">
-                                    <a href="#"><img class="log-User mt-3" src="./img/l4.png" alt=""></a>
+                                    <a href="#"><img class="log-User mt-3" :src="el.imgUser" alt=""></a>
                                 </div>
                                 <div class="col d-flex mt-3 text-center" style="padding: 0%;">
                                     <a v-on:click.prevent="gantiHalaman('edit-page')" href="#"><p class="tOption rounded bg-info mx-1 py-2 px-1">e</p></a>
@@ -398,93 +254,21 @@
                     <div class="c1 shadowcard overflow-auto" style="height: 70vh;">
                         <div id="board-4" class=" card-body text-light">
                             <!-- CARD -->
-                            <div id="card-13" draggable="true" class=" card-body mb-2 text-center flex-column pb-0 px-0" style="border-bottom: solid;">
+                            <div v-for="el in kanban" :key="el.id" id="card-1" draggable="true" class=" card-body mb-2 text-center flex-column pb-0 px-0" style="border-bottom: solid;">
                                 <div class="hvr-grow">
                                     <!-- Title Card -->
                                     <div class="col titleCard bg-white">
-                                        Membuat Kanban
+                                        {{el.title}}
                                     </div>
                                     <div class="col bg-dark">
                                     <!-- Description Card -->
-                                        <p class="pContent">Membuat Kanban menggunakan Bootstrap</p>
+                                        <p class="pContent">{{el.description}}</p>
                                     </div>
                                 </div>
                                 <div class="col d-flex" style="padding-left: 0%; padding-right: 0%;">
                                 <!-- Options Card -->
                                 <div class="col" style="padding-left: 0%; padding-right: 0%;">
-                                    <a href="#"><img class="log-User mt-3" src="./img/l1.png" alt=""></a>
-                                </div>
-                                <div class="col d-flex mt-3 text-center" style="padding: 0%;">
-                                    <a v-on:click.prevent="gantiHalaman('edit-page')" href="#"><p class="tOption rounded bg-info mx-1 py-2 px-1">e</p></a>
-                                    <a href="#"><p class="tOption rounded bg-danger mx-1 py-2 px-1">d</p></a>
-                                    <a href="#"><p class="tOption rounded bg-success mx-1 py-2 px-1">m</p></a>
-                                </div>
-                                </div>
-                            </div>
-                            <!-- CARD -->
-                            <div id="card-14" draggable="true" class=" card-body mb-2 text-center flex-column pb-0 px-0" style="border-bottom: solid;">
-                                <div class="hvr-grow">
-                                    <!-- Title Card -->
-                                    <div class="col titleCard bg-white">
-                                       Membuat Kanban
-                                   </div>
-                                   <div class="col bg-dark">
-                                   <!-- Description Card -->
-                                       <p class="pContent">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam officiis rerum molestiae, cum, earum, provident quaerat aperiam est repellendus aliquid sed quasi. Optio cum repellendus architecto quidem debitis placeat et.</p>
-                                   </div>
-                                </div>
-                                <div class="col d-flex" style="padding-left: 0%; padding-right: 0%;">
-                                <!-- Options Card -->
-                                <div class="col" style="padding-left: 0%; padding-right: 0%;">
-                                    <a href="#"><img class="log-User mt-3" src="./img/l2.png" alt=""></a>
-                                </div>
-                                <div class="col d-flex mt-3 text-center" style="padding: 0%;">
-                                    <a v-on:click.prevent="gantiHalaman('edit-page')" href="#"><p class="tOption rounded bg-info mx-1 py-2 px-1">e</p></a>
-                                    <a href="#"><p class="tOption rounded bg-danger mx-1 py-2 px-1">d</p></a>
-                                    <a href="#"><p class="tOption rounded bg-success mx-1 py-2 px-1">m</p></a>
-                                </div>
-                                </div>
-                            </div>
-                            <!-- CARD -->
-                            <div id="card-15" draggable="true" class=" card-body mb-2 text-center flex-column pb-0 px-0" style="border-bottom: solid;">
-                                <div class="hvr-grow">
-                                    <!-- Title Card -->
-                                    <div class="col titleCard bg-white">
-                                        Membuat Kanban
-                                    </div>
-                                    <div class="col bg-dark">
-                                    <!-- Description Card -->
-                                        <p class="pContent">Membuat Kanban menggunakan Bootstrap</p>
-                                    </div>
-                                </div>
-                                <div class="col d-flex" style="padding-left: 0%; padding-right: 0%;">
-                                <!-- Options Card -->
-                                <div class="col" style="padding-left: 0%; padding-right: 0%;">
-                                    <a href="#"><img class="log-User mt-3" src="./img/l3.png" alt=""></a>
-                                </div>
-                                <div class="col d-flex mt-3 text-center" style="padding: 0%;">
-                                    <a v-on:click.prevent="gantiHalaman('edit-page')" href="#"><p class="tOption rounded bg-info mx-1 py-2 px-1">e</p></a>
-                                    <a href="#"><p class="tOption rounded bg-danger mx-1 py-2 px-1">d</p></a>
-                                    <a href="#"><p class="tOption rounded bg-success mx-1 py-2 px-1">m</p></a>
-                                </div>
-                                </div>
-                            </div>
-                            <!-- CARD -->
-                            <div id="card-16" draggable="true" class=" card-body mb-2 text-center flex-column pb-0 px-0" style="border-bottom: solid;">
-                                <div class="hvr-grow">
-                                    <!-- Title Card -->
-                                    <div class="col titleCard bg-white">
-                                        Membuat Kanban
-                                    </div>
-                                    <div class="col bg-dark">
-                                    <!-- Description Card -->
-                                        <p class="pContent">Membuat Kanban menggunakan Bootstrap</p>
-                                    </div>
-                                </div>
-                                <div class="col d-flex" style="padding-left: 0%; padding-right: 0%;">
-                                <!-- Options Card -->
-                                <div class="col" style="padding-left: 0%; padding-right: 0%;">
-                                    <a href="#"><img class="log-User mt-3" src="./img/l4.png" alt=""></a>
+                                    <a href="#"><img class="log-User mt-3" :src="el.imgUser" alt=""></a>
                                 </div>
                                 <div class="col d-flex mt-3 text-center" style="padding: 0%;">
                                     <a v-on:click.prevent="gantiHalaman('edit-page')" href="#"><p class="tOption rounded bg-info mx-1 py-2 px-1">e</p></a>
@@ -514,9 +298,9 @@
                         <div class=" card-footer">
                             <form action="" method="post">
                                 <!-- add Title -->
-                                <input type="text" name="title" id="" placeholder="Title" class=" my-4 input-group form-control">
-                                <input type="text" name="descriptin" id="" placeholder="Descriptin" class=" my-4 input-group form-control">
-                                <button type="submit" class="btn">Submit</button>
+                                <input v-model="title" type="text" name="title" id="" placeholder="Title" class=" my-4 input-group form-control">
+                                <input v-model="description" type="text" name="descriptin" id="" placeholder="Descriptin" class=" my-4 input-group form-control">
+                                <button v-on:click.prevent="addkanban()" type="submit" class="btn">Submit</button>
                             </form>
                         </div>
                     </div>
