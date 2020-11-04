@@ -1,10 +1,11 @@
-const { Task } = require('../models')
+const { User, Task } = require('../models')
 
 class TaskController {
     static async readAll(req, res, next) {
         try {
             const tasks = await Task.findAll({
-               order: [['createdAt', 'desc']]
+               order: [['createdAt', 'desc']],
+               include: User
             })
             res.status(200).json(tasks)
         } catch (error) {

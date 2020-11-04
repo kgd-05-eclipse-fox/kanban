@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-signin-client_id" content="191086874630-8fcpf7tkkcd5gtor93p31og3mr97rfr6.apps.googleusercontent.com">
+    <meta name="google-signin-client_id"
+        content="191086874630-8fcpf7tkkcd5gtor93p31og3mr97rfr6.apps.googleusercontent.com">
 
     <!-- BOOTSTRAP -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
@@ -42,18 +43,22 @@
                 </div>
                 <div class="col-6">
                     <h5 class="font-weight-light mb-3 text-center" style="margin-left: 2em;">Register</h5>
-                    <form @submit.prevent="register" class="form-signin bg-light rounded shadow text-dark" style="margin-right: 5em;">
+                    <form @submit.prevent="register" class="form-signin bg-light rounded shadow text-dark"
+                        style="margin-right: 5em;">
                         <div class="form-group">
                             <label for="register-username">Username</label>
-                            <input v-model="newUser.username" type="text" id="register-username" placeholder="username here" class="form-control" required>
+                            <input v-model="newUser.username" type="text" id="register-username"
+                                placeholder="username here" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="register-email">Email</label>
-                            <input v-model="newUser.email" type="email" id="register-email" placeholder="email here" class="form-control" required>
+                            <input v-model="newUser.email" type="email" id="register-email" placeholder="email here"
+                                class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="register-password">Password</label>
-                            <input v-model="newUser.password" type="password" id="register-password" placeholder="password here" class="form-control" required>
+                            <input v-model="newUser.password" type="password" id="register-password"
+                                placeholder="password here" class="form-control" required>
                         </div>
                         <br>
                         <div class="container d-flex" style="justify-content: space-between;">
@@ -75,11 +80,13 @@
                     <form @submit.prevent="login" class="form-signin bg-light rounded shadow text-dark">
                         <div class="form-group">
                             <label for="login-email">Email</label>
-                            <input v-model="user.email" type="email" id="login-email" placeholder="email here" class="form-control" required>
+                            <input v-model="user.email" type="email" id="login-email" placeholder="email here"
+                                class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="login-password">Password</label>
-                            <input v-model="user.password" type="password" id="login-password" placeholder="password here" class="form-control" required>
+                            <input v-model="user.password" type="password" id="login-password"
+                                placeholder="password here" class="form-control" required>
                         </div>
                         <br>
                         <div class="container d-flex" style="justify-content: space-between;">
@@ -91,25 +98,26 @@
         </section>
 
         <section v-else-if="page === 'home-page'" class="container-fluid" style="width: 100%; height: 88%;">
-            <section style="margin-top: 20em;" id="board">
+            <section style="margin-top: 2em;" id="board">
                 <button @click="showForm" v-show="!form" class="btn btn-outline-primary">Add Task</button>
 
                 <br><br>
 
                 <div class="row" v-show="!form">
-                    <div class="col-3">
+                    <div class="col-3" id="backlog">
                         <div class="card card-bordered pb-2 mb-2 shadow">
                             <div class="card-head bg-info">
                                 <h6 class="text-center"><strong>Back Log</strong></h6>
                             </div>
                             <div class="card-body">
-                                <div class="card card-bordered py-2 mb-2">
+                                <div v-for="el in backlog" :key="el.id" class="card card-bordered py-2 mb-2">
                                     <div class="card-body">
-                                        <h6 class="card-title">Lorem Ipsum</h6>
+                                        <h6 class="card-title">{{el.title}}</h6>
                                         <hr>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                            sed do
-                                            eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <p class="card-text">
+                                            {{el.description}} <br>
+                                            <span class="text-muted">createdBy: {{el.User.email}}</span>
+                                        </p>
                                         <div class="d-flex container" style="justify-content: space-between;">
                                             <div>
                                                 <a href="#" class="card-link text-warning">Update</a>
@@ -124,101 +132,84 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-3" id="todo">
                         <div class="card card-bordered pb-2 mb-2 shadow">
                             <div class="card-head bg-primary">
                                 <h6 class="text-center"><strong>To Do</strong></h6>
                             </div>
                             <div class="card-body">
-                                <div class="card card-bordered py-2 mb-2">
+                                <div v-for="el in todo" :key="el.id"  class="card card-bordered py-2 mb-2">
                                     <div class="card-body">
-                                        <h6 class="card-title">Lorem Ipsum</h6>
+                                        <h6 class="card-title">{{el.title}}</h6>
                                         <hr>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                            sed do
-                                            eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                            <div class="d-flex container" style="justify-content: space-between;">
-                                                <div>
-                                                    <a href="#" class="card-link text-warning">Update</a>
-                                                    <a href="#" class="card-link text-danger">Delete</a>
-                                                </div>
-                                                <div>
-                                                    <i class="fas fa-expand-arrows-alt"></i>
-                                                </div>
+                                        <p class="card-text">
+                                            {{el.description}} <br>
+                                            <span class="text-muted">createdBy: {{el.User.email}}</span>
+                                        </p>
+                                        <div class="d-flex container" style="justify-content: space-between;">
+                                            <div>
+                                                <a href="#" class="card-link text-warning">Update</a>
+                                                <a href="#" class="card-link text-danger">Delete</a>
                                             </div>
+                                            <div>
+                                                <i class="fas fa-expand-arrows-alt"></i>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-3" id="progress">
                         <div class="card card-bordered pb-2 mb-2 shadow">
                             <div class="card-head bg-warning">
                                 <h6 class="text-center"><strong>Progress</strong></h6>
                             </div>
                             <div class="card-body">
-                                <div class="card card-bordered py-2 mb-2">
+                                <div v-for="el in progress" :key="el.id" class="card card-bordered py-2 mb-2">
                                     <div class="card-body">
-                                        <h6 class="card-title">Lorem Ipsum</h6>
+                                        <h6 class="card-title">{{el.title}}</h6>
                                         <hr>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                            sed do
-                                            eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                            <div class="d-flex container" style="justify-content: space-between;">
-                                                <div>
-                                                    <a href="#" class="card-link text-warning">Update</a>
-                                                    <a href="#" class="card-link text-danger">Delete</a>
-                                                </div>
-                                                <div>
-                                                    <i class="fas fa-expand-arrows-alt"></i>
-                                                </div>
+                                        <p class="card-text">
+                                            {{el.description}} <br>
+                                            <span class="text-muted">createdBy: {{el.User.email}}</span>
+                                        </p>
+                                        <div class="d-flex container" style="justify-content: space-between;">
+                                            <div>
+                                                <a href="#" class="card-link text-warning">Update</a>
+                                                <a href="#" class="card-link text-danger">Delete</a>
                                             </div>
+                                            <div>
+                                                <i class="fas fa-expand-arrows-alt"></i>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-3" id="completed">
                         <div class="card card-bordered pb-2 mb-2 shadow">
                             <div class="card-head bg-success">
-                                <h6 class="text-center"><strong>Finished</strong></h6>
+                                <h6 class="text-center"><strong>Completed</strong></h6>
                             </div>
                             <div class="card-body">
-                                <div class="card card-bordered py-2 mb-2">
+                                <div v-for="el in completed" :key="el.id" class="card card-bordered py-2 mb-2">
                                     <div class="card-body">
-                                        <h6 class="card-title">Lorem Ipsum</h6>
+                                        <h6 class="card-title">{{el.title}}</h6>
                                         <hr>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                            sed do
-                                            eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                            <div class="d-flex container" style="justify-content: space-between;">
-                                                <div>
-                                                    <a href="#" class="card-link text-warning">Update</a>
-                                                    <a href="#" class="card-link text-danger">Delete</a>
-                                                </div>
-                                                <div>
-                                                    <i class="fas fa-expand-arrows-alt"></i>
-                                                </div>
+                                        <p class="card-text">
+                                            {{el.description}} <br>
+                                            <span class="text-muted">createdBy: {{el.User.email}}</span>
+                                        </p>
+                                        <div class="d-flex container" style="justify-content: space-between;">
+                                            <div>
+                                                <a href="#" class="card-link text-warning">Update</a>
+                                                <a href="#" class="card-link text-danger">Delete</a>
                                             </div>
-                                    </div>
-                                    <div class="card py-2 my-5">
-                                        <div class="card-body">
-                                            <form>
-                                                <div class="form-group">
-                                                    <label for="edit_title">Title</label>
-                                                    <input type="text" id="edit_title" class="form-control" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="edit_category">Category</label>
-                                                    <select id="edit_category" class="form-control" required>
-                                                        <option value="backlog">Back log</option>
-                                                        <option value="todo">To Do</option>
-                                                        <option value="progress">Progress</option>
-                                                        <option value="finished">Finished</option>
-                                                    </select>
-                                                </div>
-                                                <button class="btn btn-outline-success">Edit</button>
-                                            </form>
+                                            <div>
+                                                <i class="fas fa-expand-arrows-alt"></i>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -235,16 +226,18 @@
                         <form @submit="addTask">
                             <div class="form-group">
                                 <label for="add_title">Title</label>
-                                <input v-model="newTask.title" type="text" id="add_title" class="form-control" required placeholder="something">
+                                <input v-model="newTask.title" type="text" id="add_title" class="form-control" required
+                                    placeholder="something">
                             </div>
                             <div class="form-group">
                                 <label for="add_description">Description</label>
-                                <input v-model="newTask.description" type="text" id="add_description" class="form-control" required placeholder="Lorem Ipsum Dolor">
+                                <input v-model="newTask.description" type="text" id="add_description"
+                                    class="form-control" required placeholder="Lorem Ipsum Dolor">
                             </div>
                             <div class="form-group">
                                 <label for="add_category">Category</label>
                                 <select v-model="newTask.category" id="add_category" class="form-control" required>
-                                    <option value="backlog">Back log</option>
+                                    <option selected value="backlog">Back log</option>
                                     <option value="todo">To Do</option>
                                     <option value="progress">Progress</option>
                                     <option value="completed">Completed</option>
@@ -255,7 +248,7 @@
                     </div>
                 </div>
             </section>
-        
+
         </section>
     </div>
 
