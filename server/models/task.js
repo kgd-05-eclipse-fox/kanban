@@ -29,11 +29,25 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notNull: {
           args: true,
-          msg: `title can't be empty`
+          msg: `category can't be empty`
         },
         notEmpty: {
           args: true,
-          msg: `title can't be empty`
+          msg: `category can't be empty`
+        }
+      }
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: `description can't be empty`
+        },
+        notEmpty: {
+          args: true,
+          msg: `description can't be empty`
         }
       }
     },
@@ -43,11 +57,11 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notNull: {
           args: true,
-          msg: `title can't be empty`
+          msg: `UserId can't be empty`
         },
         notEmpty: {
           args: true,
-          msg: `title can't be empty`
+          msg: `UserId can't be empty`
         }
       }
     },

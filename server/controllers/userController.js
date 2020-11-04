@@ -7,6 +7,7 @@ class UserController {
     static async register(req, res, next) {
         try {
             const payload = {
+                username: req.body.username,
                 email: req.body.email,
                 password: req.body.password
             }
