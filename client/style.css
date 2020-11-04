@@ -11,7 +11,7 @@ nav{
     display: flex;
     justify-content: space-between;
     padding: 15px;
-    background-color: #0d0d0d
+    background-color: #ffffff
 }
 
 nav .links li{
@@ -30,14 +30,14 @@ nav .links ul{
 nav .links a{
     text-decoration: none;
     font-size: 1.5em;
-    color: white;
+    color: black;
     margin-left: 25px;
 }
 
 nav .links p{
     text-decoration: none;
     font-size: 1.5em;
-    color: white;
+    color: black;
     margin-left: 25px;
 }
 
