@@ -10,315 +10,153 @@
         <title>Kanban App | By AkbarHabiby</title>
     </head>
     <body>
-        <div class="login-page">
-            
+        <div id="app">
+            <div v-if="display == 'login-page'">
+                
+            </div>
+            <div v-else-if="display == 'kanban-app'"> <!-- TODO Kanban App Start -->
+                <!-- * ============================== Bootstrap Navbar ============================== -->
+                <nav class="navbar navbar-expand-lg navbar-trello bg-trello">
+                    <!-- <a class="go-home navbar-brand" href="/">
+                    <img src="./logo.png" width="30" height="30" alt="">
+                    </a> -->
+                    <a class="go-home navbar-brand" href="/">Kanban</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                            <a class="go-home nav-link" href="/">Beranda <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="add-kanban nav-link" href="/" @click.prevent="addTask">Add Task <span class="sr-only">(current)</span></a>
+                            </li>
+                        </ul>
+                        <!-- Logout -->
+                        <div class="dropdown show">
+                            <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ user }}
+                            </a>
+                            <div class="dropdown-menu bg-trello" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/" @click.prevent="logout">Logout</a>
+                            </div>
+                        </div>
+                        <!-- End Of Logout -->
+                        <!-- <button class="btn btn-danger my-2 my-sm-0" onclick="logout()">Keluar</button> -->
+                    </div>
+                </nav>
+                <!-- * ============================== End Of Bootstrap Navbar ============================== -->
+                <section class="container-todo">
+                    <div class="kanban backlog col-3"> <!-- Backlog -->
+                        <div class="card text-white bg-secondary mb-3" style="max-width: 30rem;">
+                            <div class="card-header">
+                                <p>Backlog</p><hr>
+                                <img class="img-fluid" src="./img/backlog.png" alt="">
+                            </div>
+                            <div class="card-body overflow-auto" style="height: 60vh;"> <!-- Content -->
+                                <div v-for="backlog in backlogs" :key="backlog.id" class="card text-white bg-light mb-3">
+                                    <div class="card-body backlog">
+                                        <h5 class="card-title backlog">{{ backlog.title }}</h5>
+                                        <p class="card-text backlog">{{ backlog.description }}</p>
+                                        <hr>
+                                        <p class="card-text sm-info backlog">
+                                            <b>By:</b> {{ backlog.UserId }}<br>
+                                            <b>Created: {{ backlog.createdAt }}</b> 
+                                        </p>
+                                        <a href="/" @click.prevent="editTask(backlog.id)" class="card-link"><i class="fas fa-edit backlog"></i></a>
+                                        <a href="/" @click.prevent="deleteTask(backlog.id)" class="card-link"><i class="fas fa-trash-alt backlog"></i></a>
+                                    </div>
+                                </div>
+                            </div> <!-- End of Content -->
+                        </div>
+                    </div> <!-- End of Backlog -->
+                    <div class="kanban todo col-3"> <!-- Todo -->
+                        <div class="card text-white bg-primary mb-3" style="max-width: 30rem;">
+                            <div class="card-header">
+                                <p>Todo</p><hr>
+                                <img class="img-fluid" src="./img/todo.png" alt="">
+                            </div>
+                            <div class="card-body overflow-auto" style="height: 60vh;"> <!-- Content -->
+                                <div v-for="todo in todos" class="card text-white bg-light mb-3">
+                                    <div class="card-body"> <!-- Content -->
+                                        <h5 class="card-title todo">{{ todo.title }}</h5>
+                                        <p class="card-text todo">{{ todo.description }}</p>
+                                        <hr>
+                                        <p class="card-text sm-info todo">
+                                            <b>By:</b> {{ todo.UserId }}<br>
+                                            <b>Created:</b> {{ todo.createdAt }}
+                                        </p>
+                                        <a href="/" @click.prevent="editTask(todo.id)" class="card-link"><i class="fas fa-edit todo"></i></a>
+                                        <a href="/" @click.prevent="deleteTask(todo.id)" class="card-link"><i class="fas fa-trash-alt todo"></i></a>
+                                    </div> <!-- End of Content -->
+                                </div>
+                            </div> <!-- End of Content -->
+                        </div>
+                    </div> <!-- End of Todo -->
+                    <div class="kanban development col-3"> <!-- Development -->
+                        <div class="card text-white bg-info mb-3" style="max-width: 30rem;">
+                            <div class="card-header">
+                                <p>Development</p><hr>
+                                <img class="img-fluid" src="./img/development.png" alt="">
+                            </div>
+                            <div class="card-body overflow-auto" style="height: 60vh;"> <!-- Content -->
+                                <div v-for="development in developments" class="card text-white bg-light mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title development">{{ development.title }}</h5>
+                                        <p class="card-text development">{{ development.description }}</p>
+                                        <hr>
+                                        <p class="card-text sm-info development">
+                                            <b>By:</b> {{ development.UserId }}<br>
+                                            <b>Created:</b> {{ development.createdAt }}
+                                        </p>
+                                        <a href="/" @click.prevent="editTask(development.id)" class="card-link"><i class="fas fa-edit development"></i></a>
+                                        <a href="/" @click.prevent="deleteTask(development.id)" class="card-link"><i class="fas fa-trash-alt development"></i></a>
+                                    </div>
+                                </div>
+                            </div> <!-- End of Content -->
+                        </div>
+                    </div> <!-- End of Development -->
+                    <div class="kanban done col-3"> <!-- Done -->
+                        <div class="card text-white bg-success mb-3" style="max-width: 30rem;">
+                            <div class="card-header">
+                                <p>Done</p><hr>
+                                <img class="img-fluid" src="./img/done.png" alt="">
+                            </div>
+                            <div class="card-body overflow-auto" style="height: 60vh;"> <!-- Content-->
+                                <div v-for="done in dones" class="card text-white bg-light mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title done">{{ done.title }}</h5>
+                                        <p class="card-text done">{{ done.description }}</p>
+                                        <hr>
+                                        <p class="card-text sm-info done">
+                                            <b>By:</b> {{ done.UserId }}<br>
+                                            <b>Created:</b> {{ done.createdAt }}
+                                        </p>
+                                        <a href="/" @click.prevent="editTask(done.id)" class="card-link"><i class="fas fa-edit done"></i></a>
+                                        <a href="/" @click.prevent="deleteTask(done.id)" class="card-link"><i class="fas fa-trash-alt done"></i></a>
+                                    </div>
+                                </div>
+                            </div> <!-- End of Content -->
+                        </div>
+                    </div> <!-- End of Done -->
+                </section>
+            </div> <!-- TODO End Of Kanban App Start -->
+            <div v-else>
+                <h1>404 Not Found</h1>
+            </div>
         </div>
-        <div class="kanban-app"> <!-- TODO Kanban App Start -->
-            <!-- * ============================== Bootstrap Navbar ============================== -->
-            <nav class="navbar navbar-expand-lg navbar-trello bg-trello">
-                <!-- <a class="go-home navbar-brand" href="/">
-                <img src="./logo.png" width="30" height="30" alt="">
-                </a> -->
-                <a class="go-home navbar-brand" href="/">Kanban</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                        <a class="go-home nav-link" href="/">Beranda <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="add-kanban nav-link" href="/" onclick="addKanban(event)">Add Task <span class="sr-only">(current)</span></a>
-                        </li>
-                    </ul>
-                    <!-- Logout -->
-                    <div class="dropdown show">
-                        <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            admin@kanban.com
-                        </a>
-                        <div class="dropdown-menu bg-trello" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/" onclick="logout(event)">Logout</a>
-                        </div>
-                    </div>
-                    <!-- End Of Logout -->
-                    <!-- <button class="btn btn-danger my-2 my-sm-0" onclick="logout()">Keluar</button> -->
-                </div>
-            </nav>
-            <!-- * ============================== End Of Bootstrap Navbar ============================== -->
-            <section class="container-todo">
-                <div class="kanban backlog col-3"> <!-- Backlog -->
-                    <div class="card text-white bg-secondary mb-3" style="max-width: 30rem;">
-                        <div class="card-header">
-                            <p>Backlog</p><hr>
-                            <img class="img-fluid" src="./img/backlog.png" alt="">
-                        </div>
-                        <div class="card-body overflow-auto" style="height: 60vh;"> <!-- Content -->
-                            <div class="card text-white bg-light mb-3">
-                                <div class="card-body backlog">
-                                    <h5 class="card-title backlog">Deploy Server FancyTodo</h5>
-                                    <p class="card-text backlog">Deploy server ke heroku sebelum melewati deadline</p>
-                                    <hr>
-                                    <p class="card-text sm-info backlog">
-                                        <b>By:</b> akbarhabiby@hacktiv8.com<br>
-                                        <b>Created:</b> 2020-11-03
-                                    </p>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-edit backlog"></i></a>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-trash-alt backlog"></i></a>
-                                </div>
-                            </div>
-                            <div class="card text-white bg-light mb-3">
-                                <div class="card-body backlog">
-                                    <h5 class="card-title backlog">Design Kanban</h5>
-                                    <p class="card-text backlog">Design Kanban sebelum mempelajari Vue.js</p>
-                                    <hr>
-                                    <p class="card-text sm-info backlog">
-                                        <b>By:</b> akbarhabiby@icloud.com<br>
-                                        <b>Created:</b> 2020-11-03
-                                    </p>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-edit backlog"></i></a>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-trash-alt backlog"></i></a>
-                                </div>
-                            </div>
-                            <div class="card text-white bg-light mb-3">
-                                <div class="card-body backlog">
-                                    <h5 class="card-title backlog">Setting Server Kanban</h5>
-                                    <p class="card-text backlog">Cicil setup server kanban agar tugas cepat selesai</p>
-                                    <hr>
-                                    <p class="card-text sm-info backlog">
-                                        <b>By:</b> admin@kanban.com<br>
-                                        <b>Created:</b> 2020-11-03
-                                    </p>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-edit backlog"></i></a>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-trash-alt backlog"></i></a>
-                                </div>
-                            </div>
-                        </div> <!-- End of Content -->
-                    </div>
-                </div> <!-- End of Backlog -->
-                <div class="kanban todo col-3"> <!-- Todo -->
-                    <div class="card text-white bg-primary mb-3" style="max-width: 30rem;">
-                        <div class="card-header">
-                            <p>Todo</p><hr>
-                            <img class="img-fluid" src="./img/todo.png" alt="">
-                        </div>
-                        <div class="card-body overflow-auto" style="height: 60vh;"> <!-- Content -->
-                            <div class="card text-white bg-light mb-3">
-                                <div class="card-body"> <!-- Content -->
-                                    <h5 class="card-title todo">Makan bersama anak Hacktiv8</h5>
-                                    <p class="card-text todo">Makan bersama anak Hacktiv8 Kelapa Gading Batch-5 setelah semua tugas selesai</p>
-                                    <hr>
-                                    <p class="card-text sm-info todo">
-                                        <b>By:</b> akbarhabiby@hacktiv8.com<br>
-                                        <b>Created:</b> 2020-11-03
-                                    </p>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-edit todo"></i></a>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-trash-alt todo"></i></a>
-                                </div> <!-- End of Content -->
-                            </div>
-                            <div class="card text-white bg-light mb-3">
-                                <div class="card-body"> <!-- Content -->
-                                    <h5 class="card-title todo">Jalan jalan bersama Farhan</h5>
-                                    <p class="card-text todo">Jalan bersama Farhan untuk refeshing setelah mengerjakan tugas</p>
-                                    <hr>
-                                    <p class="card-text sm-info todo">
-                                        <b>By:</b> admin@kanban.com<br>
-                                        <b>Created:</b> 2020-11-03
-                                    </p>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-edit todo"></i></a>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-trash-alt todo"></i></a>
-                                </div> <!-- End of Content -->
-                            </div>
-                            <div class="card text-white bg-light mb-3">
-                                <div class="card-body"> <!-- Content -->
-                                    <h5 class="card-title todo">Makan Sushi</h5>
-                                    <p class="card-text todo">Mencari Sushi termurah di kawasan Jakarta</p>
-                                    <hr>
-                                    <p class="card-text sm-info todo">
-                                        <b>By:</b> akbarhabiby@icloud.com<br>
-                                        <b>Created:</b> 2020-11-03
-                                    </p>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-edit todo"></i></a>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-trash-alt todo"></i></a>
-                                </div> <!-- End of Content -->
-                            </div>
-                            <div class="card text-white bg-light mb-3">
-                                <div class="card-body"> <!-- Content -->
-                                    <h5 class="card-title todo">Beli Apple iPhone 12 Pro Max</h5>
-                                    <p class="card-text todo">Membeli HP baru karena kebutuhan dan tertarik akan fitur yang ditawarkan</p>
-                                    <hr>
-                                    <p class="card-text sm-info todo">
-                                        <b>By:</b> admin@kanban.com<br>
-                                        <b>Created:</b> 2020-11-03
-                                    </p>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-edit todo"></i></a>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-trash-alt todo"></i></a>
-                                </div> <!-- End of Content -->
-                            </div>
-                            <div class="card text-white bg-light mb-3">
-                                <div class="card-body"> <!-- Content -->
-                                    <h5 class="card-title todo">Beli Keychron K8</h5>
-                                    <p class="card-text todo">Beli Keyboard agar ngoding lebih enak dan lebih cepat</p>
-                                    <hr>
-                                    <p class="card-text sm-info todo">
-                                        <b>By:</b> akbarhabiby@hacktiv8.com<br>
-                                        <b>Created:</b> 2020-11-03
-                                    </p>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-edit todo"></i></a>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-trash-alt todo"></i></a>
-                                </div> <!-- End of Content -->
-                            </div>
-                            <div class="card text-white bg-light mb-3">
-                                <div class="card-body"> <!-- Content -->
-                                    <h5 class="card-title todo">Renovasi Kamar</h5>
-                                    <p class="card-text todo">Renovasi Kamar setelah selesai Hacktiv8</p>
-                                    <hr>
-                                    <p class="card-text sm-info todo">
-                                        <b>By:</b> admin@kanban.com<br>
-                                        <b>Created:</b> 2020-11-03
-                                    </p>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-edit todo"></i></a>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-trash-alt todo"></i></a>
-                                </div> <!-- End of Content -->
-                            </div>
-                        </div> <!-- End of Content -->
-                    </div>
-                </div> <!-- End of Todo -->
-                <div class="kanban development col-3"> <!-- Development -->
-                    <div class="card text-white bg-info mb-3" style="max-width: 30rem;">
-                        <div class="card-header">
-                            <p>Development</p><hr>
-                            <img class="img-fluid" src="./img/development.png" alt="">
-                        </div>
-                        <div class="card-body overflow-auto" style="height: 60vh;"> <!-- Content -->
-                            <div class="card text-white bg-light mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title development">Develop Client Kanban</h5>
-                                    <p class="card-text development">Kanban sedang dalam proses develop</p>
-                                    <hr>
-                                    <p class="card-text sm-info development">
-                                        <b>By:</b> admin@kanban.com<br>
-                                        <b>Created:</b> 2020-11-03
-                                    </p>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-edit development"></i></a>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-trash-alt development"></i></a>
-                                </div>
-                            </div>
-                            <div class="card text-white bg-light mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title development">Develop Server Kanban</h5>
-                                    <p class="card-text development">Server Kanban sedang dalam proses development oleh tim terkait</p>
-                                    <hr>
-                                    <p class="card-text sm-info development">
-                                        <b>By:</b> akbarhabiby@icloud.com<br>
-                                        <b>Created:</b> 2020-11-03
-                                    </p>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-edit development"></i></a>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-trash-alt development"></i></a>
-                                </div>
-                            </div>
-                            <div class="card text-white bg-light mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title development">Setup Firebase & Heroku</h5>
-                                    <p class="card-text development">Setup Firebase dan Heroku agar dapat memahami tentang deploy dikemudian hari</p>
-                                    <hr>
-                                    <p class="card-text sm-info development">
-                                        <b>By:</b> akbarhabiby@hacktiv8.com<br>
-                                        <b>Created:</b> 2020-11-03
-                                    </p>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-edit development"></i></a>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-trash-alt development"></i></a>
-                                </div>
-                            </div>
-                            <div class="card text-white bg-light mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title development">Fix Bugs Portofolio-1</h5>
-                                    <p class="card-text development">Memperbaiki Bugs Portofolio-1 dimana setelah logout sistem menambahkan event listener lagi</p>
-                                    <hr>
-                                    <p class="card-text sm-info development">
-                                        <b>By:</b> admin@kanban.com<br>
-                                        <b>Created:</b> 2020-11-03
-                                    </p>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-edit development"></i></a>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-trash-alt development"></i></a>
-                                </div>
-                            </div>
-                        </div> <!-- End of Content -->
-                    </div>
-                </div> <!-- End of Development -->
-                <div class="kanban done col-3"> <!-- Done -->
-                    <div class="card text-white bg-success mb-3" style="max-width: 30rem;">
-                        <div class="card-header">
-                            <p>Done</p><hr>
-                            <img class="img-fluid" src="./img/done.png" alt="">
-                        </div>
-                        <div class="card-body overflow-auto" style="height: 60vh;"> <!-- Content-->
-                            <div class="card text-white bg-light mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title done">Belajar Untuk LC-1</h5>
-                                    <p class="card-text done">Belajar untuk LC-1 Week-2 Phase-2 agar mendapatkan nilai maksimal</p>
-                                    <hr>
-                                    <p class="card-text sm-info done">
-                                        <b>By:</b> akbarhabiby@hacktiv8.com<br>
-                                        <b>Created:</b> 2020-11-03
-                                    </p>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-edit done"></i></a>
-                                    <a href="/" onclick="" class="card-link"><i class="fas fa-trash-alt done"></i></a>
-                                </div>
-                            </div>
-                        </div> <!-- End of Content -->
-                    </div>
-                </div> <!-- End of Done -->
-            </section>
-        </div> <!-- TODO End Of Kanban App Start -->
-        <!-- ! A little jQuery -->
+
+        <!-- Boostrap + SweetAlert2 -->
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-        <script>
-            // $(document).ready( _ => {
-            //     $('.kanban-app').show()
-            //     $('.login-page').hide()
-            // })
-            $(document).ready( _ => {
-                $('.kanban-app').hide()
-                $('.login-page').show()
-            })
-            function addKanban(event) {
-                event.preventDefault()
-                Swal.fire({
-                title: 'Add Task',
-                html: `<input type="text" id="title" class="swal2-input" placeholder="Title">
-                <input type="text" id="description" class="swal2-input" placeholder="Description">`,
-                confirmButtonText: 'Add',
-                focusConfirm: false,
-                preConfirm: () => {
-                    const title = Swal.getPopup().querySelector('#title').value
-                    const description = Swal.getPopup().querySelector('#description').value
-                    if (!title || !description) {
-                    Swal.showValidationMessage(`Please complete all form`)
-                    }
-                    return { title: title, description: description }
-                }
-                }).then((result) => {
-                Swal.fire(`
-                    Title: ${result.value.title}
-                    Description: ${result.value.description}
-                `.trim())
-                })
-            }
-            function login () {
-                $('.kanban-app').show()
-                $('.login-page').hide()
-            }
-            function logout (event) {
-                event.preventDefault()
-                $('.kanban-app').hide()
-                $('.login-page').show()
-            }
-        </script>
-        <!-- ! End Of A little jQuery -->
+        
+        <!-- Vue.js -> development version, includes helpful console warnings -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+        
+        <!-- Index JS -->
+        <script src="./js/index.js"></script>
     </body>
 </html>
