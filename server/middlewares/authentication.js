@@ -2,7 +2,7 @@ const {User} = require('../models')
 const JwtUser = require('../helper/jwt-user')
 
 const authentication = async (req, res, next)=>{
-    let token = req.headers.token
+    let token = req.headers.access_token
     try {
         if(!token){
             throw {status: 401, msg: 'invalid token'}

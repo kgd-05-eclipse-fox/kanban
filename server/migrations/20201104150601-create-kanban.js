@@ -24,17 +24,13 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      UsermakeId: {
+      UserId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'Users',
-          key: 'id'
+          model: "Users",
+          key: "id"
         }
-      },
-      UsergetId: {
-        allowNull: false,
-        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

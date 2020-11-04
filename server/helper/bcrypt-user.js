@@ -9,7 +9,7 @@ class BcryptUser{
         return hash
     }
 
-    static ConperPassword(pasLog, pasDB){
+    static conperPassword(pasLog, pasDB){
         return bcrypt.compareSync(pasLog, pasDB)
     }
 }

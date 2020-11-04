@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     hooks: {
       beforeCreate: user=>{
-        let hashPassword = BcryptUser(user.password)
+        let hashPassword = BcryptUser.hashPassword(user.password)
         user.password = hashPassword
       }
     },

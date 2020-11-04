@@ -4,12 +4,12 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT
 const routers = require('./routers')
-const errorHandler = require('./middlewares/errorHandler.js')
+// const errorHandler = require('./middlewares/errorHandler.js')
 
-app,use(express.json())
+app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(routers)
-app.use(errorHandler)
+// app.use(errorHandler)
 
 
 app.listen(port, ()=>{

@@ -35,23 +35,16 @@ module.exports = (sequelize, DataTypes) => {
     },
     status: DataTypes.STRING,
     imgUser: DataTypes.STRING,
-    UsermakeId: DataTypes.INTEGER,
-    UsergetId: DataTypes.INTEGER
+    UserId: DataTypes.INTEGER
   }, {
     hooks: {
-      beforeCreate: user=>{
-        if(!user.status){
-          user,status = 'backlog'
-        }
-      },
       beforeCreate: user=>{
         let getImgUser = ['./img/l1.png', './img/l2.png', './img/l3.png', './img/l4.png']
         let pick = Math.floor(Math.random()*getImgUser.length)
         user.imgUser = getImgUser[pick]
-      },
-      beforeCreate: user=>{
-        if(!UsergetId){
-          user.UsergetId = 'empty'
+
+        if(!user.status){
+          user.status = 'backlog'
         }
       }
     },
