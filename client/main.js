@@ -7,19 +7,18 @@ const app = new Vue({
         lastName: '',
         email: '',
         password: '',
+        titleTask: '',
+        descriptionTask: '',
         tasks: [
             {
-                id: 1,
                 title: "Vue.js",
                 description: "Belajar directive vue.js"
             },
             {
-                id: 2,
                 title: "React Native",
                 description: "Belajar react native"
             },
             {
-                id: 3,
                 title: "JQuery",
                 description: "Belajar JQuery"
             }
@@ -51,6 +50,16 @@ const app = new Vue({
         },
         signOutUser() {
             this.page = 'login-page'
+        },
+        saveTask() {
+            let newTask = {
+                title: this.titleTask,
+                description: this.descriptionTask
+            }
+            this.tasks.push(newTask)
+            this.titleTask = ''
+            this.descriptionTask = ''
+            this.changePage('home-page')
         }
     },
     created () {
