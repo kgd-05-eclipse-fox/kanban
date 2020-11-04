@@ -12,14 +12,14 @@
 	<div id="app">	
 		<!-- LOGIN -->
 		<div v-if="showingPage === 'login'" class="register">
-			<form autocomplete='off' class='form'>
+			<form class='form' @submit.prevent="login()">
 				<img src="./img/kanban-logo.png" alt="" class="form-login">
 				<div class='control' id="signIn">
-					<button @click="changePage('login')" class="buttonSignIn btn btn-outline-light hvr-sweep-to-right text-info">Sign In</button>
-					<button @click="changePage('register')" class="buttonSignUp btn btn-outline-dark hvr-sweep-to-left">Sign Up</button>
+					<button type="button" @click.prevent.self="changePage('login')" class="buttonSignIn btn btn-outline-light hvr-sweep-to-right text-info">Sign In</button>
+					<button type="button" @click.prevent.self="changePage('register')" class="buttonSignUp btn btn-outline-dark hvr-sweep-to-left">Sign Up</button>
 				</div>
 				<div class='control block-cube block-input'>
-					<input name='username' placeholder='Username' type='text'>
+					<input v-model="user.email" name='Email' placeholder='Email' type='email'>
 					<div class='bg-top'>
 						<div class='bg-inner'></div>
 					</div>
@@ -31,7 +31,7 @@
 					</div>
 				</div>
 				<div class='control block-cube block-input'>
-					<input name='password' placeholder='Password' type='password'>
+					<input v-model="user.password" name='password' placeholder='Password' type='password'>
 					<div class='bg-top'>
 						<div class='bg-inner'></div>
 					</div>
@@ -42,7 +42,7 @@
 						<div class='bg-inner'></div>
 					</div>
 				</div>
-				<button class='btn block-cube block-cube-hover' type='button'>
+				<button class='btn block-cube block-cube-hover' type='submit'>
 					<div class='bg-top'>
 						<div class='bg-inner'></div>
 					</div>
@@ -73,14 +73,14 @@
 			</form>
 		</div>
 		<div v-else-if="showingPage === 'register'" class="login">
-			<form autocomplete='off' class='form'>
+			<form class='form' @submit.prevent="register()">
 				<img src="./img/kanban-logo.png" alt="" class="form-login">
 				<div class='control' id="signIn">
-					<button class="buttonSignIn btn btn-outline-light hvr-sweep-to-right">Sign In</button>
-					<button class="buttonSignUp btn btn-outline-dark hvr-sweep-to-left text-info">Sign Up</button>
+					<button @click.prevent.self="changePage('login')" class="buttonSignIn btn btn-outline-light hvr-sweep-to-right">Sign In</button>
+					<button @click.prevent.self="changePage('register')" class="buttonSignUp btn btn-outline-dark hvr-sweep-to-left text-info">Sign Up</button>
 				</div>
 				<div class='control block-cube block-input'>
-					<input name='username' placeholder='Username' type='text'>
+					<input v-model='reg.email' name='email' placeholder='Email' type='email'>
 					<div class='bg-top'>
 						<div class='bg-inner'></div>
 					</div>
@@ -92,7 +92,7 @@
 					</div>
 				</div>
 				<div class='control block-cube block-input'>
-					<input name='password' placeholder='Password' type='password'>
+					<input v-model='reg.password' name='password' placeholder='Password' type='password'>
 					<div class='bg-top'>
 						<div class='bg-inner'></div>
 					</div>
@@ -103,7 +103,7 @@
 						<div class='bg-inner'></div>
 					</div>
 				</div>
-				<button class='btn block-cube block-cube-hover' type='button'>
+				<button class='btn block-cube block-cube-hover' type='submit'>
 					<div class='bg-top'>
 						<div class='bg-inner'></div>
 					</div>
@@ -150,192 +150,85 @@
 			</div>
 		</nav>
 		<!-- navbar end -->
-			<div class="container shadow-lg pt-3 rounded pb-3 pl-4 mt-5">
-				<div class="backlog card-transparent shadow-lg rounded mr-3 mr-3 px-3 pb-3" style="max-height: 70vh;">
-					<div class="card-title text-center"><h1>Backlog</h1></div>
-					<div class="card-container scrollbar-rare-wind">
-						<div class="card-transparent shadow-lg mb-2 rounded">
-							<div class="card-title">
-							<h3>TITLE</h3>	
+			<div class="container-fluid mt-3">
+				<div class="row">
+					<div class="col-3">
+						<div class="backlog card-transparent shadow-lg rounded px-2 pb-3">
+							<div class="card-title text-center"><h3>Backlog</h3></div>
+							<div class="card-container scrollbar-rare-wind">
+								<div v-for="i in backlog" v-key="backlog" class="card-transparent shadow-lg mb-2 rounded">
+									<div class="card-title">
+									<strong>{{ i.title }}</strong>
+									<hr>
+									</div>
+									<div class="card-body">
+										{{ i.description }}
+									</div>
+									<footer class="blockquote-footer"><i class="fa fa-user" aria-hidden="true"></i>  {{ i.User.email }}<br>
+										<i class="fa fa-calendar"><cite>  {{ i.date }}</cite></i>
+									</footer>
+								</div>
 							</div>
-							<div class="card-subtitle">
-								<!-- <h7>ORGANIZATION</h7>	 -->
-							</div>
-							<div class="card-body">
-								Lorem ipsum dolor sit amet consectetur adipisicing elit.
-							</div>
-							<footer class="blockquote-footer"><i class="fa fa-user" aria-hidden="true"></i>  USERNAME<br>
-								<i class="fa fa-calendar"><cite>  Date here.</cite></i>
-							</footer>
-						</div>
-						<div class="card-transparent shadow-lg mb-2 rounded">
-							<div class="card-title">
-							<h3>TITLE</h3>	
-							</div>
-							<div class="card-subtitle">
-								<!-- <h7>ORGANIZATION</h7>	 -->
-							</div>
-							<div class="card-body">
-								Lorem ipsum dolor sit amet consectetur adipisicing elit.
-							</div>
-							<footer class="blockquote-footer"><i class="fa fa-user" aria-hidden="true"></i>  USERNAME<br>
-								<i class="fa fa-calendar"><cite>  Date here.</cite></i>
-							</footer>
-						</div>
-						<div class="card-transparent shadow-lg mb-2 rounded">
-							<div class="card-title">
-							<h3>TITLE</h3>	
-							</div>
-							<div class="card-subtitle">
-								<!-- <h7>ORGANIZATION</h7>	 -->
-							</div>
-							<div class="card-body">
-								Lorem ipsum dolor sit amet consectetur adipisicing elit.
-							</div>
-							<footer class="blockquote-footer"><i class="fa fa-user" aria-hidden="true"></i>  USERNAME<br>
-								<i class="fa fa-calendar"><cite>  Date here.</cite></i>
-							</footer>
 						</div>
 					</div>
-				</div>
-				<div class="product card-transparent shadow-lg rounded mr-3 mr-3 px-3 pb-3" style="max-height: 70vh;">
-					<div class="card-title text-center"><h1>Product</h1></div>
-					<div class="card-container scrollbar-rare-wind">
-						<div class="card-transparent shadow-lg mb-2 rounded">
-							<div class="card-title">
-							<h3>TITLE</h3>	
+					<div class="col-3">
+						<div class="product card-transparent shadow-lg rounded px-2 pb-3">
+							<div class="card-title text-center"><h3>Product</h3></div>
+							<div class="card-container scrollbar-rare-wind">
+								<div v-for="i in product" v-key="product" class="card-transparent shadow-lg mb-2 rounded">
+									<div class="card-title">
+									<strong>{{ i.title }}</strong>
+									<hr>
+									</div>
+									<div class="card-body">
+										{{ i.description }}
+									</div>
+									<footer class="blockquote-footer"><i class="fa fa-user" aria-hidden="true"></i>  {{ i.User.email }}<br>
+										<i class="fa fa-calendar"><cite>  {{ i.date }}</cite></i>
+									</footer>
+								</div>
 							</div>
-							<div class="card-subtitle">
-								<!-- <h7>ORGANIZATION</h7>	 -->
-							</div>
-							<div class="card-body">
-								Lorem ipsum dolor sit amet consectetur adipisicing elit.
-							</div>
-							<footer class="blockquote-footer"><i class="fa fa-user" aria-hidden="true"></i>  USERNAME<br>
-								<i class="fa fa-calendar"><cite>  Date here.</cite></i>
-							</footer>
-						</div>
-						<div class="card-transparent shadow-lg mb-2 rounded">
-							<div class="card-title">
-							<h3>TITLE</h3>	
-							</div>
-							<div class="card-subtitle">
-								<!-- <h7>ORGANIZATION</h7>	 -->
-							</div>
-							<div class="card-body">
-								Lorem ipsum dolor sit amet consectetur adipisicing elit.
-							</div>
-							<footer class="blockquote-footer"><i class="fa fa-user" aria-hidden="true"></i>  USERNAME<br>
-								<i class="fa fa-calendar"><cite>  Date here.</cite></i>
-							</footer>
-						</div>
-						<div class="card-transparent shadow-lg mb-2 rounded">
-							<div class="card-title">
-							<h3>TITLE</h3>	
-							</div>
-							<div class="card-subtitle">
-								<!-- <h7>ORGANIZATION</h7>	 -->
-							</div>
-							<div class="card-body">
-								Lorem ipsum dolor sit amet consectetur adipisicing elit.
-							</div>
-							<footer class="blockquote-footer"><i class="fa fa-user" aria-hidden="true"></i>  USERNAME<br>
-								<i class="fa fa-calendar"><cite>  Date here.</cite></i>
-							</footer>
 						</div>
 					</div>
-				</div>
-				<div class="development card-transparent shadow-lg rounded mr-3 mr-3 px-3 pb-3" style="max-height: 70vh;">
-					<div class="card-title text-center"><h1>Development</h1></div>
-					<div class="card-container scrollbar-rare-wind">
-						<div class="card-transparent shadow-lg mb-2 rounded">
-							<div class="card-title">
-							<h3>TITLE</h3>	
+					<div class="col-3">
+						<div class="development card-transparent shadow-lg rounded px-2 pb-3">
+							<div class="card-title text-center"><h3>Development</h3></div>
+								<div class="card-container scrollbar-rare-wind">
+									<div v-for='i in development' v-key='development' class="card-transparent shadow-lg mb-2 rounded">
+										<div class="card-title">
+										<strong>{{ i.title }}</strong>	
+										</div>
+										<div class="card-subtitle">
+										</div>
+										<div class="card-body">
+											{{ i.description }}
+										</div>
+										<footer class="blockquote-footer"><i class="fa fa-user" aria-hidden="true"></i>  {{i.User.email}}<br>
+											<i class="fa fa-calendar"><cite>  {{ i.date }}</cite></i>
+										</footer>
+									</div>
+								</div>
 							</div>
-							<div class="card-subtitle">
-								<!-- <h7>ORGANIZATION</h7>	 -->
-							</div>
-							<div class="card-body">
-								Lorem ipsum dolor sit amet consectetur adipisicing elit.
-							</div>
-							<footer class="blockquote-footer"><i class="fa fa-user" aria-hidden="true"></i>  USERNAME<br>
-								<i class="fa fa-calendar"><cite>  Date here.</cite></i>
-							</footer>
-						</div>
-						<div class="card-transparent shadow-lg mb-2 rounded">
-							<div class="card-title">
-							<h3>TITLE</h3>	
-							</div>
-							<div class="card-subtitle">
-								<!-- <h7>ORGANIZATION</h7>	 -->
-							</div>
-							<div class="card-body">
-								Lorem ipsum dolor sit amet consectetur adipisicing elit.
-							</div>
-							<footer class="blockquote-footer"><i class="fa fa-user" aria-hidden="true"></i>  USERNAME<br>
-								<i class="fa fa-calendar"><cite>  Date here.</cite></i>
-							</footer>
-						</div>
-						<div class="card-transparent shadow-lg mb-2 rounded">
-							<div class="card-title">
-							<h3>TITLE</h3>	
-							</div>
-							<div class="card-subtitle">
-								<!-- <h7>ORGANIZATION</h7>	 -->
-							</div>
-							<div class="card-body">
-								Lorem ipsum dolor sit amet consectetur adipisicing elit.
-							</div>
-							<footer class="blockquote-footer"><i class="fa fa-user" aria-hidden="true"></i>  USERNAME<br>
-								<i class="fa fa-calendar"><cite>  Date here.</cite></i>
-							</footer>
-						</div>
 					</div>
-				</div>
-				<div class="done card-transparent shadow-lg rounded mr-3 mr-3 px-3 pb-3" style="max-height: 70vh;">
-					<div class="card-title text-center"><h1>Done</h1></div>
-					<div class="card-container scrollbar-rare-wind">
-						<div class="card-transparent shadow-lg mb-2 rounded">
-							<div class="card-title">
-							<h3>TITLE</h3>	
+					<div class="col-3">
+						<div class="done card-transparent shadow-lg rounded px-2 pb-3">
+							<div class="card-title text-center"><h3>Done</h3></div>
+								<div class="card-container scrollbar-rare-wind">
+									<div v-for='i in done' v-key='done' class="card-transparent shadow-lg mb-2 rounded">
+										<div class="card-title">
+										<strong>{{ i.title }}</strong>	
+										</div>
+										<div class="card-subtitle">
+										</div>
+										<div class="card-body">
+											{{ i.description }}
+										</div>
+										<footer class="blockquote-footer"><i class="fa fa-user" aria-hidden="true"></i>  {{i.User.email}}<br>
+											<i class="fa fa-calendar"><cite>  {{ i.date }}</cite></i>
+										</footer>
+									</div>
+								</div>
 							</div>
-							<div class="card-subtitle">
-								<!-- <h7>ORGANIZATION</h7>	 -->
-							</div>
-							<div class="card-body">
-								Lorem ipsum dolor sit amet consectetur adipisicing elit.
-							</div>
-							<footer class="blockquote-footer"><i class="fa fa-user" aria-hidden="true"></i>  USERNAME<br>
-								<i class="fa fa-calendar"><cite>  Date here.</cite></i>
-							</footer>
-						</div>
-						<div class="card-transparent shadow-lg mb-2 rounded">
-							<div class="card-title">
-							<h3>TITLE</h3>	
-							</div>
-							<div class="card-subtitle">
-								<!-- <h7>ORGANIZATION</h7>	 -->
-							</div>
-							<div class="card-body">
-								Lorem ipsum dolor sit amet consectetur adipisicing elit.
-							</div>
-							<footer class="blockquote-footer"><i class="fa fa-user" aria-hidden="true"></i>  USERNAME<br>
-								<i class="fa fa-calendar"><cite>  Date here.</cite></i>
-							</footer>
-						</div>
-						<div class="card-transparent shadow-lg mb-2 rounded">
-							<div class="card-title">
-							<h3>TITLE</h3>	
-							</div>
-							<div class="card-subtitle">
-								<!-- <h7>ORGANIZATION</h7>	 -->
-							</div>
-							<div class="card-body">
-								Lorem ipsum dolor sit amet consectetur adipisicing elit.
-							</div>
-							<footer class="blockquote-footer"><i class="fa fa-user" aria-hidden="true"></i>  USERNAME<br>
-								<i class="fa fa-calendar"><cite>  Date here.</cite></i>
-							</footer>
 						</div>
 					</div>
 				</div>
@@ -344,6 +237,8 @@
 		</div>
 	</div>
 	<!-- SCRIPTS -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
 	<script src="./js/main.js"></script>
 </body>

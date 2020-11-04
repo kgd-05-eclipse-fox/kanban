@@ -277,14 +277,9 @@ h1 {
 	background-color: #84b8c8;
 }
 
-.container {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-evenly;
-}
 
 .item {
-	padding: 20px;
+	/* padding: 20px; */
 	justify-content: space-evenly;
 
 }
@@ -307,10 +302,14 @@ h1 {
 
 .card-container {
 	overflow-y: scroll;
-	max-height: 63vh;
-	max-width: 40vh;
+	max-height: 70vh;
+	/* max-width: 40vh; */
 }
 
+hr {
+	margin-top: 10px;
+	margin-bottom: 0;
+}
 
 .scrollbar-rare-wind::-webkit-scrollbar-track {
 	/* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1); */

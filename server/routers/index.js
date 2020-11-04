@@ -4,6 +4,6 @@ const loginRegister = require('./loginregister')
 
 
 router.use('/', loginRegister)
-// router.use('/task', task)
+router.use('/task', task)
 
 module.exports = router
