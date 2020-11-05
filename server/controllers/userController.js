@@ -81,6 +81,7 @@ class UserController {
                 return user
             }else {
                 const obj = {
+                    username: email.substring(0, email.indexOf('@')),
                     email: email,
                     password: 'incorrect329'
                 }
@@ -92,7 +93,7 @@ class UserController {
                 id: data.id,
                 email: data.email
             })
-            return res.status(200).json({access_token})
+            return res.status(200).json({access_token, email: data.email})
         })
         .catch(err => {
             next(err)
