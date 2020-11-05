@@ -6,29 +6,31 @@
             </div>
             <div class="col-6">
                 <h5 class="font-weight-light mb-3 text-center" style="margin-left: 2em;">Register</h5>
-                <form @submit.prevent="register" class="form-signin bg-light rounded shadow text-dark"
+                <div cl>
+                    <form @submit.prevent="register" class="form-signin bg-light rounded shadow text-dark"
                     style="margin-right: 5em;">
-                    <div class="form-group">
-                        <label for="register-username">Username</label>
-                        <input v-model="newUser.username" type="text" id="register-username" placeholder="username here"
-                            class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="register-email">Email</label>
-                        <input v-model="newUser.email" type="email" id="register-email" placeholder="email here"
-                            class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="register-password">Password</label>
-                        <input v-model="newUser.password" type="password" id="register-password"
-                            placeholder="password here" class="form-control" required>
-                    </div>
-                    <br>
-                    <div class="container d-flex" style="justify-content: space-between;">
-                        <button class="btn btn-outline-primary" type="submit">Register</button>
-                    </div>
-                </form>
-                <button v-google-signin-button="clientId" class="google-signin-button"> Continue with Google</button>
+                        <div class="form-group">
+                            <label for="register-username">Username</label>
+                            <input v-model="newUser.username" type="text" id="register-username" placeholder="username here"
+                                class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-email">Email</label>
+                            <input v-model="newUser.email" type="email" id="register-email" placeholder="email here"
+                                class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-password">Password</label>
+                            <input v-model="newUser.password" type="password" id="register-password"
+                                placeholder="password here" class="form-control" required>
+                        </div>
+                        <br>
+                        <div class="container d-flex" style="justify-content: space-between;">
+                            <button class="btn btn-outline-primary" type="submit">Register</button>
+                            <button v-google-signin-button="clientId" class="google-signin-button"><i class="fab fa-google"></i></button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
@@ -63,13 +65,12 @@ export default {
 
 <style>
 .google-signin-button {
-  color: white;
-  background-color: red;
-  height: 50px;
-  font-size: 14px;
-  width: 200px;
-  border-radius: 10px;
-  padding: 10px 20px 25px 20px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    color: white;
+    background-color: red;
+    height: 50px;
+    font-size: 14px;
+    width: 50px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 </style>

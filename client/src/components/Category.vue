@@ -4,11 +4,7 @@
             <div style="height: 3em;" class="card-head" :class="cat.color">
                 <h5 class="text-left ml-2 mt-2 text-light">{{cat.name}}</h5>
             </div>
-            <div class="card-body overflow-auto" style="height:60vh"
-                @drop="onDrop($event, cat.called)"
-                @dragover.prevent
-                @dragenter.prevent>
-
+            <div class="card-body overflow-auto" style="height:60vh">
                 <Task
                     v-for="task in filterCategory"
                     :key='task.id'
@@ -41,22 +37,7 @@ export default {
         },
         updateTask(payload) {
             this.$emit('updateTask', payload)
-        },
-        onDrop(event, category) {
-            const movedID = event.dataTransfer.getData('taskID')
-            const task = this.kanban.find(task => task.id === movedID)
-            task.category = category
-            const payload = {
-                id: movedID,
-                category: category
-            }
-            this.changeCategory(payload)
-        },
-        startDrag(event, task) {
-            event.dataTransfer.items.add(task.id, 'text/plain')
-            event.dataTransfer.dropEffect = 'move'
-            event.dataTransfer.effectAllowed = 'move'
-        },
+        }
     },
     computed: {
         filterCategory() {

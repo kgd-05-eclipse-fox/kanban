@@ -26,7 +26,6 @@ export default {
     name: 'HomePage',
     data() {
         return {
-            form: false,
             category: [
                 {
                     name: 'Back Log',

@@ -19,7 +19,8 @@
         </Register>
         <Login 
             v-else-if="pageName === 'login-page'"
-            @login="login">
+            @login="login"
+            @googleSignIn='googleSignIn'>
         </Login>
         <HomePage 
             v-else-if="pageName === 'home-page'"
@@ -59,7 +60,7 @@ export default {
     name: 'App',
     data() {
         return {
-            pageName: 'login-page',
+            pageName: 'register-page',
             loggedIn: {
                 status: false,
                 user: null
@@ -347,7 +348,7 @@ export default {
 
             this.fetchKanban()
         } else {
-            this.pageName = 'login-page'
+            this.pageName = 'register-page'
         }
     }
 }
