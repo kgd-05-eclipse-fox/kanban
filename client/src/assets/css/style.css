@@ -29,7 +29,7 @@ nav .links ul{
 
 nav .links a{
     text-decoration: none;
-    font-size: 1.5em;
+    font-size: 1em;
     color: black;
     margin-left: 25px;
 }
@@ -52,21 +52,13 @@ nav .links .icons a{
 .text-white{
     font-weight: bold;
     text-align: center;
-    font-size: 20px;
+    padding-top: 5px;
 }
 
-.text-white #icon{
-    text-align: right;
-    font-size: 20px;
-    font-weight: bold;
-    padding-top: 5px;
-    color: white;
-    text-decoration: none;
-}
 
 .content-tab{
     background-color: #80848c;
-    height: 80vh;
+    height: 100vh;
 }
 
 .card {
@@ -75,21 +67,22 @@ nav .links .icons a{
 }
 
 .login{
-    background-color: black;
+    background-color: #00b386;
     text-align: center;
 }
 
 .container .column{
     padding-top: 20px;
-    height: 80vh;
+    height: 100vh;
     text-align: center;
     width: 70%;
     padding-left: 8cm;
 }
 
 .row-7 p{
+    margin-top: 5px;
     text-align: center;
-    font-size: 3em;
+    font-size: 2em;
     background-color: #ffffff;
     font-weight: bold;
 }
@@ -120,33 +113,25 @@ nav .links .icons a{
     width: 70%;
     margin-left: 2cm;
     margin-right: 2cm;
-    height: 50px;
-
-
+    height: 30px;
 }
 
 #input-password{
     width: 70%;
     margin-left: 2cm;
     margin-right: 2cm;
-    height: 50px;
+    height: 30px;
 }
 
-.bg-warning #title{
-    background-color: #e68a00;
-}
-
-.bg-warning #icon{
-    background-color: #e68a00;
+#input-username{
+    width: 70%;
+    margin-left: 2cm;
+    margin-right: 2cm;
+    height: 30px;
 }
 
 .row-6 p{
     font-size: 24px;
-}
-
-.warning{
-    color: white;
-    background-color: #e68a00;
 }
 
 .sign-out{
@@ -156,9 +141,17 @@ nav .links .icons a{
 }
 
 .card-body ul li {
-    color: white;
-    font-size: 16px;
+    color: black;
+    font-size: 14px;
     display: inline;
     margin-left: 25px;
 }
+
+.card-body ul li a{
+    color: black
+}
+
+
+
+
 
