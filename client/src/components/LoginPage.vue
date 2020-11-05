@@ -3,11 +3,11 @@
 		<form class='form'>
 			<img src="../assets/img/kanban-logo.png" alt="" class="form-login">
 			<div class='control' id="signIn">
-				<button type="button" class="buttonSignIn btn btn-outline-light hvr-sweep-to-right text-info">Sign In</button>
-				<button type="button" class="buttonSignUp btn btn-outline-dark hvr-sweep-to-left">Sign Up</button>
+				<button @click.prevent="toLogin" class="buttonSignIn btn btn-outline-light hvr-sweep-to-right text-info">Sign In</button>
+				<button @click.prevent="toRegister" class="buttonSignUp btn btn-outline-dark hvr-sweep-to-left">Sign Up</button>
 			</div>
 			<div class='control block-cube block-input'>
-				<input name='Email' placeholder='Email' type='email'>
+				<input v-model="logEmail" name='Email' placeholder='Email' type='email'>
 				<div class='bg-top'>
 					<div class='bg-inner'></div>
 				</div>
@@ -19,7 +19,7 @@
 				</div>
 			</div>
 			<div class='control block-cube block-input'>
-				<input name='password' placeholder='Password' type='password'>
+				<input v-model="logPassword" name='password' placeholder='Password' type='password'>
 				<div class='bg-top'>
 					<div class='bg-inner'></div>
 				</div>
@@ -30,7 +30,7 @@
 					<div class='bg-inner'></div>
 				</div>
 			</div>
-			<button class='btn block-cube block-cube-hover' type='submit'>
+			<button @click.prevent="enterLogin" class='btn block-cube block-cube-hover' type='submit'>
 				<div class='bg-top'>
 					<div class='bg-inner'></div>
 				</div>
@@ -64,7 +64,29 @@
 
 <script>
 export default {
-	name: 'LoginPage'
+	name: 'LoginPage',
+	methods: {
+		toLogin() {
+			this.$emit('changePage', 'login')
+		},
+		toRegister() {
+			this.$emit('changePage','register')
+		},
+		enterLogin() {
+			let payload = {
+				email: this.logEmail,
+				password: this.logPassword
+			}
+			this.$emit('login', payload)
+		}
+	},
+	props: ['login'],
+	data() {
+		return {
+			logEmail: '',
+			logPassword: ''
+		}
+	}
 }
 </script>
 

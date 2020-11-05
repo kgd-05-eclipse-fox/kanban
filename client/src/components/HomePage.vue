@@ -1,21 +1,18 @@
 <template>
 	<div>
-		<nav>
-			<div class="logo">
-				<img src="../assets/img/kanban-logo.png" class="mt-1" width="100px">
-			</div>
-			<div id="profile" class="d-flex mx-1">
-				<h4 class="mr-2 pt-1">Hello User!</h4>
-				<a href="#"> <img src="../assets/img/plus.svg" width="45px" class="mr-2 addicon"> </a>
-				<button type="button" class="btn btn-outline-light">Logout</button>
-			</div>
-		</nav>
+		<Navbar 
+			@logout="logout"
+			@showAddForm="showAddForm">
+		</Navbar>
 		<div class="container-fluid mt-3">
 			<div class="row mx-3">
 				<Category 
 					v-for="(cat, i) in categories" 
 					:key="i" class="col-3"
-					:category="cat">
+					:category="cat"
+					:tasks='tasks'
+					:getDate="getDate"
+					@destroy="destroy">
 					</Category>
 			</div>
 		</div>
@@ -24,13 +21,25 @@
 
 <script>
 import Category from './Category'
+import Navbar from './Navbar'
 export default {
 	name: 'HomePage',
 	components: {
-		Category
+		Category,
+		Navbar
 	},
-	props: ['categories'],
-	
+	props: ['categories', 'tasks', 'getDate'],
+	methods: {
+		destroy(id) {
+			this.$emit('destroy', id)
+		},
+		logout() {
+			this.$emit('logout')
+		},
+		showAddForm() {
+			this.$emit('showAddForm')
+		}
+ 	}
 }
 </script>
 
