@@ -1,3 +1,5 @@
+const { response } = require("express")
+
 let app = new Vue({
 	el: '#app',
 	data: {
@@ -14,7 +16,7 @@ let app = new Vue({
 		backlog: [],
 		product: [],
 		development: [],
-		done: []
+		done: [],
 	},
 	created() {
 		if (!localStorage.token) {
@@ -22,7 +24,6 @@ let app = new Vue({
 		} else {
 			this.showingPage = 'kanban'
 			this.showAllTask()
-			console.log(this.development)
 		}
 	},
 	methods: {
@@ -36,7 +37,7 @@ let app = new Vue({
 		getDate(date) {
 			let o = new Intl.DateTimeFormat("id" , {
 				timeStyle: "short",
-				dadevelopmentyle: "long"
+				dateStyle: "long"
 			});
 			return o.format(new Date(date))
 		},
@@ -112,6 +113,63 @@ let app = new Vue({
 			.catch(err => {
 				console.log(err)
 			})
+		},
+		showAddForm() {
+			Swal.fire({
+				title: 'Login Form',
+				html: `<input type="text" id="addtitle" class="swal2-input" placeholder="Title">
+				<input type="text" id="adddesc" class="swal2-input" placeholder="Description">`,
+				confirmButtonText: 'Sign in',
+				focusConfirm: false,
+				preConfirm: () => {
+					const title = Swal.getPopup().querySelector('#addtitle').value
+					const description = Swal.getPopup().querySelector('#adddesc').value
+					if (!title || !description) {
+						Swal.showValidationMessage(`Please fill out all the fields!`)
+					}
+					return { title, description }
+				}
+			}).then((result) => {
+					const payLoad = {
+						title: result.value.title,
+						description: result.value.description
+					}
+					const token = localStorage.token
+					axios
+						.post(`${this.url}/task`, payLoad, { headers: { token } })
+						.then(response => {
+							const id = response.data.id
+							axios
+								.get(`${this.url}/task/${id}`, { headers: { token } })
+								.then(response => {
+									this.backlog.push(response.data)
+									Swal.fire({
+										icon: 'success',
+										title: 'New task added!!',
+										showConfirmButton: false,
+										timer: 1500
+									})
+								})
+								.catch(err => {
+									console.log(err)
+								})
+						})
+						.catch(err => {
+							Swal.fire({
+								title: 'Add Failed!',
+								text: err.response.data.error,
+								icon: 'error',
+							})
+						})
+			})
+		},
+		destroy(id) {
+			const token = localStorage.token
+			axios
+				.destroy(`${this.url}/task`, id, { headers: { token } })
+				.then(response => {
+					
+				})
 		}
 	}
 })
