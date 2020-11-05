@@ -21,13 +21,13 @@ class UserController {
             
             const token = signToken(data)
 
-            const data = {
+            const userdata = {
                 id: user.id,
                 email: user.email,
                 username: user.username
             }
 
-            res.status(201).json({access_token: token, user: data})
+            res.status(201).json({access_token: token, user: userdata})
         } catch (err) {
             next(err)
         }
@@ -57,12 +57,12 @@ class UserController {
                 }
                 const token = signToken(payload)
 
-                const data = {
+                const userdata = {
                     id: user.id,
                     email: user.email,
                     username: user.username
                 }
-                res.status(200).json({access_token: token, user: data})
+                res.status(200).json({access_token: token, user: userdata})
             }
 
         } catch (err) {
