@@ -1,10 +1,14 @@
 const { Task, User } = require('../models/')
+const convertISOdate = require('../helpers/convertISOdate')
 
 class KanbanController {
     static async getAllTask (req, res, next) {
         try {
-            const allTask = await Task.findAll({ include: [{ model: User, attributes: { exclude: ['id', 'password', 'createdAt', 'updatedAt']}}], order: [['createdAt', 'ASC']], attributes: { exclude: ['updatedAt']}})
-            res.status(200).json({ allTask })
+            let allTasks = await Task.findAll({ include: [{ model: User, attributes: { exclude: ['id', 'password', 'createdAt', 'updatedAt']}}], order: [['createdAt', 'ASC']], attributes: { exclude: ['updatedAt']}})
+            
+            allTasks.forEach(task => { task.dataValues.createdAt = convertISOdate(task.createdAt) })
+
+            res.status(200).json({ allTasks })
         } catch (error) {
             next(error)
         }

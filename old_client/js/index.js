@@ -301,7 +301,7 @@ const app = new Vue({
                         access_token: this.access_token
                     }
                 })
-                this.kanban = tasks.data.allTask
+                this.kanban = tasks.data.allTasks
             } catch (error) {
                 console.log(error);
             }

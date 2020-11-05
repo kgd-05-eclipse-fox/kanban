@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Task.addHook('beforeCreate', task => {
-    task.status = 0
+    task.status = 1
   })
 
   return Task;
