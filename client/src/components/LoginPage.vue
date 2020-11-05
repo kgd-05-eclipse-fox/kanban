@@ -3,8 +3,8 @@
         <div class="card">
             <h4 class="text-center pt-4"><img class="logo-log" src="../assets/img/logoo.png" alt=""></h4> 
             <span class="info">To all special dicounts and more <br> become to login!<span>
-            <div class="text-center container flex-column"> 
-                <div class="form-group text-center container d-flex">
+            <div class="text-center flex-column"> 
+                <div class="form-group justify-content-center d-flex">
                     <form>
                         <input v-model="email" type="email" name="email" placeholder="email address" class="form-control form mb-2"> 
                         <input v-model="password" type="password" name="password" placeholder="password" class="form-control">
@@ -14,8 +14,10 @@
             </div>
             <div class="text-center pb-4 pt-3">
                 <div class="px-3">
-                    <span class="mr-4"><a v-on:click.prevent="gantiHalaman('register-page')" href="#" style="text-decoration: none; color: whitesmoke;">Go To Register</a></span>
-                    <span class="ml-4">Forgot Password</span>
+                    <div class=" d-flex justify-content-between mb-2">
+                        <span><a v-on:click.prevent="gantiHalaman('register-page')" href="#" style="text-decoration: none; color: whitesmoke;">Go To Register</a></span>
+                        <span>Forgot Password</span>
+                    </div>
                     <h4 class="else"><span class="else2"> Or use these to login </span></h4>
                 </div>
                 <div class="pt-3 d-flex flex-row px-3"> 
@@ -53,6 +55,7 @@ export default {
                 let data = res.data
                 let localId = data.id
                 let acces_token = data.access_token
+                console.log(acces_token)
                 localStorage.setItem('acces_token', acces_token)
                 localStorage.setItem('localId', localId)
                 this.gantiHalaman('home-page')
