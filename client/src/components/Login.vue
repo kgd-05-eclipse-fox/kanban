@@ -20,7 +20,7 @@
                                         <input id="pass-login" type="password" class="input" data-type="password" placeholder="Enter your password" v-model="password">
                                     </div>
                                     <div class="group">
-                                        <button type="submit" class="button" @click="signInUser()">SIGN IN</button>
+                                        <button type="submit" class="button" @click="loginUser">SIGN IN</button>
                                     </div>
                                     <div class="group">
                                         <input type="submit" class="button" value="Sign In With Google">
@@ -44,7 +44,7 @@
                                         <input id="pass-register" type="password" class="input" data-type="password" v-model="password">
                                     </div>
                                     <div class="group">
-                                        <button type="submit" class="button" @click="signUpUser()">Sign Up</button>
+                                        <button type="submit" class="button" @click="signUpUser">Sign Up</button>
                                     </div>
                                 </div>
                             </div>
@@ -66,6 +66,25 @@ export default {
             email: '',
             password: ''
         }
+    },
+    methods: {
+        loginUser() {
+            this.$emit('login', 'HomePage')
+        },
+        signUpUser() {
+            let payload = {
+                firstName: this.firstName,
+                lastName: this.lastName,
+                email: this.email,
+                password: this.password
+            }
+            this.$emit('signUp', payload)
+            this.firstName = ''
+            this.lastName = ''
+            this.email = ''
+            this.password = ''
+        }
+        
     }
 
 }

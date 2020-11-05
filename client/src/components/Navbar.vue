@@ -2,11 +2,11 @@
     <div>
         <nav>
             <div>
-                <h2>{{ fullname }}</h2>
+                <h2>Kanban Apps</h2>
             </div>
             <div class="task">
                 <ul>
-                    <li><button class="btn btn-danger" @click="signOutUser()">Logout</button></li>
+                    <li><button class="btn btn-danger" @click="logoutUser">Logout</button></li>
                 </ul>
             </div>
         </nav>
@@ -15,7 +15,12 @@
 
 <script>
 export default {
-    name: "Navbar"
+    name: "Navbar",
+    methods: {
+        logoutUser() {
+            this.$emit('logoutUser', 'LoginPage')
+        }
+    }
 }
 </script>
 

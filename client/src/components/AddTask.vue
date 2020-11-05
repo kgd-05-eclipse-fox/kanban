@@ -1,6 +1,8 @@
 <template>
     <div class="add-page">
-        <Navbar></Navbar>
+        <Navbar
+            @logoutUser='logoutUser'
+        ></Navbar>
         <div class="container my-5 d-flex flex-column justify-content-center">
             <form @submit.prevent="saveTask()">
                 <div class="form-group">
@@ -11,9 +13,13 @@
                     <label for="description">Description</label>
                     <input type="text" class="form-control" id="description">
                 </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <input type="text" class="form-control" id="category">
+                </div>
                 <button type="submit" class="btn btn-primary btn-block">Add</button>
             </form>
-            <button type="submit" class="btn btn-primary mt-3" @click="changePage('home-page')">Cancel</button>
+            <button type="submit" class="btn btn-primary mt-3" @click="cancelAddTask">Cancel</button>
         </div>
     </div>
 </template>
@@ -24,6 +30,14 @@ export default {
     name: "AddPage",
     components: {
         Navbar
+    },
+    methods: {
+        cancelAddTask() {
+            this.$emit('cancelAddTask', 'HomePage')
+        },
+        logoutUser() {
+            this.$emit('logout', 'LoginPage')
+        }
     }
 
 }

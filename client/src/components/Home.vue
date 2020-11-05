@@ -1,10 +1,12 @@
 <template>
     <div class="home-page">
-        <Navbar></Navbar>
+        <Navbar
+            @logoutUser='logoutUser'
+        ></Navbar>
         <div class="container opacity">
-            <button class="btn btn-primary" @click="changePage('add-page')">Add New Task</button>
+            <button class="btn btn-primary" @click="toAddPage">Add New Task</button>
             <div class="row my-5">
-                <TaskCategory></TaskCategory>
+                <TaskCategory v-for="(cat, i) in categories" :key="i" :category="cat"></TaskCategory>
             </div>
         </div>
     </div>
@@ -17,6 +19,15 @@ export default {
     name: "HomePage",
     components: {
         Navbar, TaskCategory
+    },
+    props: ['categories'],
+    methods: {
+        toAddPage() {
+            this.$emit('changePage', 'AddPage')
+        },
+        logoutUser() {
+            this.$emit('logout', 'LoginPage')
+        }
     }
 }
 </script>
