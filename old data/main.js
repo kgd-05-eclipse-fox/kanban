@@ -9,20 +9,7 @@ const app = new Vue({
         password: '',
         titleTask: '',
         descriptionTask: '',
-        tasks: [
-            {
-                title: "Vue.js",
-                description: "Belajar directive vue.js"
-            },
-            {
-                title: "React Native",
-                description: "Belajar react native"
-            },
-            {
-                title: "JQuery",
-                description: "Belajar JQuery"
-            }
-        ]
+        tasks: null
     },
     methods:{
         changePage(name){
