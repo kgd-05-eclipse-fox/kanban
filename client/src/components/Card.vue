@@ -8,7 +8,7 @@
                     {{task.title}}
                 </span>
             </h4>
-            <p class="card-text" style="text-align: justify;">{{task.description}}</p>
+            <p class="card-text" style="text-align: left;">{{task.description}}</p>
             <p 
                 class="mt-2"
                 style=" font-size:10px; 
@@ -19,13 +19,13 @@
                 class="card-subtitle 
                 text-muted" 
                 style="font-size: 10px;"
-                >ID: {{task.id}}
+                >id: {{task.id}}
             </p>
             <ul>
                 <li>
                     <a href="#">
                         <i 
-                            @click="changeToEdit"
+                            @click="toEditPage"
                             class="fas fa-edit" 
                             data-toggle="modal" 
                             data-target="#editmodal"
@@ -51,8 +51,15 @@ export default {
     },
     methods: {
         changeToEdit() {
-            
             this.$emit('changePage', 'editPage')
+        },
+        toEditPage() {
+            let payload = {
+                pageName: 'editPage',
+                task : this.task
+
+            }
+            this.$emit('toEditPage', payload)
         }
     },
     props: ['task', 'categoryDetail']

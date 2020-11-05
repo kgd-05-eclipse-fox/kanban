@@ -14,7 +14,8 @@
                     v-for="task in taskPerCategory"
                     :key="task.id"
                     :task="task"
-                    :categoryDetail="categoryDetail">
+                    :categoryDetail="categoryDetail"
+                    @toEditPage="toEditPage">           
                 </Card>
             </div>
         </div>
@@ -32,6 +33,9 @@ export default {
     methods: {
         changePage(name) {
             this.$emit('changePage', name)
+        },
+        toEditPage(payload) {
+            this.$emit('toEditPage', payload)
         }
     },
     computed: {

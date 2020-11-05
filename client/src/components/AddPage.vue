@@ -12,7 +12,7 @@
                 </div>
                 <div class="col  py-3" style="height: 60vh">
                 <h2>Add Task</h2>
-                    <form>
+                    <form @submit.prevent="addTask">
                         <div class="form-group">
                             <label 
                                 for="title" 
@@ -21,7 +21,8 @@
                             >   
                                 Title
                             </label>
-                            <input 
+                            <input
+                                v-model="task.title" 
                                 type="text" 
                                 class="form-control" 
                                 id="input-title" 
@@ -35,7 +36,8 @@
                                 >   
                                     Description
                                 </label>
-                            <textarea 
+                            <textarea
+                                v-model="task.description" 
                                 class="form-control" 
                                 id="input-description" 
                                 placeholder="e.g: Learn the introduction of Vue.js" 
@@ -58,11 +60,17 @@ export default {
     name:'AddPage',
     data() {
         return {
-
+            task: {
+                title: '',
+                description: ''
+            }
         }
     },
     methods: {
-        
+        addTask() {
+            let task = this.task
+            this.$emit('addTask', task)
+        }
     }
 }
 </script>

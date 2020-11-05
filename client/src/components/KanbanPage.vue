@@ -7,7 +7,8 @@
                     v-for="(cat,i) in categories"
                     :key="i"
                     :categoryDetail="cat"
-                    :tasks="tasks">
+                    :tasks="tasks"
+                    @toEditPage="toEditPage">
                 </Category>
             </div>
         </div>
@@ -26,6 +27,9 @@ export default {
     methods:{
         changePage(name) {
             this.$emit('changePage', name)
+        },
+        toEditPage(payload) {
+            this.$emit('toEditPage', payload)
         }
     }
 

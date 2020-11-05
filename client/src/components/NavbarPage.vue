@@ -25,7 +25,7 @@
                     </li>
                     <li>
                         <a
-                            v-if="pageName === 'kanbanPage'" 
+                            v-if="pageName === 'kanbanPage' || pageName === 'editPage' || pageName === 'addPage'" 
                             @click="changeToKanban" 
                             href="#"
                             >

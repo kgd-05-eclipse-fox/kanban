@@ -5,26 +5,39 @@
             @changePage="changePage"
             @clearStorage="logout">
         </NavbarPage>
+
         <HomePage v-if="pageName === 'homePage'"></HomePage>
+
         <LoginPage
             @login="loginUser" 
             v-else-if="pageName === 'loginPage'"
         >
         </LoginPage>
+
         <RegisterPage 
             v-else-if="pageName === 'registerPage'"
             @register="registerUser">
         </RegisterPage>
+
         <AddPage 
             v-else-if="pageName === 'addPage'"
-            @changePage="changePage">
+            @changePage="changePage"
+            @addTask="addNewTask">
         </AddPage>
-        <EditPage v-else-if="pageName === 'editPage'"></EditPage>
+
+        <EditPage 
+            v-else-if="pageName === 'editPage'"
+            :detailTask="detailTask"
+            @editTask="editTask">
+
+        </EditPage>
+
         <KanbanPage 
             v-else-if="pageName === 'kanbanPage'"
             :categories="categories"
             @changePage="changePage"
-            :tasks="tasks">
+            :tasks="tasks"
+            @toEditPage="toEditPage">
         </KanbanPage>
         
  
@@ -41,6 +54,7 @@ import KanbanPage from './components/KanbanPage'
 import AddPage from './components/AddPage'
 import EditPage from './components/EditPage'
 import axios from './config/axios'
+
 
 export default {
     name: 'App',
@@ -65,7 +79,8 @@ export default {
                     color: "success"
                 }
             ],
-            tasks: []  
+            tasks: [],
+            detailTask: null  
         };
     },
     components: {
@@ -80,6 +95,34 @@ export default {
     methods: {
         changePage(name) {
             this.pageName = name
+        },
+        toEditPage(payload) {
+            this.pageName = payload.pageName
+            this.detailTask = payload.task
+        },
+        editTask(payload) {
+            console.log('editTask');
+            const token = localStorage.getItem('token')
+            axios({
+                url: `/tasks/${payload.id}`,
+                method: 'PUT',
+                headers: {
+                    token: token
+                },
+                data: {
+                    title: payload.title,
+                    description: payload.description,
+                    category: payload.category
+                }
+            })
+            .then(response => {
+                console.log(response);
+                this.fetchTask()
+                this.pageName = 'kanbanPage'
+            })
+            .catch(err => {
+                console.log(err);
+            })
         },
         registerUser(user) {
             axios({
@@ -127,6 +170,25 @@ export default {
                 this.tasks = data
             })
             .catch(err => {
+                console.log(err);
+            })
+        },
+        addNewTask(task) {
+            const token = localStorage.getItem('token')
+            axios({
+                url: '/tasks',
+                method: 'POST',
+                headers: {
+                    token: token
+                },
+                data: task
+            })
+            .then(({data}) => {
+                console.log(data);
+                this.fetchTask()
+                this.pageName = 'kanbanPage'
+            })
+            .catch(err=> {
                 console.log(err);
             })
         }
