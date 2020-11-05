@@ -6,7 +6,16 @@ if (process.env.NODE_ENV !== 'production') {
 // * Initialize Express + PORT
 const express = require('express')
 const app = express()
+const http = require('http').Server(app)
+const io = require('socket.io')(http)
 const PORT = +process.env.PORT
+
+io.on('connection', socket => {
+    console.log(`A new connection with id ${socket.id}`);
+    socket.on('datachange', _ => {
+        socket.broadcast.emit('datachange', {})
+    })
+})
 
 // * Require Cors
 const cors = require('cors')
@@ -29,6 +38,6 @@ app.use(router)
 app.use(errorhandler)
 
 // * Listen OR Starting the app
-app.listen(PORT, _ => {
+http.listen(PORT, _ => {
     console.log(`Kanban App | By AkbarHabiby Live at http://127.0.0.1:${PORT}`);
 })

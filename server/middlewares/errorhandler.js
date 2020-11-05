@@ -41,6 +41,18 @@ module.exports = (err, req, res, next) => {
                 status = 404
                 message = errorMessage
                 break
+            case 'jwt malformed':
+                status = 500
+                message = errorMessage
+                break
+            case 'Wrong Email or Password':
+                status = 400
+                message = errorMessage
+                break
+            case 'Please insert Email and Password':
+                status = 400
+                message = errorMessage
+                break
         }
     }
 

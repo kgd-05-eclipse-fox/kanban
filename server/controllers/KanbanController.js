@@ -3,7 +3,7 @@ const { Task, User } = require('../models/')
 class KanbanController {
     static async getAllTask (req, res, next) {
         try {
-            const allTask = await Task.findAll({ include: User })
+            const allTask = await Task.findAll({ include: [{ model: User, attributes: { exclude: ['id', 'password', 'createdAt', 'updatedAt']}}], order: [['createdAt', 'ASC']], attributes: { exclude: ['updatedAt']}})
             res.status(200).json({ allTask })
         } catch (error) {
             next(error)
@@ -58,7 +58,6 @@ class KanbanController {
             const id = +req.params.id
 
             const { status } = req.body
-            if (!status) throw new Error('Please complete all forms')
 
             const updateStatus = {
                 status: status
