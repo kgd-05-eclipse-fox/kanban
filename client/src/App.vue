@@ -23,7 +23,8 @@
         <KanbanPage 
             v-else-if="pageName === 'kanbanPage'"
             :categories="categories"
-            @changePage="changePage">
+            @changePage="changePage"
+            :tasks="tasks">
         </KanbanPage>
         
  
@@ -63,7 +64,8 @@ export default {
                     title: "Done",
                     color: "success"
                 }
-            ]  
+            ],
+            tasks: []  
         };
     },
     components: {
@@ -111,12 +113,29 @@ export default {
             console.log('logout sukses');
             clear
             this.pageName = 'loginPage'
+        },
+        fetchTask() {
+            const token = localStorage.getItem('token')
+            axios({
+                url: '/tasks',
+                method: 'GET',
+                headers: {
+                    token: token
+                }
+            })
+            .then(({data}) => {
+                this.tasks = data
+            })
+            .catch(err => {
+                console.log(err);
+            })
         }
     },
     created () {
         const token = localStorage.getItem('token')
         if (token) {
             this.pageName = 'kanbanPage'
+            this.fetchTask()
         }
     }
 };

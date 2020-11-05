@@ -6,7 +6,8 @@
                     @changePage="changePage" 
                     v-for="(cat,i) in categories"
                     :key="i"
-                    :categoryDetail="cat">
+                    :categoryDetail="cat"
+                    :tasks="tasks">
                 </Category>
             </div>
         </div>
@@ -21,7 +22,7 @@ export default {
     components: {
         Category
     },
-    props: ['categories'],
+    props: ['categories','tasks'],
     methods:{
         changePage(name) {
             this.$emit('changePage', name)

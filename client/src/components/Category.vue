@@ -10,7 +10,11 @@
         <div class="border rounded">
             <div id="content" class="content-tab overflow-auto">
                 <Card
-                    @changePage="changePage">
+                    @changePage="changePage"
+                    v-for="task in taskPerCategory"
+                    :key="task.id"
+                    :task="task"
+                    :categoryDetail="categoryDetail">
                 </Card>
             </div>
         </div>
@@ -24,10 +28,17 @@ export default {
     components: {
         Card
     },
-    props: ['categoryDetail'],
+    props: ['categoryDetail', 'tasks'],
     methods: {
         changePage(name) {
             this.$emit('changePage', name)
+        }
+    },
+    computed: {
+        taskPerCategory() {
+            const categoryTitle = this.categoryDetail.title.toLowerCase()
+            return this.tasks.filter(task => task.category === categoryTitle    
+            )
         }
     }
 

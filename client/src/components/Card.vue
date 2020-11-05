@@ -1,19 +1,25 @@
 <template>
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Title</h5>
-            <p class="card-text" style="text-align: justify;">Description</p>
+            <h4 class="card-title">
+                <span 
+                    class="badge "
+                    :class="`badge-${categoryDetail.color}`">
+                    {{task.title}}
+                </span>
+            </h4>
+            <p class="card-text" style="text-align: justify;">{{task.description}}</p>
             <p 
-                class="mt-2" 
+                class="mt-2"
                 style=" font-size:10px; 
                 color: black;"
-                >Created By: Username
+                >created by: {{task.username}}
             </p>
             <p 
                 class="card-subtitle 
                 text-muted" 
                 style="font-size: 10px;"
-                >ID: 1
+                >ID: {{task.id}}
             </p>
             <ul>
                 <li>
@@ -48,7 +54,8 @@ export default {
             
             this.$emit('changePage', 'editPage')
         }
-    }
+    },
+    props: ['task', 'categoryDetail']
 
 }
 </script>
