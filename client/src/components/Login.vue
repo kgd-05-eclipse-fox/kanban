@@ -69,7 +69,13 @@ export default {
     },
     methods: {
         loginUser() {
-            this.$emit('login', 'HomePage')
+            let payload = {
+                email: this.email,
+                password: this.password
+            }
+            this.$emit('login', payload)
+            this.email = ''
+            this.password = ''
         },
         signUpUser() {
             let payload = {

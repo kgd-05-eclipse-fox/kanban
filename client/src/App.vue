@@ -2,19 +2,19 @@
     <div>
        <LoginPage
             v-if="pageName === 'LoginPage'"
-            @login="changePage"
+            @login="loginUser"
             @signUp="signUpUser"
         ></LoginPage>
        <HomePage
             v-else-if="pageName === 'HomePage'" 
             :categories="categories"
             @changePage="changePage"
-            @logout="changePage"    
+            @logout="logoutUser"    
         ></HomePage>
        <AddPage
             v-else-if="pageName === 'AddPage'"
             @cancelAddTask="changePage"
-            @logout="changePage"
+            @logout="logoutUser"
         ></AddPage>
     </div>
 </template>
@@ -76,6 +76,36 @@ export default {
             .catch(err => {
                 console.log(err)
             })
+        },
+        loginUser(payload) {
+            axios({
+                method: "POST",
+                url: "/users/login",
+                data: {
+                    email: payload.email,
+                    password: payload.password
+                }
+            })
+            .then(({ data }) => {
+                let token = data.access_token
+                localStorage.setItem('token', token)
+                this.pageName = 'HomePage'
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        },
+        logoutUser() {
+            localStorage.removeItem('token')
+            this.pageName = 'LoginPage'
+        }
+    },
+    created() {
+        let token = localStorage.getItem('token')
+        if(token) {
+            this.pageName = 'HomePage'
+        } else {
+            this.pageName = 'LoginPage'
         }
     }
 };
