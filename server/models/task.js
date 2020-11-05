@@ -44,12 +44,23 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    UserId: DataTypes.STRING
+    UserId: DataTypes.STRING,
+    username: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Please fill with username user'
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Task',
   });
-
+  Task.addHook('beforeCreate', (task) => {
+    task.category = 'backlog'
+  })
 
 
   return Task;
