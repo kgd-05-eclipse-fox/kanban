@@ -10,374 +10,469 @@
     <link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet">
     <link href="assets/css/theme.css" rel="stylesheet" type="text/css" media="all" />
     <link rel="stylesheet" href="./assets/css/style.css">
+    <title>Modal Component</title>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+  
+    <!-- template for the modal component -->
+    <script type="text/x-template" id="modal-template">
+      <transition name="modal">
+        <div class="modal-mask">
+          <div class="modal-wrapper">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header bg-secondary">
+                      <button type="button" class="close btn btn-round" data-dismiss="modal" aria-label="Close">
+                        <i class="material-icons">delete</i>
+                      </button>
+                      <button type="button" class="close btn btn-round" data-dismiss="modal" aria-label="Close">
+                        <i class="material-icons">close</i>
+                      </button>
+                    </div>
+                    <!--end of modal head-->
+                    <div class="modal-body">
+                      <div class="tab-content">
+                        <div class="tab-pane fade show active" id="team-manage-details" role="tabpanel">
+                          <div class="form-group row align-items-center">
+                            <input v-model="title" class="form-control col" type="text" placeholder="Add Title" name="team-name" />
+                          </div>
+                          <div class="form-group row">
+                            <textarea v-model="description" class="form-control col" rows="3" placeholder="Add details" name="team-description"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <slot name="footer">
+                        <button class="btn bg-secondary text-white" type="submit" @click="$emit('close')">
+                          Done
+                        </button>
+                      </slot>
+                    </div>
+                    <!--end of modal body-->
+                  </div>
+                </div>
+            </div>
+        </div>
+      </transition>
+    </script>
   </head>
 
   <body>
-    <section id="login-page">
-      <div class="main-container fullscreen">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-xl-5 col-lg-6 col-md-7">
-              <div class="text-center">
-                <h1 class="h2">Welcome Back &#x1f44b;</h1>
-                <p class="lead">Log in to your account to continue</p>
-                <form>
-                  <div class="form-group">
-                    <input class="form-control" type="email" placeholder="Email Address" name="login-email" />
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control" type="password" placeholder="Password" name="login-password" />
-                  </div>
-                  <button class="btn btn-lg btn-block btn-primary mb-2" role="button" type="submit">
-                    Log in
-                  </button>
-                  <small>Don't have an account yet? <a href="#">Create one</a>
-                  </small>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <section id="register-page">
-      <div class="main-container fullscreen">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-xl-5 col-lg-6 col-md-7">
-              <div class="text-center">
-                <h1 class="h2">Create account</h1>
-                <p class="lead">Start doing things for free, in an instant</p>
-                <button class="btn btn-lg btn-block btn-primary">
-                  <img alt="Google" src="assets/img/logo-google.svg" class="rounded align-top mr-2" />Continue with Google
-                </button>
-                <hr>
-                <form>
-                  <div class="form-group">
-                    <input class="form-control" type="email" placeholder="Email Address" name="create-account-email" />
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control" type="password" placeholder="Password" name="create-account-password" />
-                    <div class="text-left">
-                      <small>Your password should be at least 8 characters</small>
+    <div id='app'>
+      
+      <!-- Login Page -->
+      <section v-if="pageName == 'login-page'">
+        <div class="main-container fullscreen bg-gradient">
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-xl-5 col-lg-6 col-md-7">
+                <div class="text-center">
+                  <h1 class="h2">Welcome Back &#x1f44b;</h1>
+                  <p class="lead">Log in to your account to continue</p>
+                  <form @submit.prevent="login">
+                    <div class="form-group">
+                      <input v-model="user.email" class="form-control" type="email" placeholder="Email Address" name="login-email" />
                     </div>
-                  </div>
-                  <button class="btn btn-lg btn-block btn-primary" role="button" type="submit">
-                    Create account
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="kanban-page">
-      <div class="layout layout-nav-top">
-        <div class="navbar navbar-expand-lg bg-dark navbar-dark sticky-top">
-          <a class="navbar-brand" href="index.html">
-            <img src="https://lh3.googleusercontent.com/-hH8J-trbQ-M/XbHDwNSOwLI/AAAAAAAAAMs/0wCVVZg0ymwG5GbdOKQJJzqu007DX1L2wCMYCGAYYCw/gtask-logo-ios.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
-          </a>
-          <a class="navbar-brand">
-            KanbanBoard
-          </a>
-        </div>
-        <div class="main-container">
-     
-          <div class="container-kanban bg-f6f8">
-            <div class="container-fluid list-inline mt-2">
-              <div>
-                <p class="lead d-none d-md-block">Main Board</p>
-              </div>
-            </div>
-            <div class="kanban-board container-fluid mt-lg-2">
-              <div class="kanban-col">
-                <div class="card-list shadow-sm">
-                  <div class="card-list-header">
-                    <h6>Backlog</h6>
-                    <div class="dropdown">
-                      <button class="btn-options" type="button" id="cardlist-dropdown-button-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="material-icons">more_vert</i>
+                    <div class="form-group">
+                      <input v-model="user.password" class="form-control" type="password" placeholder="Password" name="login-password" />
+                    </div>
+                    <div class="d-flex">
+                      <button class="btn btn-lg btn-block btn-white mb-2" role="button" type="submit">
+                        Log in
                       </button>
-                      <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="#">Edit</a>
-                        <a class="dropdown-item text-danger" href="#">Archive List</a>
+                      <button class="btn btn-lg btn-block btn-white mb-2" role="button" type="submit">
+                        Google
+                      </button>
+                    </div>
+                    <small>Don't have an account yet? <a href="#">Create one</a>
+                    </small>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Register Page -->
+      <section v-else-if="pageName == 'register-page'">
+        <div class="main-container fullscreen bg-gradient">
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-xl-5 col-lg-6 col-md-7">
+                <div class="text-center">
+                  <h1 class="h2">Create account</h1>
+                  <p class="lead">Start doing things for free, in an instant</p>
+                  <button class="btn btn-lg btn-block btn-primary">
+                    <img alt="Google" src="assets/img/logo-google.svg" class="rounded align-top mr-2" />Continue with Google
+                  </button>
+                  <hr>
+                  <form>
+                    <div class="form-group">
+                      <input class="form-control" type="email" placeholder="Email Address" name="create-account-email" />
+                    </div>
+                    <div class="form-group">
+                      <input class="form-control" type="password" placeholder="Password" name="create-account-password" />
+                      <div class="text-left">
+                        <small>Your password should be at least 6 characters</small>
                       </div>
                     </div>
-                  </div>
-                  <div class="card-list-body">
-  
-                    <div class="card card-kanban">
-  
-                      <div class="card-body">
-                        <div class="dropdown card-options">
-                          <button class="btn-options" type="button" id="kanban-dropdown-button-14" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Edit</a>
-                            <a class="dropdown-item text-danger" href="#">Archive Card</a>
-                          </div>
-                        </div>
-                        <div class="card-title">
-                          <a href="#" data-toggle="modal" data-target="#task-modal"><h6>Validation</h6></a>
-                        </div>
-  
-                        <div class="card-meta d-flex justify-content-between">
-                          <div class="d-flex align-items-center">
-                            <span>cek</span>
-                          </div>
-                        </div>
-  
-                      </div>
+                    <button class="btn btn-lg btn-block btn-primary" role="button" type="submit">
+                      Create account
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Kanban Page -->
+      <section v-else-if="pageName == 'kanban-page'">
+        <div class="layout layout-nav-top">
+          <div class="navbar navbar-expand-lg bg-purple navbar-dark sticky-top">
+            <a class="navbar-brand" href="index.html">
+              <img src="https://lh3.googleusercontent.com/-hH8J-trbQ-M/XbHDwNSOwLI/AAAAAAAAAMs/0wCVVZg0ymwG5GbdOKQJJzqu007DX1L2wCMYCGAYYCw/gtask-logo-ios.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+              KanbanBoard
+            </a>
+           
+            <div class="collapse navbar-collapse justify-content-between" id="navbar-collapse">
+              <ul class="navbar-nav">
+              </ul>
+              <div class="d-lg-flex align-items-center">
+            
+                <div class="d-none d-lg-block">
+                  <div class="dropdown">
+                    <button class="btn btn-round" role="button" data-toggle="dropdown" aria-expanded="false">
+                      <i class="material-icons">logout</i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+        
+                      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#project-edit-modal">Edit Project</a>
+                      <a class="dropdown-item" href="#">Share</a>
+                      <a class="dropdown-item" href="#">Mark as Complete</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item text-danger" href="#">Archive</a>
+        
                     </div>
-  
                   </div>
-                  <div class="card-list-footer">
-                    <div class="d-flex align-items-center">
-                      <div class="ml-1 dropdown card-options">
-                        <button class="btn-options" type="button" id="note-dropdown-button-1" data-toggle="modal" data-target="#note-add-modal" aria-haspopup="true" aria-expanded="false">
-                          <i class="material-icons btn-link">add</i>
-                          <span data-filter-by="text" class="SPAN-filter-by-text ml-1">Add a task</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="main-container">
+       
+            <div class="container-kanban bg-gradient">
+              <div class="kanban-board container-fluid mt-lg-4">
+                <div class="kanban-col">
+                  <div class="card-list shadow-sm">
+                    <div class="card-list-header">
+                      <h6>Backlog</h6>
+                      <div class="dropdown">
+                        <button class="btn-options" type="button" id="cardlist-dropdown-button-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="material-icons">more_vert</i>
                         </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                          <a class="dropdown-item" href="#">Edit</a>
+                          <a class="dropdown-item text-danger" href="#">Archive List</a>
+                        </div>
                       </div>
+                    </div>
+                    <div class="card-list-body">
+    
+                      <div v-for="(task, index) in tasks" :key="index" class="card card-kanban text-wrap">
+    
+                        <div class="card-body">
+                          <div class="dropdown card-options">
+                            <modal v-if="showModal" @close="showModal = false"></modal>
+                            <button  class="btn-options" type="button" @click="showModal = true" id="kanban-dropdown-button-14" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="material-icons">edit</i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                              <a class="dropdown-item" href="#">Edit</a>
+                              <a class="dropdown-item text-danger" href="#">Archive Card</a>
+                            </div>
+                          </div>
+                          <div class="card-title">
+                            <a href="#" data-toggle="modal" data-target="#task-modal"><h6>{{ task.title }} </h6></a>
+                          </div>
+    
+                          <div class="card-meta d-flex justify-content-between">
+                            <div class="d-flex align-items-center ">
+                              <span>{{ task.description }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-list-footer">
+                      <form v-show="isShow" @submit.prevent="addTask">
+                        <div class="input-group input-group input-group-round">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="material-icons">add</i>
+                            </span>
+                          </div>
+                          <input v-model="title" type="text" class="form-control form-control" placeholder="Add a task" aria-label="Add app">
+                        </div>
+                      </form>
                     </div>
                   </div>
                 </div>
-              </div>
-  
-              <div class="kanban-col">
-                <div class="card-list shadow-sm">
-                  <div class="card-list-header">
-                    <h6>Todo</h6>
-                    <div class="dropdown">
-                      <button class="btn-options" type="button" id="cardlist-dropdown-button-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="material-icons">more_vert</i>
-                      </button>
-                      <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="#">Edit</a>
-                        <a class="dropdown-item text-danger" href="#">Archive List</a>
+    
+                <div class="kanban-col">
+                  <div class="card-list shadow-sm">
+                    <div class="card-list-header">
+                      <h6>Todo</h6>
+                      <div class="dropdown">
+                        <button class="btn-options" type="button" id="cardlist-dropdown-button-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="material-icons">more_vert</i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                          <a class="dropdown-item" href="#">Edit</a>
+                          <a class="dropdown-item text-danger" href="#">Archive List</a>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="card-list-body">
-  
-                    <div class="card card-kanban">
-  
-                      <div class="card-body">
-                        <div class="dropdown card-options">
-                          <button class="btn-options" type="button" id="kanban-dropdown-button-10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Edit</a>
-                            <a class="dropdown-item text-danger" href="#">Archive Card</a>
+                    <div class="card-list-body">
+    
+                      <div class="card card-kanban">
+    
+                        <div class="card-body">
+                          <div class="dropdown card-options">
+                            <button class="btn-options" type="button" id="kanban-dropdown-button-10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="material-icons">more_vert</i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                              <a class="dropdown-item" href="#">Edit</a>
+                              <a class="dropdown-item text-danger" href="#">Archive Card</a>
+                            </div>
                           </div>
-                        </div>
-                        <div class="card-title">
-                          <a href="#" data-toggle="modal" data-target="#task-modal"><h6>Authentication</h6></a>
-                        </div>
-  
-                        <div class="card-meta d-flex justify-content-between">
-                          <div class="d-flex align-items-center">
-                            <span>cek 123</span>
+                          <div class="card-title">
+                            <a href="#" data-toggle="modal" data-target="#task-modal"><h6>Authentication</h6></a>
                           </div>
-  
+    
+                          <div class="card-meta d-flex justify-content-between">
+                            <div class="d-flex align-items-center">
+                              <span>cek 123</span>
+                            </div>
+    
+                          </div>
+    
                         </div>
-  
                       </div>
-                    </div>
-  
-                    <div class="card card-kanban">
-  
-                      <div class="card-body">
-                        <div class="dropdown card-options">
-                          <button class="btn-options" type="button" id="kanban-dropdown-button-11" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Edit</a>
-                            <a class="dropdown-item text-danger" href="#">Archive Card</a>
+    
+                      <div class="card card-kanban">
+    
+                        <div class="card-body">
+                          <div class="dropdown card-options">
+                            <button class="btn-options" type="button" id="kanban-dropdown-button-11" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="material-icons">more_vert</i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                              <a class="dropdown-item" href="#">Edit</a>
+                              <a class="dropdown-item text-danger" href="#">Archive Card</a>
+                            </div>
                           </div>
-                        </div>
-                        <div class="card-title">
-                          <a href="#" data-toggle="modal" data-target="#task-modal"><h6>Fetch Data</h6></a>
-                        </div>
-  
-                        <div class="card-meta d-flex justify-content-between">
-                          <div class="d-flex align-items-center">
-                            <span>0/6</span>
+                          <div class="card-title">
+                            <a href="#" data-toggle="modal" data-target="#task-modal"><h6>Fetch Data</h6></a>
                           </div>
-  
+    
+                          <div class="card-meta d-flex justify-content-between">
+                            <div class="d-flex align-items-center">
+                              <span>0/6</span>
+                            </div>
+    
+                          </div>
+    
                         </div>
-  
                       </div>
-                    </div>
-  
-                    <div class="card card-kanban">
-  
-                      <div class="card-body">
-                        <div class="dropdown card-options">
-                          <button class="btn-options" type="button" id="kanban-dropdown-button-12" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Edit</a>
-                            <a class="dropdown-item text-danger" href="#">Archive Card</a>
+    
+                      <div class="card card-kanban">
+    
+                        <div class="card-body">
+                          <div class="dropdown card-options">
+                            <button class="btn-options" type="button" id="kanban-dropdown-button-12" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="material-icons">more_vert</i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                              <a class="dropdown-item" href="#">Edit</a>
+                              <a class="dropdown-item text-danger" href="#">Archive Card</a>
+                            </div>
                           </div>
-                        </div>
-                        <div class="card-title">
-                          <a href="#" data-toggle="modal" data-target="#task-modal"><h6>Instance lifecycle Vue</h6></a>
-                        </div>
-  
-                        <div class="card-meta d-flex justify-content-between">
-                          <div class="d-flex align-items-center">
-                            <span>cek</span>
+                          <div class="card-title">
+                            <a href="#" data-toggle="modal" data-target="#task-modal"><h6>Instance lifecycle Vue</h6></a>
                           </div>
-  
+    
+                          <div class="card-meta d-flex justify-content-between">
+                            <div class="d-flex align-items-center">
+                              <span>cek</span>
+                            </div>
+    
+                          </div>
+    
                         </div>
-  
                       </div>
+    
                     </div>
-  
-                  </div>
-                  <div class="card-list-footer">
-                    <button class="btn btn-link btn-sm text-small">Add task</button>
+                    <div class="card-list-footer">
+                    </div>
                   </div>
                 </div>
-              </div>
-  
-              <div class="kanban-col">
-                <div class="card-list shadow-sm">
-                  <div class="card-list-header">
-                    <h6>Doing</h6>
-                    <div class="dropdown">
-                      <button class="btn-options" type="button" id="cardlist-dropdown-button-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="material-icons">more_vert</i>
-                      </button>
-                      <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="#">Edit</a>
-                        <a class="dropdown-item text-danger" href="#">Archive List</a>
+    
+                <div class="kanban-col">
+                  <div class="card-list shadow-sm">
+                    <div class="card-list-header">
+                      <h6>Doing</h6>
+                      <div class="dropdown">
+                        <button class="btn-options" type="button" id="cardlist-dropdown-button-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="material-icons">more_vert</i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                          <a class="dropdown-item" href="#">Edit</a>
+                          <a class="dropdown-item text-danger" href="#">Archive List</a>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="card-list-body">
-  
-                    <div class="card card-kanban">
-  
-                      <div class="card-body">
-                        <div class="dropdown card-options">
-                          <button class="btn-options" type="button" id="kanban-dropdown-button-7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Edit</a>
-                            <a class="dropdown-item text-danger" href="#">Archive Card</a>
+                    <div class="card-list-body">
+    
+                      <div class="card card-kanban">
+    
+                        <div class="card-body">
+                          <div class="dropdown card-options">
+                            <button class="btn-options" type="button" id="kanban-dropdown-button-7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="material-icons">edit</i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                              <a class="dropdown-item" href="#">Edit</a>
+                              <a class="dropdown-item text-danger" href="#">Archive Card</a>
+                            </div>
                           </div>
-                        </div>
-                        <div class="card-title">
-                          <a href="#" data-toggle="modal" data-target="#task-modal"><h6>Socket IO</h6></a>
-                        </div>
-  
-                        <div class="card-meta d-flex justify-content-between">
-                          <div class="d-flex align-items-center">
-                            <span>cek</span>
+                          <div class="card-title">
+                            <a href="#" data-toggle="modal" data-target="#task-modal"><h6>Socket IO</h6></a>
                           </div>
-  
+    
+                          <div class="card-meta d-flex justify-content-between">
+                            <div class="d-flex align-items-center">
+                              <span>cek</span>
+                            </div>
+    
+                          </div>
+    
                         </div>
-  
                       </div>
-                    </div>
-  
-                    <div class="card card-kanban">
-  
-                      <div class="card-body">
-                        <div class="dropdown card-options">
-                          <button class="btn-options" type="button" id="kanban-dropdown-button-8" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Edit</a>
-                            <a class="dropdown-item text-danger" href="#">Archive Card</a>
+    
+                      <div class="card card-kanban">
+    
+                        <div class="card-body">
+                          <div class="dropdown card-options">
+                            <button class="btn-options" type="button" id="kanban-dropdown-button-8" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="material-icons">more_vert</i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                              <a class="dropdown-item" href="#">Edit</a>
+                              <a class="dropdown-item text-danger" href="#">Archive Card</a>
+                            </div>
                           </div>
-                        </div>
-                        <div class="card-title">
-                          <a href="#" data-toggle="modal" data-target="#task-modal"><h6>Draggable</h6></a>
-                        </div>
-  
-                        <div class="card-meta d-flex justify-content-between">
-                          <div class="d-flex align-items-center">
-                            <span>cek</span>
+                          <div class="card-title">
+                            <a href="#" data-toggle="modal" data-target="#task-modal"><h6>Draggable</h6></a>
                           </div>
-  
+    
+                          <div class="card-meta d-flex justify-content-between">
+                            <div class="d-flex align-items-center">
+                              <span>cek</span>
+                            </div>
+    
+                          </div>
+    
                         </div>
-  
                       </div>
+    
                     </div>
-  
-                  </div>
-                  <div class="card-list-footer">
-                    <button class="btn btn-link btn-sm text-small">Add task</button>
                   </div>
                 </div>
-              </div>
-  
-              <div class="kanban-col">
-                <div class="card-list shadow-sm">
-                  <div class="card-list-header">
-                    <h6>Done</h6>
-                    <div class="dropdown">
-                      <button class="btn-options" type="button" id="cardlist-dropdown-button-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="material-icons">more_vert</i>
-                      </button>
-                      <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="#">Edit</a>
-                        <a class="dropdown-item text-danger" href="#">Archive List</a>
+    
+                <div class="kanban-col">
+                  <div class="card-list shadow-sm">
+                    <div class="card-list-header">
+                      <h6>Done</h6>
+                      <div class="dropdown">
+                        <button class="btn-options" type="button" id="cardlist-dropdown-button-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="material-icons">more_vert</i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                          <a class="dropdown-item" href="#">Edit</a>
+                          <a class="dropdown-item text-danger" href="#">Archive List</a>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="card-list-body">
-  
-                    <div class="card card-kanban">
-  
-                      <div class="card-body">
-                        <div class="dropdown card-options">
-                          <button class="btn-options" type="button" id="kanban-dropdown-button-17" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Edit</a>
-                            <a class="dropdown-item text-danger" href="#">Archive Card</a>
+                    <div class="card-list-body">
+    
+                      <div class="card card-kanban">
+    
+                        <div class="card-body">
+                          <div class="dropdown card-options">
+                            <button class="btn-options" type="button" id="kanban-dropdown-button-17" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="material-icons">more_vert</i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                              <a class="dropdown-item" href="#">Edit</a>
+                              <a class="dropdown-item text-danger" href="#">Archive Card</a>
+                            </div>
                           </div>
-                        </div>
-                        <div class="card-title">
-                          <a href="#" data-toggle="modal" data-target="#task-modal"><h6>Full SPA</h6></a>
-                        </div>
-  
-                        <div class="card-meta d-flex justify-content-between">
-                          <div class="d-flex align-items-center">
-                            <span>cek</span>
+                          <div class="card-title">
+                            <a href="#" data-toggle="modal" data-target="#task-modal"><h6>Full SPA</h6></a>
+                          </div>
+    
+                          <div class="card-meta d-flex justify-content-between">
+                            <div class="d-flex align-items-center">
+                              <span>cek</span>
+                            </div>
+                            
                           </div>
                           
                         </div>
-                        
                       </div>
+                      
                     </div>
-                    
-                  </div>
-                  <div class="card-list-footer">
-                    <button class="btn btn-link btn-sm text-small">Add task</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+       
+      <!-- 404 Page -->
+      <section v-else>
+        <div class="main-container fullscreen bg-gradient">
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-xl-5 col-lg-6 col-md-7">
+                <div class="text-center">
+                  <h1 class="display-1 text-primary">4&#x1f635;4</h1>
+                  <p>
+                    The page you were looking for was not found. <a href="index.html">Click here to go home</a> or <a href="#">Contact Us</a> if you think this might be an error.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
   </body>
+
+  <!-- Vue Js -->
   <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-  <script src="./assets/js/main.js"></script>
+  <script src="https://unpkg.com/vue"></script>
+
+  <!-- jsDelivr CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="./assets/js/index.js"></script>
+
 </html>
