@@ -64,21 +64,13 @@ class KanbanConteroller{
     static async deleteUserKanban(req, res, next){
         try {
             let id = +req.params.id
-            let data = await Todo.destroy({
+            let data = await Kanban.destroy({
                 where: {id}
             })
             if(data===0){
-                let error = {
-                    key: 'deletToDo',
-                    status: 400,
-                    msg: 'Id Tidak ditemukan'
-                }
-                throw error
+                throw ({status: 400, msg: 'Id Tidak ditemukan'})
             }else{
-                let output = {
-                    massage: 'todo succes to delete'
-                }
-                res.status(200).json(output)
+                res.status(200).json({msg: 'Kanban succes to delete'})
             }
         } catch (err) {
             console.log(err)

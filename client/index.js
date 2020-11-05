@@ -5,7 +5,7 @@
 let app = new Vue({
     el: '#app',
     data: {
-        showNav: 'navBar',
+        showNav: '',
         showContet: 'login-page',
         conten: false,
         kanban: [],
@@ -53,6 +53,7 @@ let app = new Vue({
             })
             .then(res=>{
                 this.gantiHalaman('home-page')
+                this.showNav = 'navBar'
                 this.title = ''
                 this.description = ''
             })
@@ -69,6 +70,7 @@ let app = new Vue({
             })
             .then(res=>{
                 this.kanban = res.data
+                this.showNav = 'navBar'
                 // console.log(res.data)
             })
             .catch(err=>{
@@ -86,13 +88,37 @@ let app = new Vue({
             })
             .then(res=>{
                 let data = res.data
-                let id = data.id
-                let email = data.email
+                let localId = data.id
                 let acces_token = data.access_token
                 localStorage.setItem('acces_token', acces_token)
+                localStorage.setItem('localId', localId)
                 this.gantiHalaman('home-page')
                 this.email = ''
                 this.password = ''
+
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Your has been login',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+        },
+        deleteKanban(){
+            let id = localStorage.localId
+            let access_token = localStorage.acces_token
+            axios({
+                method: 'DELETE',
+                url: this.server + `/tasks/${id}`,
+                headers: {access_token}
+            })
+            .then(res=>{
+                this.gantiHalaman('home-page')
+                this.showNav = 'navBar'
             })
             .catch(err=>{
                 console.log(err)
@@ -101,13 +127,23 @@ let app = new Vue({
         logout(){
             localStorage.removeItem('acces_token');
             this.gantiHalaman('login-page')
+            this.showNav = ''
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Your has been logout',
+                showConfirmButton: false,
+                timer: 1500
+            })
         }
     },
     created(){
         if(!localStorage.acces_token){
             this.gantiHalaman('login-page')
+            this.showNav = ''
         }else{
             this.gantiHalaman('home-page')
+            this.showNav = 'navBar'
         }
     }
     

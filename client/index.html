@@ -8,7 +8,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <!-- Main CSS-->
     <link href="style.css" rel="stylesheet" media="all">
+    <!-- sweetalert -->
+    <!-- <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet"> -->
 
+    <!-- Icon -->
     <link rel="Icon" href="./img/klipartz.com.png">
 
     <title>Kaban App</title>
@@ -17,7 +20,7 @@
 <div id="app">
 
     <!-- NAVBAR -->
-    <div id="navBar">
+    <div v-if="showNav === 'navBar'" id="navBar">
         <nav class="mb-1 navbar navbar-expand-lg navbar-dark secondary-color lighten-1 shadowNav bgNav">
             <a v-on:click.prevent="gantiHalaman('home-page')" id="listAll-todo" class="navbar-brand" href="#"><img class="logo-nav" src="./img//klipartz.com.png" alt=""></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-555"
@@ -70,7 +73,7 @@
 
     <!--login Page-->
     <div v-if="showContet === 'login-page'" id="login-page">
-        <div class="container d-flex justify-content-center my-5">
+        <div class="container d-flex justify-content-center" style="margin-top: 15vh;">
             <div class="card">
                 <h4 class="text-center pt-4"><img class="logo-log" src="./img//klipartz.com.png" alt=""></h4> 
                 <span class="info">To all special dicounts and more <br> become to login!<span>
@@ -108,7 +111,7 @@
     
     <!--Register Page-->
     <div v-else-if="showContet === 'register-page'" id="register-page">
-        <div class="container d-flex justify-content-center my-5">
+        <div class="container d-flex justify-content-center" style="margin-top: 15vh;">
             <div class="card">
                 <h4 class="text-center pt-4"><img class="logo-log" src="./img//klipartz.com.png" alt=""></h4> 
                 <span class="info">To all special dicounts and more <br> become a member!<span>
@@ -147,7 +150,7 @@
     <!-- Home page -->
     <div v-else-if="showContet === 'home-page'" id="home-page">
         <div class="container justify-content-center">
-            <div class="row d-flex mt-5">
+            <div class="row d-flex mt-3">
                 <div class="col-sm-3">
                     <div class="bg1 card-header text-center shadowcard">
                         <h4>Backlog</h4>
@@ -173,7 +176,7 @@
                                 </div>
                                 <div class="col d-flex mt-3 text-center" style="padding: 0%;">
                                     <a v-on:click.prevent="gantiHalaman('edit-page')" href="#"><p class="tOption rounded bg-info mx-1 py-2 px-1">e</p></a>
-                                    <a href="#"><p class="tOption rounded bg-danger mx-1 py-2 px-1">d</p></a>
+                                    <a v-on:click.prevent="deleteKanban()" href="#"><p class="tOption rounded bg-danger mx-1 py-2 px-1">d</p></a>
                                     <a href="#"><p class="tOption rounded bg-success mx-1 py-2 px-1">m</p></a>
                                 </div>
                                 </div>
@@ -377,6 +380,10 @@
     <!--Script BootsTrap-->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+    <!-- sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script> -->
 
     <!-- Vuejs -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>   

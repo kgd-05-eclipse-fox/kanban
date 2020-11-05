@@ -12,7 +12,7 @@ routers.use(authentication)
 routers.get('/tasks', KabanController.getAllKanban)
 routers.post('/tasks', KanbanConteroller.postUserKanban)
 
-routers.use('/:id', authorization)
+routers.use('/tasks/:id', authorization)
 routers.put('/tasks/:id', KabanController.putUserKanban)
 routers.patch('/tasks/:id', KabanController.patchUserKanban)
 routers.delete('/tasks/:id', KabanController.deleteUserKanban)
