@@ -1,5 +1,7 @@
 const { User, Task } = require('../models')
-const { comparePassword, signToken } = require('../helpers/bcrypt')
+const { comparePassword } = require('../helpers/bcrypt')
+const { signToken } = require('../helpers/jwt')
+const { OAuth2Client } = require('google-auth-library');
 
 class Controller {
   static async login (req, res, next) {
@@ -82,8 +84,7 @@ class Controller {
         const { title, description, CategoryId } = req.body
         const update = await Task.update({
            title,
-           description,
-           CategoryId
+           description
         },{
            where: {
               id: +req.params.id
@@ -116,6 +117,55 @@ class Controller {
         next(error)
      }
   }
+
+  static googleSignIn(req,res,next) {
+   //verify access token
+   //dapetin token dari client
+   let { google_access_token } = req.body
+   const client = new OAuth2Client(process.env.CLIENT_ID);
+   let email = null;
+   //verify google token berdasarkan client id
+   //kembalikan token google seperti token biasa agar dapat di autentikasi server
+   client.verifyIdToken({
+       idToken: google_access_token,
+       audience: process.env.CLIENT_ID
+   })
+   .then(ticket => {
+       let payload = ticket.getPayload();
+       email = payload.email
+       return User.findOne({
+           where:{
+               email: payload.email
+           }
+       })
+
+   })
+   .then(user => {
+       if(user) {
+           return user;
+
+       } else {
+           let newUser = {
+               email: email,
+               password: 'randomaja',
+               username: email.substring(0,email.indexOf('@'))
+           }
+           return User.create(newUser)
+       }
+   })
+   .then(dataUser =>{
+       let access_token =  signToken({
+           id: dataUser.id,
+           email: dataUser.email,
+           username: dataUser.username
+       })
+       return res.status(200).json({ access_token })
+   })
+   .catch(err => {
+       console.log(err);
+   })
+
+}
 }
 
 module.exports = Controller

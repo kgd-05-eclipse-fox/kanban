@@ -13,9 +13,11 @@
         
             <div class="d-none d-lg-block">
               <div class="dropdown">
+                
                 <button @click="logout" class="btn btn-round" role="button" data-toggle="dropdown" aria-expanded="false">
                   <i class="material-icons">logout</i>
                 </button>
+
                 <div class="dropdown-menu dropdown-menu-right">
     
                   <a class="dropdown-item" href="#" data-toggle="modal" data-target="#project-edit-modal">Edit Project</a>
@@ -27,6 +29,7 @@
                 </div>
               </div>
             </div>
+            
           </div>
         </div>
       </div>
@@ -38,7 +41,9 @@
               v-for="(stat, i) in status"
               :key="i"
               :statusDetail="stat"
-              :tasks="tasks">
+              :tasks="tasks"
+              @addTaskFromCategory="addTaskViaKanban"
+              @editPage="editPage">
             </Category>
 
           </div>
@@ -58,6 +63,14 @@ export default {
   },
   methods: {
     logout() {
+      localStorage.clear()
+      this.$emit('changePage', 'login-page')
+    },
+    addTaskViaKanban(payload) {
+      this.$emit('AddTaskKanban', payload)
+    },
+    editPage(payload) {
+      this.$emit('editPage', payload)
     }
   },
   components: {

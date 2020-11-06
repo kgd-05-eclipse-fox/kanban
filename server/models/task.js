@@ -23,7 +23,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Task.init({
-    title: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Title is required'
+        }
+      }
+    },
     description: DataTypes.STRING,
     CategoryId: DataTypes.INTEGER,
     UserId: DataTypes.INTEGER
@@ -31,5 +39,11 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Task',
   });
+
+  Task.addHook('beforeCreate', (instance, option) => {
+    if (!instance.CategoryId) {
+      instance.CategoryId = 1
+    }
+  })
   return Task;
 };

@@ -16,13 +16,15 @@
       
      <Task
       v-for="task in filterCategory"
-      :key="task.CategoryId"
+      :key="task.id"
       :task="task"
-      class="mb-2">
+      class="mb-2"
+      @editPage="editPage">
       </Task>
 
-      <div class="card-list-footer">
-        <form v-show="isShow" @submit.prevent="addTask">
+      <!-- Form Add a Task -->
+      <div class="card-list-footer" :class="hideForm">
+        <form @submit.prevent="addTask">
           <div class="input-group input-group input-group-round">
             <div class="input-group-prepend">
               <span class="input-group-text">
@@ -33,6 +35,7 @@
           </div>
         </form>
       </div>
+      <!-- End Form -->
     </div>
   </div>
 </template>
@@ -43,10 +46,20 @@ export default {
   name: 'Category',
   data() {
     return {
-      isShow: true,
       showModal: false,
       title: "",
       description: ""
+    }
+  },
+  methods: {
+    addTask() {
+      let payload = {
+        name: this.title
+      }
+      this.$emit('addTaskFromCategory', payload )
+    },
+    editPage(payload) {
+      this.$emit('editPage', payload)
     }
   },
   components: {
@@ -56,11 +69,18 @@ export default {
   computed: {
     filterCategory() {
       return this.tasks.filter(item => item.CategoryId == this.statusDetail.id)
+    },
+    hideForm() {
+      if (this.statusDetail.id != 1) {
+        return 'hide'
+      }
     }
   }
 }
 </script>
 
 <style>
-
+  .hide {
+    display: none;
+  }
 </style>

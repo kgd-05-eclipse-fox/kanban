@@ -18,9 +18,7 @@
                   <button class="btn btn-lg btn-block btn-white mb-2" role="button" type="submit">
                     Log in
                   </button>
-                  <button class="btn btn-lg btn-block btn-white mb-2" role="button" type="submit">
-                    Google
-                  </button >
+                  <button v-google-signin-button="clientId" class="google-signin-button"> Continue with Google</button>
                 </div>
                 <small @click="register">Don't have an account yet? <a href="#">Create one</a>
                 </small>
@@ -42,12 +40,37 @@ export default {
         email:'',
         password:''
       },
-      register: 'register-page'
+      clientId: '247629122397-5olff61o6eicahelc1n2bprmsm2nk8ba.apps.googleusercontent.com'
+    }
+  },
+  methods: {
+    login() {
+      
+      this.$emit('login', this.user)
+    },
+    register() {
+      this.$emit('changePage', 'register-page')
+    },
+    OnGoogleAuthSuccess (idToken) {
+      console.log(idToken)
+      // Receive the idToken and make your magic with the backend
+      this.$emit('googleSignIn', idToken)
+    },
+    OnGoogleAuthFail (error) {
+      console.log(error)
     }
   }
 }
 </script>
 
 <style>
-
+.google-signin-button {
+  color: white;
+  background-color: red;
+  height: 50px;
+  font-size: 16px;
+  border-radius: 10px;
+  padding: 10px 20px 25px 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 </style>

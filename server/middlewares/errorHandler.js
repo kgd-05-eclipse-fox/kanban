@@ -1,5 +1,7 @@
 module.exports = function errorHandler (err, req, res, next) {
   let msg = err.msg || "Internal Server Error" 
+  console.log("errorHandler ->>>>>> 😄 err", err)
+ 
   let status = 500 || err.status
 
   if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError'){

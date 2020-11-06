@@ -8,12 +8,12 @@
               <h1 class="h2">Create account</h1>
               <p class="lead">Start doing things for free, in an instant</p>
               <hr>
-              <form>
+              <form @submit.prevent='register'>
                 <div class="form-group">
-                  <input v-model="register.email" class="form-control" type="email" placeholder="Email Address" name="create-account-email" />
+                  <input v-model="user.email" class="form-control" type="email" placeholder="Email Address" name="create-account-email" />
                 </div>
                 <div class="form-group">
-                  <input v-model="register.password" class="form-control" type="password" placeholder="Password" name="create-account-password" />
+                  <input v-model="user.password" class="form-control" type="password" placeholder="Password" name="create-account-password" />
                   <div class="text-left">
                     <small>Your password should be at least 6 characters</small>
                   </div>
@@ -35,10 +35,16 @@ export default {
   name: "RegisterPage",
   data() {
     return {
-      register: {
+      user: {
         email: "",
         password: ""
       }
+    }
+  },
+  methods: {
+    register() {
+      const user = this.user
+      this.$emit('register', user)
     }
   }
 }
