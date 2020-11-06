@@ -1,10 +1,10 @@
-if (process.env.NODE_ENV != 'production') {
+if (process.env.NODE_ENV != "production") {
     require('dotenv').config()
 }
 const express = require("express")
 const cors = require("cors")
 const app = express()
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 8080
 const router = require('./routes')
 const errorHandler = require('./middlewares/errorHandler')
 
@@ -14,6 +14,9 @@ app.use(express.urlencoded({
     extended: true
 }))
 
+app.get("/", (req, res) => res.status(200).json({
+    msg: "halo dunia"
+}))
 
 app.use(router)
 app.use(errorHandler.error)
