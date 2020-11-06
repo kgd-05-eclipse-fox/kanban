@@ -65,5 +65,25 @@ class Controller {
             res.status(500).json("Internal Server Error")
         }
     }
+
+    static async updateTask(req, res, next) {
+        try {
+            const id = Number(req.body.id)
+            const payload = { category: req.body.category }
+            const task = await Task.update(payload, {
+                where: {
+                    id: id
+                },
+                returning: true
+            })
+            if(task[0] == 0) {
+                throw { name: "Not Found" }
+            } else {
+                res.status(200).json(task[1][0])
+            }
+        } catch (error) {
+            res.status(500).json("Internal Server Error")
+        }
+    }
 }
 module.exports = Controller

@@ -13,6 +13,7 @@
                     :allTask="allTask"
                     @changePage="toEditPage"
                     @deleteTask="deleteTask"
+                    @updateCategory="updateCategory"
                 ></TaskCategory>
             </div>
         </div>
@@ -43,6 +44,9 @@ export default {
         },
         deleteTask(id) {
             this.$emit('deleteTask', id)
+        },
+        updateCategory(payload) {
+            this.$emit('updateCategory', payload)
         }
     }
 }

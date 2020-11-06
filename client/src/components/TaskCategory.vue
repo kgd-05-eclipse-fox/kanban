@@ -9,6 +9,7 @@
                     :task="task"
                     @changePage="changePage"
                     @deleteTask="deleteTask"
+                    @updateCategory="updateCategory"
                 ></TaskCard>
             </div>
         </div>
@@ -34,6 +35,9 @@ export default {
         },
         deleteTask(id) {
             this.$emit('deleteTask', id)
+        },
+        updateCategory(payload) {
+            this.$emit('updateCategory', payload)
         }
     }
 }

@@ -12,7 +12,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Edit</button>
             </form>
-            <button type="submit" class="btn btn-primary mt-3">Cancel</button>
+            <button type="submit" class="btn btn-primary mt-3" @click="cancelEditTask">Cancel</button>
         </div>
     </div>
 </template>
@@ -38,6 +38,12 @@ export default {
                 description: this.description
             }
             this.$emit('updateTask', payload)
+        },
+        cancelEditTask() {
+            let payload = {
+                pageName: "HomePage"
+            }
+            this.$emit('cancelEditTask', payload)
         }
     }
 }

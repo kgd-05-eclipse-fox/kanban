@@ -11,6 +11,7 @@
             :allTask="task"
             @changePage="changePage"
             @deleteTask="deleteTask"
+            @updateCategory="updateCategory"
             @logout="logoutUser"
         ></HomePage>
        <AddTask
@@ -23,6 +24,7 @@
             v-else-if="pageName === 'EditPage'"
             :updatedTask="updatedTask"
             @updateTask="updateTask"
+            @cancelEditTask="changePage"
         ></EditTask>
     </div>
 </template>
@@ -180,6 +182,33 @@ export default {
                 headers: {token},
                 data: {
                     id
+                }
+            })
+            .then(({ data }) => {
+                this.fetchTask()
+                this.pageName = 'HomePage'
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        },
+        updateCategory(payload) {
+            let token = localStorage.getItem('token')
+            let newCategory = ''
+            if(payload.category == 'Back Log') {
+                newCategory = 'To Do'
+            } else if (payload.category == "To Do") {
+                newCategory = 'On Progress'
+            } else {
+                newCategory = 'Done'
+            }
+            axios({
+                method: "PATCH",
+                url: '/task/patch',
+                headers: {token},
+                data: {
+                    id: payload.id,
+                    category: newCategory
                 }
             })
             .then(({ data }) => {
