@@ -34,7 +34,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-trash"> Delete</i></a>
+                    <a href="#"><i @click="deleteTask" class="fa fa-trash"> Delete</i></a>
                 </li>
             </ul>
         </div>
@@ -43,7 +43,7 @@
 
 <script>
 export default {
-    name: 'Card',
+    name: 'TaskCard',
     data () {
         return {
 
@@ -60,6 +60,10 @@ export default {
 
             }
             this.$emit('toEditPage', payload)
+        },
+        deleteTask() {
+            let id = this.task.id
+            this.$emit('deleteTask', id)
         }
     },
     props: ['task', 'categoryDetail']

@@ -9,25 +9,26 @@
         </div>
         <div class="border rounded">
             <div id="content" class="content-tab overflow-auto">
-                <Card
+                <TaskCard
                     @changePage="changePage"
                     v-for="task in taskPerCategory"
                     :key="task.id"
                     :task="task"
                     :categoryDetail="categoryDetail"
-                    @toEditPage="toEditPage">           
-                </Card>
+                    @toEditPage="toEditPage"
+                    @deleteTask="deleteTask">           
+                </TaskCard>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import Card from './Card'
+import TaskCard from './TaskCard'
 export default {
-    name: 'Category',
+    name: 'TaskCategory',
     components: {
-        Card
+        TaskCard
     },
     props: ['categoryDetail', 'tasks'],
     methods: {
@@ -36,6 +37,9 @@ export default {
         },
         toEditPage(payload) {
             this.$emit('toEditPage', payload)
+        },
+        deleteTask(id) {
+            this.$emit('deleteTask', id)
         }
     },
     computed: {

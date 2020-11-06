@@ -2,26 +2,27 @@
     <section id="kanban-board">
         <div class="container">
             <div class="row category">
-                <Category
+                <TaskCategory
                     @changePage="changePage" 
                     v-for="(cat,i) in categories"
                     :key="i"
                     :categoryDetail="cat"
                     :tasks="tasks"
-                    @toEditPage="toEditPage">
-                </Category>
+                    @toEditPage="toEditPage"
+                    @deleteTask="deleteTask">
+                </TaskCategory>
             </div>
         </div>
     </section>
 </template>
 
 <script>
-import Category from './Category'
+import TaskCategory from './TaskCategory'
 
 export default {
     name: 'KanbanPage',
     components: {
-        Category
+        TaskCategory
     },
     props: ['categories','tasks'],
     methods:{
@@ -30,6 +31,9 @@ export default {
         },
         toEditPage(payload) {
             this.$emit('toEditPage', payload)
+        },
+        deleteTask(id) {
+            this.$emit('deleteTask', id)
         }
     }
 

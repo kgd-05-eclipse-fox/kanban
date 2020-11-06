@@ -2,7 +2,7 @@
     <div>
         <NavbarPage
             :pageName="pageName"
-            @changePage="changePage"
+            v-on:changePage="changePage"
             @clearStorage="logout">
         </NavbarPage>
 
@@ -37,7 +37,8 @@
             :categories="categories"
             @changePage="changePage"
             :tasks="tasks"
-            @toEditPage="toEditPage">
+            @toEditPage="toEditPage"
+            @deleteTask="deleteTask">
         </KanbanPage>
         
  
@@ -99,6 +100,23 @@ export default {
         toEditPage(payload) {
             this.pageName = payload.pageName
             this.detailTask = payload.task
+        },
+        deleteTask(id) {
+            console.log(id, 'app');
+            const token = localStorage.getItem('token')
+            axios({
+                url: `/tasks/${id}`,
+                method: 'DELETE',
+                headers: {
+                    token: token
+                }
+            })
+            .then(_ => {
+                this.fetchTask()
+            })
+            .catch(err => {
+                console.log(err);
+            })
         },
         editTask(payload) {
             console.log('editTask');
