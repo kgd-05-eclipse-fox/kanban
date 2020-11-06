@@ -4,7 +4,7 @@ if (process.env.NODE_ENV != 'production') {
 const express = require("express")
 const cors = require("cors")
 const app = express()
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT
 const router = require('./routes')
 const errorHandler = require('./middlewares/errorHandler')
 
@@ -14,9 +14,6 @@ app.use(express.urlencoded({
     extended: true
 }))
 
-app.get('/', (req, res) => res.status(200).json({
-    msg: "halo dunia"
-}))
 app.use(router)
 app.use(errorHandler.error)
 
