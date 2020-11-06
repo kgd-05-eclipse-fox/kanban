@@ -38,7 +38,7 @@ class UserController {
 
                     const access_token = jwtSign(payload)
 
-                    res.status(200).json({ access_token: access_token })
+                    res.status(200).json({ id: findUser.id, access_token: access_token })
                 } else {
                     throw new Error('Wrong Email or Password')
                 }
