@@ -10,9 +10,7 @@
 			v-else-if="showingPage == 'register'"
 			@changePage="changePage"
 			@register="register"
-			:clientId="clientId"
-			:OnGoogleAuthFail='OnGoogleAuthFail'
-			:OnGoogleAuthSuccess='OnGoogleAuthSuccess'>
+			>
 		</RegisterPage>
 		<HomePage
 			@logout='logout'
@@ -25,6 +23,7 @@
 			:tasks="tasks"
 			v-else>
 		</HomePage>
+		<div>
 	</div>
 </template>
 
@@ -61,6 +60,7 @@ export default {
 					})
 					localStorage.setItem('token', data.token)
 					this.showingPage = 'kanban'
+					this.showAllTask()
 				})
 				.catch(err => {
 					Swal.fire({
@@ -71,8 +71,29 @@ export default {
 				})
 		},
 		logout(data) {
-			this.showingPage = 'login'
-			localStorage.clear()
+			Swal.fire({
+				title: 'Are you sure to logout and leave me alone?',
+				imageUrl: 'https://media1.tenor.com/images/94ec8e77f201109a234ae494b82bb514/tenor.gif?itemid=4988274',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes, logout!',
+				backdrop: `
+				rgba(0,0,123,0.4)
+				left top
+				no-repeat
+			`
+			}).then((result) => {
+				if (result.isConfirmed) {
+					Swal.fire(
+						'Logged Out!',
+						'Please come back anytime!',
+						'success'
+					)
+				this.showingPage = 'login'
+				localStorage.clear()
+				}
+			})
 		},
 		getDate(date) {
 			let o = new Intl.DateTimeFormat("id" , {
@@ -91,6 +112,7 @@ export default {
 						showConfirmButton: false,
 						timer: 1500
 					})
+					console.log(response)
 					this.showingPage = 'login'
 				})
 				.catch(err => {
@@ -119,22 +141,30 @@ export default {
 			Swal.fire({
 				title: 'Add a task',
 				html: `<input type="text" id="addtitle" class="swal2-input" placeholder="Title">
-				<input type="text" id="adddesc" class="swal2-input" placeholder="Description">`,
+				<input type="text" id="adddesc" class="swal2-input" placeholder="Description">
+				  <select id="addCategory" class="swal2-input">
+					<option value="backlog">Backlog</option>
+					<option value="product">Product</option>
+					<option value="development">Development</option>
+					<option value="done">Done</option>
+				</select>`,
 				confirmButtonText: 'Add task',
 				focusConfirm: false,
 				preConfirm: () => {
 					const title = Swal.getPopup().querySelector('#addtitle').value
 					const description = Swal.getPopup().querySelector('#adddesc').value
-					if (!title || !description) {
+					const category = Swal.getPopup().querySelector('#addCategory').value
+					if (!title || !description || !category) {
 						Swal.showValidationMessage(`Please fill out all the fields!`)
 					}
-					return { title, description }
+					return { title, description, category }
 				}
 			})
 			.then((result) => {
 				const payLoad = {
 					title: result.value.title,
-					description: result.value.description
+					description: result.value.description,
+					category: result.value.category
 				}
 				const token = localStorage.token
 				axios
@@ -200,6 +230,20 @@ export default {
 			this.tasks = []
 			this.showAllTask()
 		},
+		editCategory(data) {
+			const token = localStorage.token
+			axios.patch(`/task/${data.id}`, category, { headers: { token }})
+			.then(data => {
+				this.reloadTask()
+			})
+			.catch(err => {
+				Swal.fire({
+					title: 'Oops!!',
+					text: err.response.data.error,
+					icon: 'error',
+				})
+			})
+		},
 		updateTask(data) {
 			const token = localStorage.token
 			axios.put(`/task/${data.id}`, data, { headers: { token } })
@@ -213,12 +257,13 @@ export default {
 			})
 			.catch(err => {
 				Swal.fire({
-					title: 'Login Failed!',
+					title: 'Edit Failed!',
 					text: err.response.data.error,
 					icon: 'error',
 				})
 			})
-		}
+		},
+		
 	},
 	created() {
 		if (!localStorage.token) {
@@ -226,7 +271,6 @@ export default {
 		} else {
 			this.showingPage = 'kanban'
 			this.showAllTask()
-			// this.showAddForm()
 		}
 	},
   data() {
@@ -234,7 +278,6 @@ export default {
 			showingPage: 'login',
 			categories: ['Backlog', 'Product', 'Development', 'Done'],
 			tasks: [],
-			clientId: '358498963778-71ock3dr38230rt7o30v1bn9251f64li.apps.googleusercontent.com',
     };
   },
 };

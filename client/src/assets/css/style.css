@@ -412,3 +412,16 @@ hr {
 		align-items: center;
 		margin-left: 30%;
 	}
+
+	.ggLogin {
+		display: inline;
+	}
+	
+	.items {
+		justify-content: center;
+	}
+
+	.googleButton {
+		display: flex;
+		justify-content: center;
+	}

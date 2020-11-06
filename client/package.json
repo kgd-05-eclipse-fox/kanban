@@ -11,8 +11,13 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.0",
+    "bootstrap": "^4.5.3",
+    "bootstrap-vue": "^2.18.1",
+    "i": "^0.3.6",
+    "npm": "^6.14.8",
     "sweetalert2": "^10.9.0",
     "vue": "^2.6.12",
+    "vue-google-login": "^2.0.5",
     "vue-google-signin-button-directive": "^1.0.3",
     "vue-hot-reload-api": "^2.3.4",
     "vuedraggable": "^2.24.3"

@@ -44,36 +44,23 @@
 					Log In
 				</div>
 			</button>
+			<br><br>
 			<h4 class="text mb-3" id="or">or</h4>
-			<button v-google-signin-button="clientId" class='btn block-cube block-cube-hover' type='button'>
-				<div class='bg-top'>
-					<div class='bg-inner'></div>
-				</div>
-				<div class='bg-right'>
-					<div class='bg-inner'></div>
-				</div>
-				<div class='bg'>
-					<div class='bg-inner'></div>
-				</div>
-				<div class='text'>
-					Log In with Google
-				</div>
-			</button>
 		</form>
-		<button v-google-signin-button="clientId" class="google-signin-button"> Continue with Google</button>
+			<GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccess" :onFailure="onFailure" class="googleButton"></GoogleLogin>
 	</div>
 </template>
 
 <script>
+import axios from 'axios';
+import GoogleLogin from 'vue-google-login';
+import Swal from 'sweetalert2';
 export default {
 	name: 'LoginPage',
+	components: {
+		GoogleLogin
+	},
 	methods: {
-		OnGoogleAuthSuccess(idToken) {
-			this.$emit('OnGoogleAuthSuccess', idToken)
-		},
-		OnGoogleAuthFail(error) {
-			this.$emit('OnGoogleAuthFail', error)
-		},
 		toLogin() {
 			this.$emit('changePage', 'login')
 		},
@@ -86,13 +73,37 @@ export default {
 				password: this.logPassword
 			}
 			this.$emit('login', payload)
+		},
+		onSuccess(googleUser) {
+			console.log(googleUser)
+			const gToken = googleUser.getAuthResponse().id_token
+			console.log(gToken)
+			axios.post('http://localhost:3000/googleSignIn', {gToken})
+			.then(({data}) => {
+				localStorage.setItem('token', data.accessToken)
+				this.$emit('changePage', 'HomePage')
+			})
+			.catch(err => {
+				console.log(err)
+			})
+		},
+		onFailure(err) {
+			console.log(err)
 		}
 	},
-	props: ['login', 'clientId'],
+	props: ['login'],
 	data() {
 		return {
 			logEmail: '',
-			logPassword: ''
+			logPassword: '',
+			params: {
+					client_id: "358498963778-71ock3dr38230rt7o30v1bn9251f64li.apps.googleusercontent.com"
+			},
+			renderParams: {
+				width: 250,
+				height: 50,
+				longtitle: true
+			}
 		}
 	}
 }
