@@ -23,6 +23,16 @@ class KanbanConteroller{
         }
     }
 
+    static async getKanbanById(req, res, next){
+        try {
+            let id = +req.params.id
+            let data = await Kanban.findByPk(id)
+            res.status(200).json(data)
+        } catch (err) {
+           next(err)
+        }
+    }
+
     static async getUserKanban(req, res, next){
         try {
             
@@ -35,7 +45,6 @@ class KanbanConteroller{
         try {
             let id = +req.params.id
             let dataInput = req.body
-            // let validasiError = ValidasiUser.validasiPutTodo(dataInput)
             let data = await Todo.update(dataInput, {
                 where: {id}
             })
@@ -44,25 +53,30 @@ class KanbanConteroller{
             console.log(err)
         }
     }
-
+    
     static async patchUserKanban(req, res, next){
+        console.log('masuuukkkk <<<<<<<<<<<')
         try {
             let id = +req.params.id
             let data = req.body.status 
+            console.log(req.body)
             let updateData = await Kanban.update({
                 status: data
             }, {
                 where: {id},
                 returning: true
             })
+            console.log(updateData)
             res.status(200).json(updateData)
         } catch (err) {
+            console.log('masuukk errorrrrrrrrrrrrrrrr')
             res.status(500).json(err)
         }
     }
 
     static async deleteUserKanban(req, res, next){
         try {
+            console.log('masuk controler delete <<<<<<<<<<<<<<<<<<<,')
             let id = +req.params.id
             let data = await Kanban.destroy({
                 where: {id}
@@ -74,6 +88,7 @@ class KanbanConteroller{
             }
         } catch (err) {
             console.log(err)
+            res.status(500).json(err)
         }
     }
 }

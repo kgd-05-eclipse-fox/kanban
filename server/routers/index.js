@@ -12,10 +12,11 @@ routers.use(authentication)
 routers.get('/tasks', KabanController.getAllKanban)
 routers.post('/tasks', KanbanConteroller.postUserKanban)
 
-routers.use('/tasks/:id', authorization)
-routers.put('/tasks/:id', KabanController.putUserKanban)
-routers.patch('/tasks/:id', KabanController.patchUserKanban)
-routers.delete('/tasks/:id', KabanController.deleteUserKanban)
+console.log('masukkk routersss <<<<<<<<<<<<')
+routers.get('/tasks/:id', authorization, KanbanConteroller.getKanbanById)
+routers.put('/tasks/:id' ,authorization , KabanController.putUserKanban)
+routers.patch('/tasks/:id' ,authorization , KabanController.patchUserKanban)
+routers.delete('/tasks/:id' ,authorization , KabanController.deleteUserKanban)
 
 
 module.exports = routers

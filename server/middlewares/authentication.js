@@ -12,6 +12,7 @@ const authentication = async (req, res, next)=>{
             if(!dataUserDB){
                 throw {status: 401, msg: 'invalid token'}
             }else{
+                console.log('masuk authenticatiionnnnnnnnnnnnnnnnn')
                 req.acces_token = dataUserDB
                 next()
             }

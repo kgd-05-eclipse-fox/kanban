@@ -9,10 +9,10 @@
                             <img class="logo-log" src="../assets/img/logoo.png" alt="">
                         </div>
                         <div class=" card-footer">
-                            <form action="" method="post">
+                            <form @submit.prevent="addKanban">
                                 <input v-model="title" type="text" name="title" id="" placeholder="Title" class=" my-4 input-group form-control">
                                 <input v-model="description" type="text" name="descriptin" id="" placeholder="Descriptin" class=" my-4 input-group form-control">
-                                <button v-on:click.prevent="addkanban()" type="submit" class="btn">Submit</button>
+                                <button type="submit" class="btn">Submit</button>
                             </form>
                         </div>
                     </div>
@@ -27,12 +27,18 @@ export default {
     name: 'AddPage',
     data(){
         return {
-
+            title: '',
+            description: ''
         }
     },
     methods: {
-        addkanban(){
-            
+        addKanban(){
+            console.log('masuk add <<<<<<<<<<<<<<,')
+            let data = {
+                title: this.title,
+                description: this.description
+            }
+            this.$emit('addKanban', data)
         }
     }
 }

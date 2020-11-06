@@ -7,6 +7,7 @@
                         <div class=" card-header text-center">
                             <h4>Edit You'r Project</h4>
                             <img class="logo-log" src="../assets/img/logoo.png" alt="">
+                                {{editKanban}}
                         </div>
                         <div class=" card-footer">
                             <form action="" method="post">
@@ -25,6 +26,7 @@
 <script>
 export default {
     name: 'EditPage',
+    props: ['editKanban'],
     data(){
         return{
 

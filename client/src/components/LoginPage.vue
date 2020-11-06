@@ -5,10 +5,10 @@
             <span class="info">To all special dicounts and more <br> become to login!<span>
             <div class="text-center flex-column"> 
                 <div class="form-group justify-content-center d-flex">
-                    <form>
+                    <form  @submit.prevent="userLogin">
                         <input v-model="email" type="email" name="email" placeholder="email address" class="form-control form mb-2"> 
                         <input v-model="password" type="password" name="password" placeholder="password" class="form-control">
-                        <button v-on:click.prevent="loginUser()" type="submit" class="btn mt-4">Login</button>
+                        <button type="submit" class="btn mt-4">Login</button>
                     </form>
                 </div>
             </div>
@@ -36,43 +36,19 @@ export default {
         return {
             email: '',
             password: ''
+                
         }
     },
     methods: {
-        gantiHalaman(){
-            // $e
+        userLogin(){
+            let data = {
+                email: this.email,
+                password: this.password
+            }
+            this.$emit('dataUserLogin', data)
         },
-        loginUser(){
-            axios({
-                method: 'POST',
-                url: this.server + '/login',
-                data: {
-                    email: this.email,
-                    password: this.password
-                }
-            })
-            .then(res=>{
-                let data = res.data
-                let localId = data.id
-                let acces_token = data.access_token
-                console.log(acces_token)
-                localStorage.setItem('acces_token', acces_token)
-                localStorage.setItem('localId', localId)
-                this.gantiHalaman('home-page')
-                this.email = ''
-                this.password = ''
-
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'Your has been login',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            })
-            .catch(err=>{
-                console.log(err)
-            })
+        gantiHalaman(name){
+            this.$emit('registerpage', name)
         }
     }
 }
