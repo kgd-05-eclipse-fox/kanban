@@ -11,6 +11,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Task.belongsTo(models.User, {
+        foreignKey: 'UserId',
+        targetKey: 'id'
+      })
+
+      Task.belongsTo(models.Category, {
+        foreignKey: 'CategoryId',
+        targetKey: 'id'
+      })
     }
   };
   Task.init({

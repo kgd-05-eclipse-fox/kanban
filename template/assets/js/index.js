@@ -28,6 +28,9 @@ let app = new Vue({
     showModal: false
   },
   methods: {
+    changePage(name) {
+      this.pageName = name
+    },
     addTask() {
       let data = {
         title: this.title,
@@ -51,19 +54,28 @@ let app = new Vue({
       // .then(result => {
       //   localStorage.setItem('access_token', this.user.email)
       // })
+      
       localStorage.setItem('access_token', this.user.email)
       this.changePage('kanban-page')
+      this.user.email = ""
+      this.user.password = ""
     },
     checkLogin() {
       if (localStorage.access_token) {
-        this.pageName = 'kanban_page'
+        this.pageName = 'kanban-page'
       } else {
         this.pageName = 'login-page'
       }
+    },
+    logout() {
+      this.changePage('login-page')
+      localStorage.clear
+    },
+    register() {
+      this.changePage('register-page')
     }
+  },
+  created: function () {
+    this.checkLogin()
   }
-  // ,
-  // created() {
-  //   this.checkLogin()
-  // }
 })
