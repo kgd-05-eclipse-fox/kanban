@@ -39,7 +39,7 @@ export default {
         return {
             pageRender: 'login-page',
             loginRegister: '',
-            user: null,
+            user: {},
             tasks: [],
             boards: [
                 {
@@ -97,8 +97,13 @@ export default {
                         text: 'Kamu berhasil login!'
                     })
 
+                    this.loginRegister = ''
+                    this.user = {
+                        id: data.id,
+                        email: payload.email
+                    }
+
                     this.fetchTask()
-                    this.user = payload.email
                     this.pageRender = 'kanban-page'
                 })
                 .catch(err => {
@@ -202,6 +207,7 @@ export default {
                 }
             })
                 .then(({ data }) => {
+                    this.editTaskData = {}
                     this.fetchTask()
                     Toast.fire({
                         icon: 'success',
@@ -270,6 +276,10 @@ export default {
                     if (isConfirmed) {
                         localStorage.removeItem('access_token')
                         localStorage.removeItem('email')
+                        localStorage.removeItem('id')
+                        this.tasks = []
+                        this.user = {}
+                        this.loginRegister = ''
                         this.pageRender = 'login-page'
                     }
                 })
