@@ -2,6 +2,7 @@
     <div class="col-3">
         <div :class="category.bg">
             <h3 class="text-center">{{category.name}}</h3>
+            <p>{{allTask}}</p>
             <div class="test-class">
                 <TaskCard></TaskCard>
             </div>
@@ -16,7 +17,7 @@ export default {
     components: {
         TaskCard
     },
-    props: ['category']
+    props: ['category', 'allTask']
 }
 </script>
 

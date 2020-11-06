@@ -23,7 +23,7 @@
                                         <button type="submit" class="button" @click="loginUser">SIGN IN</button>
                                     </div>
                                     <div class="group">
-                                        <input type="submit" class="button" value="Sign In With Google">
+                                        <button type="submit" class="button" @click="googleLogin">SIGN IN WITH GOOGLE</button>
                                     </div>
                                 </div>
                                 <div class="sign-up-form">
@@ -89,6 +89,9 @@ export default {
             this.lastName = ''
             this.email = ''
             this.password = ''
+        },
+        googleLogin(googleUser) {
+            console.log(googleUser.getBasicProfile())
         }
         
     }

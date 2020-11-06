@@ -8,21 +8,23 @@
        <HomePage
             v-else-if="pageName === 'HomePage'" 
             :categories="categories"
+            :allTask="task"
             @changePage="changePage"
-            @logout="logoutUser"    
+            @logout="logoutUser"
         ></HomePage>
-       <AddPage
+       <AddTask
             v-else-if="pageName === 'AddPage'"
             @cancelAddTask="changePage"
             @logout="logoutUser"
-        ></AddPage>
+            @addTask="addNewTask"
+        ></AddTask>
     </div>
 </template>
 
 <script>
 import LoginPage from "./components/Login"
 import HomePage from "./components/Home"
-import AddPage from "./components/AddTask"
+import AddTask from "./components/AddTask"
 import axios from "./config/axios"
 
 export default {
@@ -48,11 +50,12 @@ export default {
                     name: 'Done',
                     bg: "bg-success"
                 }
-            ]
+            ],
+            task: null
         };
     },
     components: {
-        LoginPage, HomePage, AddPage
+        LoginPage, HomePage, AddTask
     },
     methods: {
         changePage(name) {
@@ -98,12 +101,45 @@ export default {
         logoutUser() {
             localStorage.removeItem('token')
             this.pageName = 'LoginPage'
+        },
+        fetchTask() {
+            let token = localStorage.getItem('token')
+            axios({
+                method: "GET",
+                url: '/task',
+                headers: {token}
+            })
+            .then(({ data }) => {
+                this.task = data
+            })
+            .catch(err => {
+                console.log(data)
+            })
+        },
+        addNewTask(payload) {
+            let token = localStorage.getItem('token')
+            axios({
+                method: "POST",
+                url: '/task/add',
+                headers: {token},
+                data: {
+                    title: payload.title,
+                    description: payload.title
+                }
+            })
+            .then(({ data }) => {
+                console.log(data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
         }
     },
     created() {
         let token = localStorage.getItem('token')
         if(token) {
             this.pageName = 'HomePage'
+            this.fetchTask()
         } else {
             this.pageName = 'LoginPage'
         }

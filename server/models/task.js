@@ -75,5 +75,11 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Task',
   });
+
+  Task.addHook('beforeValidate', (instance, options) => {
+    if(instance.category == null) {
+      instance.category = 'Back Log'
+    }
+  })
   return Task;
 };

@@ -6,7 +6,12 @@
         <div class="container opacity">
             <button class="btn btn-primary" @click="toAddPage">Add New Task</button>
             <div class="row my-5">
-                <TaskCategory v-for="(cat, i) in categories" :key="i" :category="cat"></TaskCategory>
+                <TaskCategory
+                    v-for="(cat, i) in categories"
+                    :key="i"
+                    :category="cat"
+                    :allTask="allTask"
+                ></TaskCategory>
             </div>
         </div>
     </div>
@@ -20,7 +25,7 @@ export default {
     components: {
         Navbar, TaskCategory
     },
-    props: ['categories'],
+    props: ['categories', 'allTask'],
     methods: {
         toAddPage() {
             this.$emit('changePage', 'AddPage')
