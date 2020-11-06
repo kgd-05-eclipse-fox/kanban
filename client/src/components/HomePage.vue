@@ -41,7 +41,6 @@ export default {
 			this.$emit('showAddForm')
 		},
 		updateTask(data) {
-			console.log('di homepage')
 			this.$emit('updateTask', data)
 		}
  	}

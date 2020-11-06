@@ -52,7 +52,6 @@ export default {
 			this.isEdit = false
 		},
 		updateTask(data) {
-			console.log('di categorycard')
 			this.$emit('updateTask', data)
 		},
 		startDrag: (evt, item) => {

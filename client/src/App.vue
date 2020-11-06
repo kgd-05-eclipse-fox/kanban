@@ -4,6 +4,7 @@
 			v-if="showingPage == 'login'"
 			@changePage="changePage"
 			@login="login"
+			@showAllTask='showAllTask'
 			>
 		</LoginPage>
 		<RegisterPage 
@@ -45,7 +46,6 @@ export default {
 	},
 	methods: {
 		changePage(name) {
-			console.log(name);
 			this.showingPage = name
 		},
 		login(payload) {
@@ -112,7 +112,6 @@ export default {
 						showConfirmButton: false,
 						timer: 1500
 					})
-					console.log(response)
 					this.showingPage = 'login'
 				})
 				.catch(err => {

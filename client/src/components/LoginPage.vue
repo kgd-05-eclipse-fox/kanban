@@ -75,13 +75,13 @@ export default {
 			this.$emit('login', payload)
 		},
 		onSuccess(googleUser) {
-			console.log(googleUser)
 			const gToken = googleUser.getAuthResponse().id_token
-			console.log(gToken)
-			axios.post('http://localhost:3000/googleSignIn', {gToken})
+			axios.post('https://k-a-n-b-a-n.herokuapp.com/googleSignIn', {gToken})
 			.then(({data}) => {
 				localStorage.setItem('token', data.accessToken)
 				this.$emit('changePage', 'HomePage')
+				this.$emit('showAllTask')
+				this.showAllTask()
 			})
 			.catch(err => {
 				console.log(err)

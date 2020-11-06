@@ -40,7 +40,6 @@ export default {
 			this.$emit('closeForm', true)
 		},
 		updateTask(data) {
-			console.log('di edit form')
 			const payload = {
 				title: this.title,
 				description: this.description,
