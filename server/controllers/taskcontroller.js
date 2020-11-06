@@ -8,6 +8,7 @@ class TaskController {
 			const payLoad = {
 				title: req.body.title,
 				description: req.body.description,
+				category: req.body.category,
 				UserId
 			}
 			const addTask = await Task.create(payLoad)
@@ -82,6 +83,29 @@ class TaskController {
 			}
 		} catch (err) {
 			next(err)
+		}
+	}
+	static async patchTodo(req, res, next) {
+		try {
+				const id = +req.params.id
+				const UserId = req.loggedInUser.id
+				const category = req.body.category
+				const updateTodo = await Todo.update({
+						category
+				}, {
+						where: {
+								id,
+								UserId
+						},
+						returning: true
+				})
+				if (!updateTodo[0]){
+						res.status(404).json({ error: 'Todo not found' })
+				} else {
+						res.status(200).json(updateTodo[1][0])
+				}
+		} catch (error) {
+				next(error)
 		}
 	}
 }

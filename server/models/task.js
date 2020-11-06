@@ -62,8 +62,5 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Task',
 	});
-	Task.addHook('beforeCreate', instance => {
-		instance.category = 'backlog'
-	})
   return Task;
 };

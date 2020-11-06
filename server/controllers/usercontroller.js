@@ -1,6 +1,8 @@
 const { User } = require('../models/index')
 const { compare } = require('../helpers/bcrypt')
 const { createToken } = require('../helpers/jwt')
+const {OAuth2Client} = require('google-auth-library');
+const jwt = require('jsonwebtoken')
 
 class UserController {
 	static async register (req, res, next) {
@@ -47,6 +49,7 @@ class UserController {
 
 	static async gLogin(req, res, next) {
 			let { gToken } = req.body
+			console.log(req.body)
       try {
         const client = new OAuth2Client(process.env.GOAUTH);
         async function verify() {
