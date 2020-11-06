@@ -1,7 +1,7 @@
 # kanban
 
 * Web: <br />
-ini ntar hasil deploy
+https://kanban-d1607.web.app/
 ---- 
 
 List of available endpoints:

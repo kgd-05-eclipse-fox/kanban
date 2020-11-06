@@ -61,8 +61,7 @@ export default {
                 user: null,
                 username: null
             },
-            kanban: [],
-
+            kanban: []
         }
     },
     components: {
@@ -175,6 +174,8 @@ export default {
                 localStorage.setItem('user', JSON.stringify(user, null, 2))
                 
                 this.pageName = 'home-page'
+
+                this.loggedIn.status = true
                 this.loggedIn.user = JSON.parse(localStorage.user)
                 this.loggedIn.username = JSON.parse(localStorage.user).username
 
