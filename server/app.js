@@ -4,7 +4,7 @@ if (process.env.NODE_ENV != 'production') {
 const express = require("express")
 const cors = require("cors")
 const app = express()
-const PORT = process.env.port || 3000
+const PORT = process.env.PORT
 const router = require('./routes')
 const errorHandler = require('./middlewares/errorHandler')
 
