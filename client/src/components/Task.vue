@@ -1,6 +1,6 @@
 <template>
   <div class="card-list-body">
-    <div v-for="(task, index) in tasks" :key="index" class="card card-kanban text-wrap">
+    <div class="card card-kanban text-wrap">
       <div class="card-body">
         <div class="dropdown card-options">
           <button  class="btn-options" type="button" id="kanban-dropdown-button-14" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -31,7 +31,7 @@ export default {
     return {
     }
   },
-  props: ['tasks']
+  props: ['task']
 
 }
 </script>

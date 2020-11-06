@@ -1,7 +1,7 @@
 <template>
   <div class="kanban-col">
     <div class="card-list shadow-sm">
-      <div class="card-list-header">
+      <div class="card-list-header text-wrap">
         <h6>{{ statusDetail.name }}</h6>
         <div class="dropdown">
           <button class="btn-options" type="button" id="cardlist-dropdown-button-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -15,7 +15,9 @@
       </div>
       
      <Task
-      :tasks="tasks" 
+      v-for="task in filterCategory"
+      :key="task.CategoryId"
+      :task="task"
       class="mb-2">
       </Task>
 
@@ -50,7 +52,12 @@ export default {
   components: {
     Task
   },
-  props: ['statusDetail', 'tasks']
+  props: ['statusDetail', 'tasks'],
+  computed: {
+    filterCategory() {
+      return this.tasks.filter(item => item.CategoryId == this.statusDetail.id)
+    }
+  }
 }
 </script>
 
