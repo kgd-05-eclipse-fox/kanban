@@ -9,7 +9,8 @@
                     :categoryDetail="cat"
                     :tasks="tasks"
                     @toEditPage="toEditPage"
-                    @deleteTask="deleteTask">
+                    @deleteTask="deleteTask"
+                    @patchTask="patchTask">
                 </TaskCategory>
             </div>
         </div>
@@ -22,7 +23,7 @@ import TaskCategory from './TaskCategory'
 export default {
     name: 'KanbanPage',
     components: {
-        TaskCategory
+        TaskCategory,
     },
     props: ['categories','tasks'],
     methods:{
@@ -34,6 +35,9 @@ export default {
         },
         deleteTask(id) {
             this.$emit('deleteTask', id)
+        },
+        patchTask(payload) {
+            this.$emit('patchTask', payload)
         }
     }
 

@@ -11,8 +11,6 @@ router.get('/', TaskController.fetchTask);
 
 router.post('/', TaskController.postTask);
 
-router.get('/:id', TaskController.fetchTaskById);
-
 router.patch('/:id', authorization, TaskController.patchTaskById);
 
 router.put('/:id', authorization, TaskController.putTask);

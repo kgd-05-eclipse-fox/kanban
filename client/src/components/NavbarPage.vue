@@ -50,9 +50,8 @@
                         <a href="#">
                             <button
                                 @click="changeToRegister" 
-                                class="btn btn-primary btn-md" 
-                                style="background-color: #00b386; 
-                                border-color: #00b386;"
+                                class="btn btn-info btn-md" 
+                                
                                 >
                                 Sign Up
                             </button>

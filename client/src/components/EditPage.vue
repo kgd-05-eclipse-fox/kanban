@@ -1,22 +1,22 @@
 <template>
   <section>
         <div class="container">
-            <div class="row">
-                <div class="col  py-3" style="height: 60vh">
+            <div class="row border shadow-lg" style="height: 80vh; background-color:#17A2B8">
+                <div class="col-6 py-3">
                     <img 
-                    src="../assets/pics/img2.jpg" 
+                    src="../assets/pics/content.png" 
                     alt="" 
                     width="100%"  
                     height="100%" 
                     class="border rounded">
                 </div>
-                <div class="col  py-3" style="height: 60vh">
-                    <h2>Edit Task</h2>
+                <div class="col-6 py-3">
+                    <h2 class="text-white">Edit Task</h2>
                     <form @submit.prevent="editTask">
                         <div class="form-group">
                             <label 
                                 for="title" 
-                                style="color: black; 
+                                style="color: white; 
                                 text-align: left;"
                             >   
                                 Title
@@ -32,7 +32,7 @@
                         <div class="form-group">
                                 <label 
                                     for="description" 
-                                    style="color: black;"
+                                    style="color: white;"
                                 >   
                                     Description
                                 </label>
@@ -46,7 +46,7 @@
                             </textarea>
                         </div>
                         <div class="form-group">
-                            <label for="category">Category</label>
+                            <label for="category" style="color:white">Category</label>
                             <select class="form-control" v-model="category">
                             <option disabled value="">Please select one</option>
                             <option value="backlog">backlog</option>
@@ -55,7 +55,7 @@
                             <option value="done">done</option>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <button type="submit" class="btn btn-warning">Save changes</button>
                         </div>
                     </form>
                 </div>

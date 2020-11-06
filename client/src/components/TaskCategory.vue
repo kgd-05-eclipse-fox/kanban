@@ -5,10 +5,13 @@
                 <div id="title">
                     <h5>{{categoryDetail.title}}</h5>
                 </div>
-            
         </div>
         <div class="border rounded">
-            <div id="content" class="content-tab overflow-auto">
+            <div id="content" class="content-tab overflow-auto" 
+                @drop="drop($event, categoryDetail)"
+                @dragover.prevent
+                @dragenter.prevent
+            >
                 <TaskCard
                     @changePage="changePage"
                     v-for="task in taskPerCategory"
@@ -28,7 +31,7 @@ import TaskCard from './TaskCard'
 export default {
     name: 'TaskCategory',
     components: {
-        TaskCard
+        TaskCard,
     },
     props: ['categoryDetail', 'tasks'],
     methods: {
@@ -40,6 +43,14 @@ export default {
         },
         deleteTask(id) {
             this.$emit('deleteTask', id)
+        },
+        drop(event, category) {
+            const taskId = +event.dataTransfer.getData('taskId')
+            const payload = {
+                id: taskId,
+                category: category.title.toLowerCase()
+            }
+            this.$emit('patchTask', payload)
         }
     },
     computed: {

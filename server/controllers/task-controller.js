@@ -32,18 +32,6 @@ class TaskController {
         })
     }
 
-    static fetchTaskById (req, res, next) {
-        const id = +req.params.id
-
-        Task.findByPk(id)
-        .then(task => {
-            res.status(200).json(task)
-        })
-        .catch(err => {
-            next(err)
-        })
-    }
-
     static patchTaskById (req, res, next) {
         const id = +req.params.id
         

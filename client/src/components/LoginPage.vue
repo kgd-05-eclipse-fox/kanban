@@ -1,21 +1,29 @@
 <template>
     <section id="login">
         <div class="container">
-            <div class="column">
-                <div class="row-5 login border rounded">
+            <div class="row">
+                <div class="col-4"></div>
+                <div 
+                    class="col-4 
+                    border 
+                    border-10 
+                    rounded 
+                    align-content-center 
+                    text-center 
+                    shadow-lg p-3 mb-5 
+                    bg-white "
+                >
                     <img 
                         src="../assets/pics/logo.png" 
                         alt="" 
-                        width="100px" 
-                        class="border rounded-circle"
+                        width="80px" 
+                        class="border rounded-circle px-1 mt-2 mb-4"
                     >
-                </div>
-                <div class="row-7 border rounded">
-                    <p>Sign In</p>
+                    <h6>Sign In</h6>
                     <br>
                     <form @submit.prevent="login">
                         <div class="form-group">
-                            <label for="email"> <h5>Email</h5></label>
+                            <label for="email"><h6>Email</h6></label>
                             <input
                                 v-model="user.email"
                                 id="input-email" 
@@ -25,7 +33,7 @@
                             >
                         </div>
                         <div class="form-group">
-                            <label for="password"><h5>Password</h5></label>
+                            <label for="password"><h6>Password</h6></label>
                             <input 
                                 v-model="user.password"
                                 id="input-password" 
@@ -38,6 +46,13 @@
                             <button type="submit" class="btn1">Sign In</button>
                         </div>
                     </form>
+                    or
+                    <br>
+                    <button id="customBtn" v-google-signin-button="clientId" class="mt-2 google-signin-button"> 
+                        <i class='fab fa-google' style='font-size:18px'></i>
+                    </button>
+                </div>
+                <div class="col-4">
                 </div>
             </div>
         </div>
@@ -52,18 +67,40 @@ export default {
             user: {
                 email: '',
                 password: ''
-            }
+            },
+            clientId: "1051107630527-o2e9teo1prenbks8hk6if1bgpj6j4atm.apps.googleusercontent.com"  
         }
     },
     methods: {
-        login() {
+        login() {                                                                                                                                           
             const user = this.user
             this.$emit('login', user);
-        }
+        },
+        OnGoogleAuthSuccess (idToken) {
+            // Receive the idToken and make your magic with the backend
+            this.$emit('googleLogin', idToken)
+        },
+        OnGoogleAuthFail (error) {
+            console.log(error)
+        },
+
     }
 }
 </script>
 
-<style>
-
+<style>                                                                                                                     
+    #customBtn {
+      display: inline-block;
+      background: white;
+      color: #444;
+      width: 190px;
+      border-radius: 5px;
+      border: thin solid #888;
+      box-shadow: 1px 1px 1px grey;
+      white-space: nowrap;
+    }
+    #customBtn:hover {
+      cursor: pointer;
+    }
+    
 </style>

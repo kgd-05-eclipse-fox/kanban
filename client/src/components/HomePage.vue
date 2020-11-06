@@ -5,7 +5,7 @@
                 <div class="col-6">
                     <img 
                         class="img-float border rounded" 
-                        src="../assets/pics/img1.jpeg" 
+                        src="../assets/pics/timeline.png" 
                         alt="" 
                         width="100%"
                     >
@@ -20,12 +20,10 @@
                 >
                     <p style="color: black;"> Organize your work and plan your task with Qanban</p>
                     <button 
-                        @click="changePage('register-page')" 
-                        class="btn btn-primary" 
+                        @click="changePage" 
+                        class="btn btn-info" 
                         style="width: 100%; 
-                        height: 20%; 
-                        background-color: #00b386; 
-                        border-color: #00b386;"
+                        height: 15%;"
                         >Get Started
                     </button> 
                 </div>
@@ -36,7 +34,12 @@
 
 <script>
 export default {
-    name: 'HomePage'
+    name: 'HomePage',
+    methods: {
+        changePage() {
+            this.$emit('changePage', 'registerPage')
+        }
+    }
 
 }
 </script>

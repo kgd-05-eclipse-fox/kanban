@@ -5,13 +5,17 @@
 
 body{
     font-family: sans-serif;
+    background-color: #ffffff;
+    
 }
 
 nav{
     display: flex;
     justify-content: space-between;
     padding: 15px;
-    background-color: #ffffff
+    background-color: #ffffff;
+
+
 }
 
 nav .links li{
@@ -94,50 +98,38 @@ nav .links .icons a{
 .btn1{
     border: none;
     outline: none;
-    height: 50px;
-    width: 72%;
-    background-color: black;
+    height: 40px;
+    width: 100%;
+    background-color: #17A2B8;
     color: white;
     border-radius: 4px;
     font-weight: bold;
-    margin-left: 0.2cm;
+    margin-top: 5px;
 }
 
 .btn1:hover{
     background-color: white;
     border: 1px solid;
-    color: black;
+    color: #17A2B8;
 }
 
 #input-email{
-    width: 70%;
-    margin-left: 2cm;
-    margin-right: 2cm;
+    width: 100%;;
     height: 30px;
 }
 
 #input-password{
-    width: 70%;
-    margin-left: 2cm;
-    margin-right: 2cm;
+    width: 100%;;
     height: 30px;
 }
 
 #input-username{
-    width: 70%;
-    margin-left: 2cm;
-    margin-right: 2cm;
+    width: 100%;;
     height: 30px;
 }
 
 .row-6 p{
     font-size: 24px;
-}
-
-.sign-out{
-    background-color: blue;
-    border-color: blue;
-
 }
 
 .card-body ul li {
@@ -151,6 +143,11 @@ nav .links .icons a{
     color: black
 }
 
+h6{
+    font-weight: bold;
+    text-align: left;
+    font-size: large;
+}
 
 
 

@@ -1,21 +1,29 @@
 <template>
     <section id="register">
         <div class="container">
-            <div class="column">
-                <div class="row-5 login border rounded">
+            <div class="row">
+                <div class="col-4"></div>
+                <div 
+                    class="col-4 
+                    border 
+                    border-10 
+                    rounded 
+                    align-content-center 
+                    text-center 
+                    shadow-lg p-3 mb-5 
+                    bg-white"
+                >
                     <img 
                         src="../assets/pics/logo.png" 
                         alt="" 
-                        width="100px" 
+                        width="80px" 
                         class="border rounded-circle"
                     >
-                </div>
-                <div class="row-7 border rounded">
-                    <p>Sign Up</p>
+                    <h6>Sign Up</h6>
                     <br>
                     <form @submit.prevent="register">
                         <div class="form-group">
-                            <label for="username"><h5>Username</h5></label>
+                            <label for="username"><h6>Username</h6></label>
                             <input
                                 v-model="user.username" 
                                 id="input-username" 
@@ -25,7 +33,7 @@
                             >
                         </div>
                         <div class="form-group">
-                            <label for="email"><h5>Email</h5></label>
+                            <label for="email"><h6>Email</h6></label>
                             <input
                                 v-model="user.email" 
                                 id="input-email" 
@@ -35,7 +43,7 @@
                             >
                         </div>
                         <div class="form-group">
-                            <label for="email"><h5>Password</h5></label>
+                            <label for="email"><h6>Password</h6></label>
                             <input
                                 v-model="user.password"  
                                 id="input-password" 
@@ -49,6 +57,7 @@
                         </div>
                     </form>
                 </div>
+                <div class="col-4"></div>
             </div>
         </div>
     </section>

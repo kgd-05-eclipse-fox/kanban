@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div class="card border rounded shadow" draggable @dragstart="dragging($event,task)">
         <div class="card-body">
             <h4 class="card-title">
                 <span 
@@ -49,6 +49,9 @@ export default {
 
         }
     },
+    components: {
+
+    },
     methods: {
         changeToEdit() {
             this.$emit('changePage', 'editPage')
@@ -64,6 +67,11 @@ export default {
         deleteTask() {
             let id = this.task.id
             this.$emit('deleteTask', id)
+        },
+        dragging(event, task) {
+            event.dataTransfer.setData('taskId', task.id)
+            event.dataTransfer.dropEffect = 'move'
+            event.dataTransfer.effectAllowed = 'move'
         }
     },
     props: ['task', 'categoryDetail']

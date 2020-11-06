@@ -8,9 +8,7 @@ router.get('/', (req, res) => {
 
 router.post('/register', UserController.register);
 router.post('/login', UserController.login);
+router.post('/googleLogin', UserController.googleLogin);
 router.use('/tasks', task_router);
-
-
-
 
 module.exports = router;
