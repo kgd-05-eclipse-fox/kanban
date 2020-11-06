@@ -2,7 +2,7 @@
     <b-modal
         id="modal-prevent-closing"
         ref="modal"
-        title="Add Task"
+        title="Edit Task"
         @hidden="hiddenModal"
         @ok="handleOk"
     >
