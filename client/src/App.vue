@@ -201,22 +201,10 @@ export default {
             const access_token = data.data.access_token
             localStorage.setItem('access_token', access_token)
             this.pageName = 'kanban-page'
-            this.fetchTask()
-              
-            Swal.fire({
-                icon: 'success',
-                title: 'Success Login',
-            })
+            this.fetchTasks()
         })
         .catch(err => {
-            Swal.fire({
-                position: 'top',
-                icon: 'error',
-                title: 'Error',
-                text: err.response.data.msg,
-                showConfirmButton: false,
-                timer: 1500
-            })
+            console.log(err);
         })
      }
      },
