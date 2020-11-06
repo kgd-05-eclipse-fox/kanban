@@ -104,6 +104,7 @@ export default {
       this.done = []
     },
     register(data){
+      let userEmail = localStorage.getItem('email')
         axios({
             method: 'POST',
             url: '/resgister',
@@ -116,9 +117,25 @@ export default {
             this.gantiHalaman('login-page')
             this.addEmail = ''
             this.addPassword = ''
+
+             Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: `${userEmail} Registration has been complite`,
+              showConfirmButton: false,
+              timer: 1500
+            })
         })
         .catch(err=>{
             console.log(err)
+
+            Swal.fire({
+              position: 'top-end',
+              icon: 'error',
+              title: `Sorry`,
+              showConfirmButton: false,
+              timer: 1500
+            })
         })
     },
     backToHome(data){
@@ -143,9 +160,25 @@ export default {
             this.getDataAllkanban()
             this.title = ''
             this.description = ''
+
+             Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Your Kanban has ben saved',
+              showConfirmButton: false,
+              timer: 1500
+            })
         })
         .catch(err=>{
             console.log(err)
+
+            Swal.fire({
+              position: 'top-end',
+              icon: 'error',
+              title: `Sorry errer to add your kanban`,
+              showConfirmButton: false,
+              timer: 1500
+            })
         })
     },
     getDataAllkanban(){
@@ -177,10 +210,21 @@ export default {
         })
         .catch(err=>{
             console.log(err)
+
+            Swal.fire({
+              position: 'top-end',
+              icon: 'error',
+              title: `Sorry`,
+              showConfirmButton: false,
+              timer: 1500
+            })
         })
     },
     loginUser(data){
       console.log(data)
+      let nameUser = data.email
+      localStorage.setItem('email', nameUser)
+      console.log(nameUser)
         axios({
             method: 'POST',
             url: '/login',
@@ -199,32 +243,62 @@ export default {
             this.getDataAllkanban()
             this.email = ''
             this.password = ''
+
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: `Welcome ${nameUser}`,
+              showConfirmButton: false,
+              timer: 1500
+            })
         })
         .catch(err=>{
             console.log(err)
+
+            Swal.fire({
+              position: 'top-end',
+              icon: 'error',
+              title: `Sorry`,
+              showConfirmButton: false,
+              timer: 1500
+            })
         })
     },
     deleteKanban(data){
-        let id = localStorage.localId
-        let access_token = localStorage.acces_token
-        let idKanban = data
-        console.log(id, '\n', access_token, '\n', idKanban)
-        axios({
-            method: 'DELETE',
-            url: `/tasks/${idKanban}`,
-            headers: {access_token}
-        })
-        .then(res=>{
-            this.gantiHalaman('home-page')
-            this.getDataAllkanban()
-            // this.showNav = 'navBar'
-        })
-        .catch(err=>{
-            console.log(err)
-        })
+      let id = localStorage.localId
+      let access_token = localStorage.acces_token
+      let idKanban = data
+      console.log(id, '\n', access_token, '\n', idKanban)
+      axios({
+          method: 'DELETE',
+          url: `/tasks/${idKanban}`,
+          headers: {access_token}
+      })
+      .then(res=>{
+          this.gantiHalaman('home-page')
+          this.getDataAllkanban()
+          
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Your Kanban has been Delete',
+            showConfirmButton: false,
+            timer: 1500
+          })
+      })
+      .catch(err=>{
+          console.log(err)
+
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: `Sorry Not your Kanban`,
+            showConfirmButton: false,
+            timer: 1500
+          })
+      })
     },
     logout(){
-      console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
         localStorage.removeItem('acces_token');
         this.gantiHalaman('login-page')
         this.showNav = ''
@@ -232,6 +306,14 @@ export default {
         this.product = []
         this.development = []
         this.done = []
+
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Your has been Logout',
+          showConfirmButton: false,
+          timer: 1500
+        })
     },
     update(data){
       let id = +data.id
@@ -260,10 +342,25 @@ export default {
         console.log(res.data)
         this.gantiHalaman('home-page')
         this.getDataAllkanban()
-        // this.showNav = 'navBar'
+        
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: `Your Kanban has been Update status to ${newData}`,
+          showConfirmButton: false,
+          timer: 1500
+        })
       })
       .catch(err=>{
           console.log(err)
+      })
+
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: `Sorry internal server Error`,
+        showConfirmButton: false,
+        timer: 1500
       })
     },
 
@@ -283,6 +380,14 @@ export default {
       })
       .catch(err=>{
         console.log(err)
+
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: `Sorry`,
+          showConfirmButton: false,
+          timer: 1500
+        })
       })
 
     },
@@ -303,9 +408,25 @@ export default {
         console.log(res.data)
         this.gantiHalaman('home-page')
         this.getDataAllkanban()
+
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Your Kanban has been Save',
+          showConfirmButton: false,
+          timer: 1500
+        })
       })
       .catch(err=>{
         console.log(err)
+
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: `Sorry`,
+          showConfirmButton: false,
+          timer: 1500
+        })
       })
     }
   },

@@ -47,6 +47,8 @@ export default {
                 description: this.description
             }
             this.$emit('editDataKanban', data)
+            this.title = ''
+            this.description = ''
         }
     },
     created(){
