@@ -7,7 +7,8 @@ class KanbanConteroller{
             let data = await Kanban.findAll()
             res.status(200).json(data)
         } catch (err) {
-            res.status(500).json(err)
+            // res.status(500).json(err)
+            next(err)
         }
     }
 
@@ -19,7 +20,8 @@ class KanbanConteroller{
             let data = await Kanban.create(databody)
             res.status(201).json(data)
         } catch (err) {
-            res.status(500).json(err)
+            // res.status(500).json(err)
+            next(err)
         }
     }
 
@@ -37,7 +39,8 @@ class KanbanConteroller{
         try {
             
         } catch (err) {
-            res.status(500).json(err)
+            // res.status(500).json(err)
+            next(err)
         }
     }
 
@@ -52,7 +55,8 @@ class KanbanConteroller{
             res.status(200).json(dataInput)
         } catch (err) {
             console.log(err, '<<<<<<<<<<<<<<<<<<< error controller')
-            console.log(err)
+            // console.log(err)
+            next(err)
         }
     }
     
@@ -72,7 +76,8 @@ class KanbanConteroller{
             res.status(200).json(updateData)
         } catch (err) {
             console.log('masuukk errorrrrrrrrrrrrrrrr')
-            res.status(500).json(err)
+            // res.status(500).json(err)
+            next(err)
         }
     }
 
@@ -90,7 +95,8 @@ class KanbanConteroller{
             }
         } catch (err) {
             console.log(err)
-            res.status(500).json(err)
+            // res.status(500).json(err)
+            next(err)
         }
     }
 }

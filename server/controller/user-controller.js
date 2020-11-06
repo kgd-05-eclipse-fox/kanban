@@ -15,7 +15,8 @@ class UserController{
             }
             res.status(201).json(showData)
         } catch (err) {
-            res.status(500).json(err)
+            // res.status(500).json(err)
+            next(err)
         }
     }
 
@@ -40,7 +41,8 @@ class UserController{
             }
             res.status(200).json(dataBody)
         } catch (err) {
-            res.status(500).json(err)
+            // res.status(500).json(err)
+            next(err)
         }
     }
 
@@ -83,6 +85,7 @@ class UserController{
         })
         .catch(err => {
             console.log(err);
+            next(err)
         })
 
     }

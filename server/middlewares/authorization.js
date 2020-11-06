@@ -17,7 +17,8 @@ const authorization = async (req, res, next)=>{
         }
     } catch (err) {
         console.log('masuk authorizationnnnssssssssssssssssss ++++++++++')
-        res.status(500).json(err)
+        // res.status(500).json(err)
+        next(err)
     }
 }
 
