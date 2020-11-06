@@ -2,7 +2,7 @@
   <div class="kanban-col">
     <div class="card-list shadow-sm">
       <div class="card-list-header">
-        <h6>Backlog</h6>
+        <h6>{{ statusDetail.name }}</h6>
         <div class="dropdown">
           <button class="btn-options" type="button" id="cardlist-dropdown-button-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="material-icons">more_vert</i>
@@ -13,10 +13,12 @@
           </div>
         </div>
       </div>
-    <div  class="card-list-body">
+      
+     <Task
+      :tasks="tasks" 
+      class="mb-2">
+      </Task>
 
-        <Task v-for="(task, index) in tasks" :key="index" ></Task>
-    </div>
       <div class="card-list-footer">
         <form v-show="isShow" @submit.prevent="addTask">
           <div class="input-group input-group input-group-round">
@@ -39,25 +41,16 @@ export default {
   name: 'Category',
   data() {
     return {
-      tasks: [{}],
       isShow: true,
       showModal: false,
       title: "",
       description: ""
     }
-  },method: {
-    addTask() {
-      let data = {
-        title: this.title,
-        description: this.description
-      }
-      this.tasks.push({title: data.title})
-      this.description.push({description: data.description})
-    }
   },
   components: {
     Task
-  }
+  },
+  props: ['statusDetail', 'tasks']
 }
 </script>
 

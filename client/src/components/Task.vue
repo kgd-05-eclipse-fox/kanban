@@ -1,6 +1,6 @@
 <template>
-    <div class="card card-kanban text-wrap">
-
+  <div class="card-list-body">
+    <div v-for="(task, index) in tasks" :key="index" class="card card-kanban text-wrap">
       <div class="card-body">
         <div class="dropdown card-options">
           <button  class="btn-options" type="button" id="kanban-dropdown-button-14" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -14,7 +14,6 @@
         <div class="card-title">
           <a href="#" data-toggle="modal" data-target="#task-modal"><h6>{{ task.title }} </h6></a>
         </div>
-
         <div class="card-meta d-flex justify-content-between">
           <div class="d-flex align-items-center ">
             <span>{{ task.description }}</span>
@@ -22,6 +21,7 @@
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -29,15 +29,9 @@ export default {
   name: 'Task',
   data() {
     return {
-      task: "",
-      tasks: [
-        {
-        title: "Social Login",
-        description: "Sign in with google"
-        }
-      ]
     }
-  }
+  },
+  props: ['tasks']
 
 }
 </script>

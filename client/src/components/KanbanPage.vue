@@ -34,9 +34,12 @@
         <div class="container-kanban bg-gradient">
           <div class="kanban-board container-fluid mt-lg-4">
 
-            <Category></Category>
-            <Category></Category>
-            <Category></Category>
+            <Category
+              v-for="(stat, i) in status"
+              :key="i"
+              :statusDetail="stat"
+              :tasks="tasks">
+            </Category>
 
           </div>
         </div>
@@ -51,18 +54,16 @@ export default {
   name: 'KanbanPage',
   data() {
     return {
-      
-      
     }
   },
   methods: {
     logout() {
-      
     }
   },
   components: {
     Category
-  }
+  },
+  props: [ 'status', 'tasks' ] // anak warisan
 }
 </script>
 

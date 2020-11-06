@@ -9,11 +9,11 @@ router.post('/register', Controller.register)
 // router.get('/category', Controller.showCategory)
 
 router.use(authentication)
-router.get('/', Controller.showTask)
-router.post('/', Controller.createTask)
+router.get('/tasks', Controller.showTask)
+router.post('/tasks', Controller.createTask)
 
-router.use('/:id', authorization)
-router.patch('/:id', Controller.editTask)
-router.delete('/:id', Controller.deleteTask)
+router.use('/tasks/:id', authorization)
+router.patch('/tasks/:id', Controller.editTask)
+router.delete('/tasks/:id', Controller.deleteTask)
 
 module.exports = router
