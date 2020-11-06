@@ -9,6 +9,7 @@ const kanbanRouter = require('./kanbanRouter')
 // * Login and Register Router
 router.post('/register', UserController.postRegisterUser)
 router.post('/login', UserController.postLoginUser)
+router.post('/googlelogin', UserController.postGoogleLogin)
 
 // * Kanban Router * Require Authentication
 router.use('/kanban', kanbanRouter)

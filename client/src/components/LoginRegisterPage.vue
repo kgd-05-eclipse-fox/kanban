@@ -5,8 +5,8 @@
             <form class="login-template-xd">
             <h1 class="login-template-xd">Create Account</h1>
             <div class="social-container">
-                <a class="login-template-xd social" href="/" @click.prevent="google"><i class="fab fa-google-plus-g"></i></a>
-                <a class="login-template-xd social" href="/" @click.prevent="github"><i class="fab fa-github"></i></a>
+                <a class="login-template-xd social" href="/" @click.prevent="google"><GoogleLogin :params="params" :onSuccess="onSuccess" style="border: none; background-color: transparent;"><font-awesome-icon :icon="['fab', 'google-plus-g']" /></GoogleLogin></a>
+                <!-- <a class="login-template-xd social" href="/" @click.prevent="github"><font-awesome-icon :icon="['fab', 'github']" /></a> -->
             </div>
             <span class="login-template-xd">or use email to register</span>
             <input class="login-template-xd" type="email" placeholder="Email" />
@@ -15,11 +15,12 @@
             </form>
         </div>
         <div class="form-container sign-in-container">
+            
             <form @submit.prevent="login" class="login-template-xd">
                 <h1 class="login-template-xd">Sign in to Kanban</h1>
                 <div class="social-container">
-                    <a class="login-template-xd social" href="/" @click.prevent="google"><i class="fab fa-google-plus-g"></i></a>
-                    <a class="login-template-xd social" href="/" @click.prevent="github"><i class="fab fa-github"></i></a>
+                    <a class="login-template-xd social" href="/" @click.prevent="google"><GoogleLogin :params="params" :onSuccess="onSuccess" style="border: none; background-color: transparent;"><font-awesome-icon :icon="['fab', 'google-plus-g']" /></GoogleLogin></a>
+                    <!-- <a class="login-template-xd social" href="/" @click.prevent="github"><font-awesome-icon :icon="['fab', 'github']" /></a> -->
                 </div>
                 <span class="login-template-xd">or use email to login</span>
                 <input class="login-template-xd" type="email" placeholder="Email" v-model="userLogin.email" />
@@ -46,8 +47,11 @@
 </template>
 
 <script>
+
+import GoogleLogin from 'vue-google-login'
+
 export default {
-    name: 'LoginPage',
+    name: 'LoginRegisterPage',
     props: ['menuLoginRegister'],
     data() {
         return {
@@ -58,8 +62,14 @@ export default {
             userRegister: {
                 email: '',
                 password: ''
+            },
+            params: {
+                client_id: "90829278115-fu8tr2ekd74q2mg6b2ks5tadalrb0c45.apps.googleusercontent.com"
             }
         }
+    },
+    components: {
+        GoogleLogin
     },
     methods: {
         loginPage() {
@@ -80,6 +90,10 @@ export default {
         },
         github() {
             this.$emit('github')
+        },
+        onSuccess(googleUser) {
+            const id_token = googleUser.getAuthResponse().id_token
+            this.$emit('googleLogin', id_token)
         }
     }
 }

@@ -50,6 +50,48 @@ class UserController {
             next(error)
         }
     }
+
+    static async postGoogleLogin(req, res, next) {
+        try {
+            const { id_token } = req.body
+            const { OAuth2Client } = require('google-auth-library')
+            const client = new OAuth2Client(process.env.PRIVATE_GOOGLE_CLIENT_ID)
+
+            const ticket = await client.verifyIdToken({
+                idToken: id_token,
+                audience: process.env.PRIVATE_GOOGLE_CLIENT_ID
+            });
+            const payload = ticket.getPayload()
+            const email = payload.email
+            const password = payload.sub.substring(0, 18)
+
+            const user = await User.findOne({ where: { email }})
+            if (user) {
+                const verify = verifyPassword(password, user.password)
+                if (verify) {
+                    const payload = { id: user.id, email: user.email }
+                    const access_token = jwtSign(payload)
+
+                    res.status(200).json({ id: user.id, access_token: access_token, email:email })
+                } else {
+                    throw new Error('Login via Google gagal')
+                }
+            } else {
+                const newGoogleUser = {
+                    email,
+                    password
+                }
+                const newUser = await User.create(newGoogleUser)
+                
+                const payload = { id: newUser.id, email: newUser.email }
+                const access_token = jwtSign(payload)
+
+                res.status(200).json({ id: newUser.id, access_token: access_token, email:email })
+            }
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 
 module.exports = UserController

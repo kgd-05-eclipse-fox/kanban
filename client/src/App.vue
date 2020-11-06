@@ -1,13 +1,12 @@
 <template>
     <div>
-        <LoginPage
+        <LoginRegisterPage
             v-if="pageRender == 'login-page'"
             :menuLoginRegister="loginRegister"
             @menu="changeLoginRegister"
             @login="userLogin"
-            @google="google"
-            @github="github"
-        ></LoginPage>
+            @googleLogin="googleLogin"
+        ></LoginRegisterPage>
         <KanbanPage
             v-else-if="pageRender == 'kanban-page' || pageRender == 'add-task' || pageRender == 'edit-task'"
             :tasks="tasks"
@@ -27,7 +26,7 @@
 </template>
 
 <script>
-import LoginPage from './components/LoginPage'
+import LoginRegisterPage from './components/LoginRegisterPage'
 import KanbanPage from './components/KanbanPage'
 import axios from './config/axios'
 import Toast from './config/swaltoast'
@@ -71,7 +70,7 @@ export default {
         }
     },
     components: {
-        LoginPage, KanbanPage
+        LoginRegisterPage, KanbanPage
     },
     methods: {
         changeLoginRegister(payload) {
@@ -277,6 +276,11 @@ export default {
                         localStorage.removeItem('access_token')
                         localStorage.removeItem('email')
                         localStorage.removeItem('id')
+
+                        // * Google SignOut
+                        var auth2 = gapi.auth2.getAuthInstance()
+                        auth2.signOut()
+
                         this.tasks = []
                         this.user = {}
                         this.loginRegister = ''
@@ -284,11 +288,41 @@ export default {
                     }
                 })
         },
-        google() {
-            console.log('google')
-        },
-        github() {
-            console.log('github')
+        googleLogin(id_token) {
+            axios({
+                method: 'POST',
+                url: '/googlelogin',
+                data: {
+                    id_token: id_token
+                }
+            })
+                .then(({ data }) => {
+                    localStorage.setItem('id', data.id)
+                    localStorage.setItem('access_token', data.access_token)
+                    localStorage.setItem('email', data.email)
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: `Haloo ${data.email}`,
+                        text: 'Kamu berhasil login!'
+                    })
+
+                    this.loginRegister = ''
+                    this.user = {
+                        id: data.id,
+                        email: data.email
+                    }
+
+                    this.fetchTask()
+                    this.pageRender = 'kanban-page'
+                })
+                .catch(err => {
+                    Swal.fire({
+                        title: `Oopss..`,
+                        text: err.response.data.message,
+                        icon: `error`
+                    })
+                })
         }
     },
     created() {
