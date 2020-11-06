@@ -45,7 +45,7 @@
 				</div>
 			</button>
 			<h4 class="text mb-3" id="or">or</h4>
-			<button class='btn block-cube block-cube-hover' type='button'>
+			<button v-google-signin-button="clientId" class='btn block-cube block-cube-hover' type='button'>
 				<div class='bg-top'>
 					<div class='bg-inner'></div>
 				</div>
@@ -58,7 +58,9 @@
 				<div class='text'>
 					Log In with Google
 				</div>
+			</button>
 		</form>
+		<button v-google-signin-button="clientId" class="google-signin-button"> Continue with Google</button>
 	</div>
 </template>
 
@@ -66,6 +68,12 @@
 export default {
 	name: 'LoginPage',
 	methods: {
+		OnGoogleAuthSuccess(idToken) {
+			this.$emit('OnGoogleAuthSuccess', idToken)
+		},
+		OnGoogleAuthFail(error) {
+			this.$emit('OnGoogleAuthFail', error)
+		},
 		toLogin() {
 			this.$emit('changePage', 'login')
 		},
@@ -80,7 +88,7 @@ export default {
 			this.$emit('login', payload)
 		}
 	},
-	props: ['login'],
+	props: ['login', 'clientId'],
 	data() {
 		return {
 			logEmail: '',

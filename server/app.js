@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors())
 app.use('/', routers)
-// app.use(errorHandler)
+app.use(errorHandler)
 
 app.listen(port, () => {
 	console.log(`Kanban airlines ready to go ==> http://localhost:${port} !!`)

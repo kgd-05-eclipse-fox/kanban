@@ -12,6 +12,7 @@
 					:category="cat"
 					:tasks='tasks'
 					:getDate="getDate"
+					@updateTask='updateTask'
 					@destroy="destroy">
 					</Category>
 			</div>
@@ -38,6 +39,10 @@ export default {
 		},
 		showAddForm() {
 			this.$emit('showAddForm')
+		},
+		updateTask(data) {
+			console.log('di homepage')
+			this.$emit('updateTask', data)
 		}
  	}
 }

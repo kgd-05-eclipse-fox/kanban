@@ -329,6 +329,7 @@ hr {
 	
 	.scrollbar-rare-wind {
 	scrollbar-color: #a8edea #F5F5F5;
+	padding: 0;
 	}
 
 	.chat {
@@ -401,4 +402,13 @@ hr {
 		display: flex;
 		align-items: right;
 		justify-content: space-evenly;
+	}
+
+	.bordering {
+		border: none;
+	}
+
+	.saveButton {
+		align-items: center;
+		margin-left: 30%;
 	}

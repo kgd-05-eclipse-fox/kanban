@@ -9,12 +9,16 @@
 		<RegisterPage 
 			v-else-if="showingPage == 'register'"
 			@changePage="changePage"
-			@register="register">
+			@register="register"
+			:clientId="clientId"
+			:OnGoogleAuthFail='OnGoogleAuthFail'
+			:OnGoogleAuthSuccess='OnGoogleAuthSuccess'>
 		</RegisterPage>
 		<HomePage
 			@logout='logout'
 			@showAddForm="showAddForm"
 			@destroy='destroy'
+			@updateTask='updateTask'
 			:categories="categories"
 			:getDate='getDate'
 			:showAllTask='showAllTask'
@@ -30,13 +34,15 @@ import RegisterPage from './components/RegisterPage'
 import HomePage from './components/HomePage'
 import axios from './config/axios'
 import Swal from 'sweetalert2'
+import draggable from 'vuedraggable'
 
 export default {
 	name: 'kanban',
 	components: {
 		LoginPage,
 		RegisterPage,
-		HomePage
+		HomePage,
+		draggable
 	},
 	methods: {
 		changePage(name) {
@@ -175,7 +181,7 @@ export default {
 						})
 						.catch(err => {
 							Swal.fire({
-								title: 'Login Failed!',
+								title: 'Delete Failed!',
 								text: err.response.data.error,
 								icon: 'error',
 							})
@@ -193,6 +199,25 @@ export default {
 		reloadTask() {
 			this.tasks = []
 			this.showAllTask()
+		},
+		updateTask(data) {
+			const token = localStorage.token
+			axios.put(`/task/${data.id}`, data, { headers: { token } })
+			.then(data => {
+				Swal.fire(
+					'Edited!',
+					'Your task has been edited.',
+					'success'
+				)
+				this.reloadTask()
+			})
+			.catch(err => {
+				Swal.fire({
+					title: 'Login Failed!',
+					text: err.response.data.error,
+					icon: 'error',
+				})
+			})
 		}
 	},
 	created() {
@@ -208,7 +233,8 @@ export default {
     return {
 			showingPage: 'login',
 			categories: ['Backlog', 'Product', 'Development', 'Done'],
-			tasks: []
+			tasks: [],
+			clientId: '358498963778-71ock3dr38230rt7o30v1bn9251f64li.apps.googleusercontent.com',
     };
   },
 };
