@@ -10,6 +10,7 @@
       v-if="showContet === 'login-page'"
       @dataUserLogin='loginUser'
       @registerpage=gantiHalaman
+      @googleSignIn='googleSignIn'
     >
     </LoginPage>
 
@@ -102,6 +103,39 @@ export default {
       this.product = []
       this.development = []
       this.done = []
+    },
+    googleSignIn(google_access_token) {
+      // console.log(google_access_token, '<<<<<<<<<<<<<<<<<<<<<<<<<')
+      axios({
+        method: 'POST',
+        url: '/loginGoogle',
+        data:  { google_access_token }
+      })
+      .then(data => {
+        console.log(data, '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
+        const acces_token = data.data.access_token
+        localStorage.setItem('acces_token', acces_token)
+        this.showContet = 'home-page'
+        this.getDataAllkanban()
+          
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: `Welcome`,
+            showConfirmButton: false,
+            timer: 1500
+        })
+      })
+      .catch(err => {
+        console.log(err)
+        Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: `Sorry`,
+            showConfirmButton: false,
+            timer: 1500
+        })
+      })
     },
     register(data){
       let userEmail = localStorage.getItem('email')
@@ -300,6 +334,8 @@ export default {
     },
     logout(){
         localStorage.removeItem('acces_token');
+        localStorage.removeItem('localId');
+        localStorage.removeItem('email');
         this.gantiHalaman('login-page')
         this.showNav = ''
         this.backlog = []

@@ -14,15 +14,16 @@
             </div>
             <div class="text-center pb-4 pt-3">
                 <div class="px-3">
-                    <div class=" d-flex justify-content-between mb-2">
+                    <div class=" d-flex justify-content-center mb-2">
                         <span><a v-on:click.prevent="gantiHalaman('register-page')" href="#" style="text-decoration: none; color: whitesmoke;">Go To Register</a></span>
-                        <span>Forgot Password</span>
                     </div>
                     <h4 class="else"><span class="else2"> Or use these to login </span></h4>
                 </div>
                 <div class="pt-3 d-flex flex-row px-3"> 
                     <button type="button" class="btn btn-success fb mr-2">Facebook</button> 
-                    <button type="button" class="btn btn-succes ggl">Google</button> 
+                    <button  v-google-signin-button="clientId" class="google-signin-button btn btn-succes ggl">Google</button>
+                    <!-- <button type="button" class="btn btn-succes ggl">Google</button>  -->
+                    <!-- <button v-google-signin-button="clientId" class="google-signin-button">Google</button> -->
                 </div>
             </div>
         </div>
@@ -35,8 +36,8 @@ export default {
     data (){
         return {
             email: '',
-            password: ''
-                
+            password: '',
+            clientId: '777778329790-jibki0m5jnl30610bsbfuvinnohq90l1.apps.googleusercontent.com'
         }
     },
     methods: {
@@ -49,6 +50,13 @@ export default {
         },
         gantiHalaman(name){
             this.$emit('registerpage', name)
+        },
+        OnGoogleAuthSuccess (idToken) {
+            console.log(idToken)
+            this.$emit('googleSignIn', idToken)
+        },
+        OnGoogleAuthFail (error) {
+            console.log(error)
         }
     }
 }
