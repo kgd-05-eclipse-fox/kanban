@@ -11,6 +11,7 @@
                 v-for="(cat, i) in boards" :key="i"
                 :categoryDetail="cat"
                 :tasks="tasks"
+                :user="user"
                 @updateTask="updateTask"
                 @editTaskPage="editTaskPage"
                 @deleteTask="deleteTask"

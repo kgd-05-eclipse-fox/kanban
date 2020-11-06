@@ -14,6 +14,7 @@
                     v-for="task in categoryTask" :key="task.id"
                     :oneTask="task"
                     :type="type"
+                    :user="user"
                     @editTaskPage="editTaskPage"
                     @deleteTask="deleteTask"
                 >
@@ -29,7 +30,7 @@ import Task from './Task'
 
 export default {
     name: 'Category',
-    props: ['categoryDetail', 'tasks'],
+    props: ['categoryDetail', 'tasks', 'user'],
     components: {
         Task
     },

@@ -17,7 +17,7 @@
             <!-- Logout -->
             <div class="dropdown show">
                 <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ user }}
+                    {{ user.email }}
                 </a>
                 <div class="dropdown-menu bg-trello" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/" @click.prevent="logout">Logout</a>

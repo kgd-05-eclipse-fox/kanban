@@ -88,6 +88,7 @@ export default {
             })
                 .then(({data}) => {
                     localStorage.setItem('access_token', data.access_token)
+                    localStorage.setItem('id', data.id)
                     localStorage.setItem('email', payload.email)
 
                     Toast.fire({
@@ -283,10 +284,14 @@ export default {
     created() {
         const access_token = localStorage.getItem('access_token')
         const email = localStorage.getItem('email')
+        const id = localStorage.getItem('id')
 
-        if (access_token && email) {
+        if (access_token && email && id) {
             this.fetchTask()
-            this.user = localStorage.getItem('email')
+            this.user = {
+                id: localStorage.getItem('id'),
+                email: localStorage.getItem('email')
+            }
             this.pageRender = 'kanban-page'
         } else {
             this.pageRender = 'login-page'
