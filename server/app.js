@@ -14,9 +14,7 @@ app.use(express.urlencoded({
     extended: true
 }))
 
-app.get('/', (req, res) => res.status(200).json({
-    msg: "halo dunia"
-}))
+
 app.use(router)
 app.use(errorHandler.error)
 
