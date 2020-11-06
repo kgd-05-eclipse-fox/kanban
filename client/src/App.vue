@@ -2,7 +2,7 @@
   <div>
     <NavBar
       :showContet='showContet'
-      @gantiHalaman='gantiHalaman'
+      @gantiHalaman='backToHome'
       @logout='logout'
     ></NavBar>
 
@@ -48,6 +48,7 @@
     <EditPage
       v-else-if="showContet === 'edit-page'"
       :editKanban='this.editKanban'
+      @editDataKanban='editDataKanban'
     >
     </EditPage>
 
@@ -120,6 +121,10 @@ export default {
             console.log(err)
         })
     },
+    backToHome(data){
+      this.gantiHalaman(data)
+      this.getDataAllkanban()
+    },
     addKanban(data){
       console.log(data, 'data add kanban <<<<<<<<<<<<<<,')
         let access_token = localStorage.acces_token
@@ -135,7 +140,7 @@ export default {
         .then(res=>{
             this.gantiHalaman('home-page')
             this.showNav = 'navBar'
-            getDataAllkanban()
+            this.getDataAllkanban()
             this.title = ''
             this.description = ''
         })
@@ -211,7 +216,8 @@ export default {
         })
         .then(res=>{
             this.gantiHalaman('home-page')
-            this.showNav = 'navBar'
+            this.getDataAllkanban()
+            // this.showNav = 'navBar'
         })
         .catch(err=>{
             console.log(err)
@@ -236,9 +242,9 @@ export default {
       }else if(data.status === 'product'){
         newData = 'development'
       }else if(data.status === 'development'){
-        newData.status = 'done'
+        newData = 'done'
       }else if(data.status === 'done'){
-        newData = 'development'
+        newData = 'done'
       }
       console.log(`${data.status} >>> ${newData}`)
 
@@ -251,14 +257,16 @@ export default {
           }
       })
       .then(res=>{
-        console,log(res.data)  
+        console.log(res.data)
         this.gantiHalaman('home-page')
-        this.showNav = 'navBar'
+        this.getDataAllkanban()
+        // this.showNav = 'navBar'
       })
       .catch(err=>{
           console.log(err)
       })
     },
+
     getKanbanById(data){
       let id = data
       let access_token = localStorage.acces_token
@@ -277,6 +285,28 @@ export default {
         console.log(err)
       })
 
+    },
+    editDataKanban(data){
+      let newData = data
+      let access_token = localStorage.acces_token
+      console.log(newData)
+      axios({
+        method: 'PUT',
+        url: `/tasks/${newData.id}`,
+        headers: {access_token},
+        data: {
+          title: newData.title,
+          description: newData.description
+        }
+      })
+      .then(res=>{
+        console.log(res.data)
+        this.gantiHalaman('home-page')
+        this.getDataAllkanban()
+      })
+      .catch(err=>{
+        console.log(err)
+      })
     }
   },
   created(){

@@ -3,7 +3,7 @@
       v-if="showContet === 'home-page' || showContet === 'edit-page' || showContet === 'add-page' || showContet === 'information-page'"
       id="navBar">
         <nav class="mb-1 navbar navbar-expand-lg navbar-dark secondary-color lighten-1 shadowNav bgNav">
-            <a  v-on:click.prevent="showKanban()"  class="navbar-brand" href="#"><img class="logo-nav" src="../assets/img/logoo.png" alt=""></a>
+            <a  v-on:click.prevent="showKanban"  class="navbar-brand" href="#"><img class="logo-nav" src="../assets/img/logoo.png" alt=""></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-555"
               aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>

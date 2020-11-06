@@ -39,9 +39,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     hooks: {
       beforeCreate: user=>{
-        let getImgUser = ['./img/l1.png', './img/l2.png', './img/l3.png', './img/l4.png']
-        let pick = Math.floor(Math.random()*getImgUser.length)
-        user.imgUser = getImgUser[pick]
+        let getImgUser = '../assets/img/star.png'
+        // let pick = Math.floor(Math.random()*getImgUser.length)
+        user.imgUser = getImgUser
 
         if(!user.status){
           user.status = 'backlog'

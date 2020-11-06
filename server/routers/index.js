@@ -14,9 +14,9 @@ routers.post('/tasks', KanbanConteroller.postUserKanban)
 
 console.log('masukkk routersss <<<<<<<<<<<<')
 routers.get('/tasks/:id', authorization, KanbanConteroller.getKanbanById)
-routers.put('/tasks/:id' ,authorization , KabanController.putUserKanban)
-routers.patch('/tasks/:id' ,authorization , KabanController.patchUserKanban)
-routers.delete('/tasks/:id' ,authorization , KabanController.deleteUserKanban)
+routers.put('/tasks/:id' , authorization, KabanController.putUserKanban)
+routers.patch('/tasks/:id' , authorization, KabanController.patchUserKanban)
+routers.delete('/tasks/:id' , authorization, KabanController.deleteUserKanban)
 
 
 module.exports = routers

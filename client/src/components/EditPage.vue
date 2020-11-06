@@ -7,12 +7,17 @@
                         <div class=" card-header text-center">
                             <h4>Edit You'r Project</h4>
                             <img class="logo-log" src="../assets/img/logoo.png" alt="">
-                                {{editKanban}}
                         </div>
-                        <div class=" card-footer">
-                            <form action="" method="post">
-                                <input type="text" name="title" id="" placeholder="Title" class=" my-4 input-group form-control">
-                                <input type="text" name="descriptin" id="" placeholder="Descriptin" class=" my-4 input-group form-control">
+                        <div class=" card-footer text-dark">
+                            <form @submit.prevent="editDataKanban">
+                                <input type="text" 
+                                    name="title"
+                                    placeholder="Title" 
+                                    class=" my-4 input-group form-control"    
+                                    v-model="title"
+                                >
+                                <!-- <input type="textarea" name="descriptin" id="" placeholder="Descriptin" class=" my-4 input-group form-control" v-model="description"> -->
+                                <textarea class=" form-control mb-4 h-100" v-model="description"></textarea>
                                 <button type="submit" class="btn">Submit</button>
                             </form>
                         </div>
@@ -29,11 +34,25 @@ export default {
     props: ['editKanban'],
     data(){
         return{
-
+            id: null,
+            title: '',
+            description: ''
         }
     },
     methods:{
-
+        editDataKanban(){
+            let data = {
+                id: this.id,
+                title: this.title,
+                description: this.description
+            }
+            this.$emit('editDataKanban', data)
+        }
+    },
+    created(){
+        this.id = this.editKanban.id
+        this.title = this.editKanban.title
+        this.description = this.editKanban.description
     }
 }
 </script>

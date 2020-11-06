@@ -43,13 +43,15 @@ class KanbanConteroller{
 
     static async putUserKanban(req, res, next){
         try {
+            console.log('masukk put controller <<<<<<<<<<<<<<')
             let id = +req.params.id
             let dataInput = req.body
-            let data = await Todo.update(dataInput, {
+            let data = await Kanban.update(dataInput, {
                 where: {id}
             })
             res.status(200).json(dataInput)
         } catch (err) {
+            console.log(err, '<<<<<<<<<<<<<<<<<<< error controller')
             console.log(err)
         }
     }

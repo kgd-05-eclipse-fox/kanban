@@ -18,13 +18,14 @@
                                         </div>
                                     </div>
                                     <div class="col d-flex" style="padding-left: 0%; padding-right: 0%;">
-                                    <div class="col" style="padding-left: 0%; padding-right: 0%;">
-                                        <a href="#"><img class="log-User mt-3" :src="el.imgUser" alt=""></a>
+                                    <div class="col d-flex mt-2 mx-2 justify-content-start" style="padding-left: 0%; padding-right: 0%;">
+                                        <a href="#"><img  src="../assets/img/profile.png" alt=""></a>
+                                        <a v-if="UserId == el.UserId" class=" mx-3 mt-2" href="#"><img  src="../assets/img/star.png" alt=""></a>
                                     </div>
-                                    <div class="col d-flex mt-3 text-center" style="padding: 0%;">
-                                        <a v-on:click.prevent="editBacklog(el.id)" href="#"><p class="tOption rounded bg-info mx-1 py-2 px-1">e</p></a>
-                                        <a v-on:click.prevent="deleteBacklog(el.id)" href="#"><p class="tOption rounded bg-danger mx-1 py-2 px-1">d</p></a>
-                                        <a v-on:click.prevent="upToProduct(el.status, el.id)" href="#"><p class="tOption rounded bg-success mx-1 py-2 px-1">m</p></a>
+                                    <div class="col d-flex my-3 justify-content-end" style="padding: 0%;">
+                                        <a id="icon" class="mx-2" v-on:click.prevent="deleteKanban(el.id)" href="#"><img src="../assets/img/deleteBt.png"/></a>
+                                        <a id="icon" class="mx-2" v-on:click.prevent="editKanban(el.id)"  href="#"><img  src="../assets/img/edit.png"/></a>
+                                        <a id="icon" class="mx-2" v-on:click.prevent="changeStatus(el.status, el.id)" href="#"><img src="../assets/img/move.png"/></a>
                                     </div>
                                     </div>
                                 </div>
@@ -38,7 +39,7 @@
                         <div class="c1 shadowcard overflow-auto" style="height: 70vh;">
                             <div id="board-2" class=" card-body text-light">
                                 <div v-for="el in kanban.product" :key="el.id" id="card-1" draggable="true" class=" card-body mb-2 text-center flex-column pb-0 px-0" style="border-bottom: solid;">
-                                    <div class="hvr-grow">
+                                   <div class="hvr-grow">
                                         <div class="col titleCard bg-white">
                                             {{el.title}}
                                         </div>
@@ -47,13 +48,14 @@
                                         </div>
                                     </div>
                                     <div class="col d-flex" style="padding-left: 0%; padding-right: 0%;">
-                                    <div class="col" style="padding-left: 0%; padding-right: 0%;">
-                                        <a href="#"><img class="log-User mt-3" :src="el.imgUser" alt=""></a>
+                                    <div class="col d-flex mt-2 mx-2 justify-content-start" style="padding-left: 0%; padding-right: 0%;">
+                                        <a href="#"><img  src="../assets/img/profile.png" alt=""></a>
+                                        <a v-if="UserId == el.UserId" class=" mx-3 mt-2" href="#"><img  src="../assets/img/star.png" alt=""></a>
                                     </div>
-                                    <div class="col d-flex mt-3 text-center" style="padding: 0%;">
-                                        <a v-on:click.prevent="editProduct(el.id)" href="#"><p class="tOption rounded bg-info mx-1 py-2 px-1">e</p></a>
-                                        <a v-on:click.prevent="deleteProduct(el.id)" href="#"><p class="tOption rounded bg-danger mx-1 py-2 px-1">d</p></a>
-                                        <a v-on:click.prevent="upToDevelopment(el.status, el.id)" href="#"><p class="tOption rounded bg-success mx-1 py-2 px-1">m</p></a>
+                                    <div class="col d-flex my-3 justify-content-end" style="padding: 0%;">
+                                        <a id="icon" class="mx-2" v-on:click.prevent="deleteKanban(el.id)" href="#"><img src="../assets/img/deleteBt.png"/></a>
+                                        <a id="icon" class="mx-2" v-on:click.prevent="editKanban(el.id)"  href="#"><img  src="../assets/img/edit.png"/></a>
+                                        <a id="icon" class="mx-2" v-on:click.prevent="changeStatus(el.status, el.id)" href="#"><img src="../assets/img/move.png"/></a>
                                     </div>
                                     </div>
                                 </div>
@@ -76,13 +78,14 @@
                                         </div>
                                     </div>
                                     <div class="col d-flex" style="padding-left: 0%; padding-right: 0%;">
-                                    <div class="col" style="padding-left: 0%; padding-right: 0%;">
-                                        <a href="#"><img class="log-User mt-3" :src="el.imgUser" alt=""></a>
+                                    <div class="col d-flex mt-2 mx-2 justify-content-start" style="padding-left: 0%; padding-right: 0%;">
+                                        <a href="#"><img  src="../assets/img/profile.png" alt=""></a>
+                                        <a v-if="UserId == el.UserId" class=" mx-3 mt-2" href="#"><img  src="../assets/img/star.png" alt=""></a>
                                     </div>
-                                    <div class="col d-flex mt-3 text-center" style="padding: 0%;">
-                                        <a v-on:click.prevent="editDevelopment(el.id)"  href="#"><p class="tOption rounded bg-info mx-1 py-2 px-1">e</p></a>
-                                        <a v-on:click.prevent="deleteDevelopment(el.id)"  href="#"><p class="tOption rounded bg-danger mx-1 py-2 px-1">d</p></a>
-                                        <a v-on:click.prevent="upToDone(el.status, el.id)" href="#"><p class="tOption rounded bg-success mx-1 py-2 px-1">m</p></a>
+                                    <div class="col d-flex my-3 justify-content-end" style="padding: 0%;">
+                                        <a id="icon" class="mx-2" v-on:click.prevent="deleteKanban(el.id)" href="#"><img src="../assets/img/deleteBt.png"/></a>
+                                        <a id="icon" class="mx-2" v-on:click.prevent="editKanban(el.id)"  href="#"><img  src="../assets/img/edit.png"/></a>
+                                        <a id="icon" class="mx-2" v-on:click.prevent="changeStatus(el.status, el.id)" href="#"><img src="../assets/img/move.png"/></a>
                                     </div>
                                     </div>
                                 </div>
@@ -105,13 +108,14 @@
                                         </div>
                                     </div>
                                     <div class="col d-flex" style="padding-left: 0%; padding-right: 0%;">
-                                    <div class="col" style="padding-left: 0%; padding-right: 0%;">
-                                        <a href="#"><img class="log-User mt-3" :src="el.imgUser" alt=""></a>
+                                    <div class="col d-flex mt-2 mx-2 justify-content-start" style="padding-left: 0%; padding-right: 0%;">
+                                        <a href="#"><img  src="../assets/img/profile.png" alt=""></a>
+                                        <a v-if="UserId == el.UserId" class=" mx-3 mt-2" href="#"><img  src="../assets/img/star.png" alt=""></a>
                                     </div>
-                                    <div class="col d-flex mt-3 text-center" style="padding: 0%;">
-                                        <a v-on:click.prevent="editDone(el.id)" href="#"><p class="tOption rounded bg-info mx-1 py-2 px-1">e</p></a>
-                                        <a v-on:click.prevent="deleteDone(el.id)" href="#"><p class="tOption rounded bg-danger mx-1 py-2 px-1">d</p></a>
-                                        <a v-on:click.prevent="downToDevelopment(el.status, el.id)" href="#"><p class="tOption rounded bg-success mx-1 py-2 px-1">m</p></a>
+                                    <div class="col d-flex my-3 justify-content-end" style="padding: 0%;">
+                                        <a id="icon" class="mx-2" v-on:click.prevent="deleteKanban(el.id)" href="#"><img src="../assets/img/deleteBt.png"/></a>
+                                        <a id="icon" class="mx-2" v-on:click.prevent="editKanban(el.id)"  href="#"><img  src="../assets/img/edit.png"/></a>
+                                        <a id="icon" class="mx-2" v-on:click.prevent="changeStatus(el.status, el.id)" href="#"><img src="../assets/img/move.png"/></a>
                                     </div>
                                     </div>
                                 </div>
@@ -133,10 +137,10 @@ export default {
         }
     },
     methods: {
-        upToProduct(status, id){
+        changeStatus(status, id){
             let data = {
-                status: status,
-                id: id
+                id: id,
+                status: status
             }
             this.$emit('GoUpdate', data)
         },
@@ -161,7 +165,7 @@ export default {
             }
             this.$emit('GoUpdate', data)
         },
-        deleteBacklog(data){
+        deleteKanban(data){ //===========
             this.$emit('deleteBacklog', data)
         },
         deleteProduct(data){
@@ -173,7 +177,7 @@ export default {
         deleteDone(data){
             this.$emit('deleteDone', data)
         },
-        editBacklog(id){
+        editKanban(id){ //=================
             this.$emit('editKanban', id)
         },
         editProduct(id){
