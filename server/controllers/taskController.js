@@ -25,5 +25,45 @@ class Controller {
             res.status(500).json("Internal Server Error")
         }
     }
+
+    static async editTask(req, res, next) {
+        try {
+            const id = Number(req.body.id)
+            const payload = {
+                title: req.body.title,
+                description: req.body.description
+            }
+            const task = await Task.update(payload, {
+                where: {
+                    id: id
+                },
+                returning: true
+            })
+            if(task[0] == 0) {
+                throw { name: "Not Found" }
+            } else {
+                res.status(200).json(task[1][0])
+            }
+        } catch (error) {
+            res.status(500).json("Internal Server Error")
+        }
+    }
+
+    static async deleteTask(req, res, next) {
+        try {
+            const task = await Task.destroy({
+                where: {
+                    id: req.body.id
+                }
+            })
+            if(task == 0) {
+                throw { name: "Not Found" }
+            } else {
+                res.status(200).json({ message: 'To do success delete' })
+            }
+        } catch (error) {
+            res.status(500).json("Internal Server Error")
+        }
+    }
 }
 module.exports = Controller

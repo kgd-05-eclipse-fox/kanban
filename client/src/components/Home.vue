@@ -11,6 +11,8 @@
                     :key="i"
                     :category="cat"
                     :allTask="allTask"
+                    @changePage="toEditPage"
+                    @deleteTask="deleteTask"
                 ></TaskCategory>
             </div>
         </div>
@@ -28,10 +30,19 @@ export default {
     props: ['categories', 'allTask'],
     methods: {
         toAddPage() {
-            this.$emit('changePage', 'AddPage')
+            let payload = {
+                pageName: "AddPage"
+            }
+            this.$emit('changePage', payload)
         },
         logoutUser() {
             this.$emit('logout', 'LoginPage')
+        },
+        toEditPage(payload) {
+            this.$emit('changePage', payload)
+        },
+        deleteTask(id) {
+            this.$emit('deleteTask', id)
         }
     }
 }

@@ -10,6 +10,7 @@
             :categories="categories"
             :allTask="task"
             @changePage="changePage"
+            @deleteTask="deleteTask"
             @logout="logoutUser"
         ></HomePage>
        <AddTask
@@ -18,6 +19,11 @@
             @logout="logoutUser"
             @addTask="addNewTask"
         ></AddTask>
+        <EditTask
+            v-else-if="pageName === 'EditPage'"
+            :updatedTask="updatedTask"
+            @updateTask="updateTask"
+        ></EditTask>
     </div>
 </template>
 
@@ -25,6 +31,7 @@
 import LoginPage from "./components/Login"
 import HomePage from "./components/Home"
 import AddTask from "./components/AddTask"
+import EditTask from "./components/EditTask"
 import axios from "./config/axios"
 
 export default {
@@ -51,15 +58,21 @@ export default {
                     bg: "bg-success"
                 }
             ],
-            task: null
+            task: [],
+            updatedTask: {}
         };
     },
     components: {
-        LoginPage, HomePage, AddTask
+        LoginPage, HomePage, AddTask, EditTask
     },
     methods: {
         changePage(name) {
-            this.pageName = name
+            if(name.pageName == "EditPage") {
+                this.pageName = name.pageName
+                this.updatedTask = name.task
+            } else {
+                this.pageName = name.pageName
+            }
         },
         signUpUser(payload) {
             // console.log(payload)
@@ -92,7 +105,8 @@ export default {
             .then(({ data }) => {
                 let token = data.access_token
                 localStorage.setItem('token', token)
-                this.pageName = 'HomePage'
+                this.fetchTask()
+                this.changePage('HomePage')
             })
             .catch(err => {
                 console.log(err)
@@ -102,6 +116,7 @@ export default {
             localStorage.removeItem('token')
             this.pageName = 'LoginPage'
         },
+        
         fetchTask() {
             let token = localStorage.getItem('token')
             axios({
@@ -124,11 +139,52 @@ export default {
                 headers: {token},
                 data: {
                     title: payload.title,
-                    description: payload.title
+                    description: payload.description
+                }
+            })
+            .then(({ data }) => {
+                this.fetchTask()
+                this.pageName = 'HomePage'
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        },
+
+        updateTask(payload){
+            let token = localStorage.getItem('token')
+            axios({
+                method: "PUT",
+                url: '/task/edit',
+                headers: {token},
+                data: {
+                    id: payload.id,
+                    title: payload.title,
+                    description: payload.description
                 }
             })
             .then(({ data }) => {
                 console.log(data)
+                this.fetchTask()
+                this.pageName = 'HomePage'
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        },
+        deleteTask(id) {
+            let token = localStorage.getItem('token')
+            axios({
+                method: "DELETE",
+                url: '/task/delete',
+                headers: {token},
+                data: {
+                    id
+                }
+            })
+            .then(({ data }) => {
+                this.fetchTask()
+                this.pageName = 'HomePage'
             })
             .catch(err => {
                 console.log(err)
@@ -138,8 +194,8 @@ export default {
     created() {
         let token = localStorage.getItem('token')
         if(token) {
-            this.pageName = 'HomePage'
             this.fetchTask()
+            this.pageName = 'HomePage'
         } else {
             this.pageName = 'LoginPage'
         }

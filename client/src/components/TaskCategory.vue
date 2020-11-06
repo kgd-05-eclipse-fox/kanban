@@ -7,6 +7,8 @@
                     v-for="task in filterTask"
                     :key="task.id"
                     :task="task"
+                    @changePage="changePage"
+                    @deleteTask="deleteTask"
                 ></TaskCard>
             </div>
         </div>
@@ -24,6 +26,14 @@ export default {
     computed: {
         filterTask() {
             return this.allTask.filter(task => task.category == this.category.name)
+        }
+    },
+    methods: {
+        changePage(payload) {
+            this.$emit('changePage', payload)
+        },
+        deleteTask(id) {
+            this.$emit('deleteTask', id)
         }
     }
 }
