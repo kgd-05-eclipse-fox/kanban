@@ -14,7 +14,7 @@
                     v-for="task in categoryTask" :key="task.id"
                     :oneTask="task"
                     :type="type"
-                    @editTask="editTask"
+                    @editTaskPage="editTaskPage"
                     @deleteTask="deleteTask"
                 >
                 </Task>
@@ -46,8 +46,8 @@ export default {
 
             this.$emit('updateTask', payload)
         },
-        editTask(payload) {
-            this.$emit('editTask', payload)
+        editTaskPage(payload) {
+            this.$emit('editTaskPage', payload)
         },
         deleteTask(id) {
             this.$emit('deleteTask', id)

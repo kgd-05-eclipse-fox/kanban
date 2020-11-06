@@ -9,13 +9,17 @@
             @github="github"
         ></LoginPage>
         <KanbanPage
-            v-else-if="pageRender == 'kanban-page'"
+            v-else-if="pageRender == 'kanban-page' || pageRender == 'add-task' || pageRender == 'edit-task'"
             :tasks="tasks"
             :boards="boards"
             :user="user"
+            :pageRender="pageRender"
+            :editTaskData="editTaskData"
             @addTask="addTask"
+            @changePage="changePage"
             @updateTask="updateTask"
             @editTask="editTask"
+            @editTaskPage="editTaskPage"
             @deleteTask="deleteTask"
             @logout="logout"
         ></KanbanPage>
@@ -62,7 +66,8 @@ export default {
                     bg:'bg-success',
                     img: require('../src/assets/img/done.png')
                 }
-            ]
+            ],
+            editTaskData: {}
         }
     },
     components: {
@@ -119,51 +124,9 @@ export default {
                     console.log(err)
                 })
         },
-        addTask() {
+        changePage(pageName) {
             const access_token = localStorage.getItem('access_token')
-
-            Swal.fire({
-                title: 'Add Task',
-                html: `<input type="title" id="title" class="swal2-input" placeholder="Title" value="">
-                <input type="description" id="description" class="swal2-input" placeholder="Description" value="">`,
-                confirmButtonText: 'Add',
-                focusConfirm: false,
-                preConfirm: () => {
-                    const title = Swal.getPopup().querySelector('#title').value
-                    const description = Swal.getPopup().querySelector('#description').value
-                    if (!title || !description) {
-                    Swal.showValidationMessage(`Please complete all forms`)
-                    }
-                    return { title: title, description: description }
-                }
-                })
-                    .then(result => {
-                        axios({
-                            method: 'POST',
-                            url: '/kanban',
-                            headers: {
-                                access_token: access_token
-                            },
-                            data: {
-                                title: result.value.title,
-                                description: result.value.description
-                            }
-                        })
-                            .then(({ data }) => {
-                                this.fetchTask()
-                                Toast.fire({
-                                    icon: 'success',
-                                    title: data.msg
-                                })
-                            })
-                            .catch(err => {
-                                Swal.fire({
-                                    title: `Oopss..`,
-                                    text: err.response.data.message,
-                                    icon: `error`
-                                })
-                            })
-                    })
+            this.pageRender = pageName
         },
         updateTask(payload) {
             const { itemID, newStatus } = payload
@@ -190,52 +153,67 @@ export default {
                     })
                 })
         },
-        editTask(payload) {
-            const { id } = payload
+        addTask(payload) {
             const access_token = localStorage.getItem('access_token')
-
-            Swal.fire({
-                title: 'Edit Task',
-                html: `<input type="title" id="title" class="swal2-input" placeholder="Title" value="${payload.title}">
-                <input type="description" id="description" class="swal2-input" placeholder="Description" value="${payload.description}">`,
-                confirmButtonText: 'Edit',
-                focusConfirm: false,
-                preConfirm: () => {
-                    const title = Swal.getPopup().querySelector('#title').value
-                    const description = Swal.getPopup().querySelector('#description').value
-                    if (!title || !description) {
-                    Swal.showValidationMessage(`Please complete all forms`)
-                    }
-                    return { title: title, description: description }
-                }
-                })
-                    .then(result => {
-                        axios({
-                            method: 'PUT',
-                            url: '/kanban/' + id,
-                            headers: {
-                                access_token: access_token
-                            },
-                            data: {
-                                title: result.value.title,
-                                description: result.value.description
-                            }
-                        })
-                            .then(({ data }) => {
-                                this.fetchTask()
-                                Toast.fire({
-                                    icon: 'success',
-                                    title: data.msg
-                                })
-                            })
-                            .catch(err => {
-                                Swal.fire({
-                                    title: `Oopss..`,
-                                    text: err.response.data.message,
-                                    icon: `error`
-                                })
-                            })
+            axios({
+                method: 'POST',
+                url: '/kanban',
+                headers: {
+                    access_token: access_token
+                },
+                data: payload
+            })
+                .then( _ => {
+                    this.fetchTask()
+                    Toast.fire({
+                        title: 'Success Add Task!',
+                        icon: 'success'
                     })
+                })
+                .catch(err => {
+                    Swal.fire({
+                        title: `Oopss..`,
+                        text: err.response.data.message,
+                        icon: `error`
+                    })
+                })
+        },
+        editTaskPage(payload) {
+            this.editTaskData = {
+                id: payload.id,
+                title: payload.title,
+                description: payload.description
+            }
+            this.pageRender = 'edit-task'
+        },
+        editTask(payload) {
+            const access_token = localStorage.getItem('access_token')
+            const { id, title, description } = payload
+            axios({
+                method: 'PUT',
+                url: '/kanban/' + id,
+                headers: {
+                    access_token: access_token
+                },
+                data: {
+                    title: title,
+                    description: description
+                }
+            })
+                .then(({ data }) => {
+                    this.fetchTask()
+                    Toast.fire({
+                        icon: 'success',
+                        title: data.msg
+                    })
+                })
+                .catch(err => {
+                    Swal.fire({
+                        title: `Oopss..`,
+                        text: err.response.data.message,
+                        icon: `error`
+                    })
+                })
         },
         deleteTask(id) {
             const access_token = localStorage.getItem('access_token')

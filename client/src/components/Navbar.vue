@@ -8,10 +8,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                <a class="go-home nav-link" href="/" @click.prevent="showHome">Home <span class="sr-only">(current)</span></a>
+                <a class="go-home nav-link" href="/" @click.prevent="changePage('kanban-page')">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="add-kanban nav-link" href="/" @click.prevent="addTask">Add Task <span class="sr-only">(current)</span></a>
+                    <a class="add-kanban nav-link" v-b-modal.modal-prevent-closing href="/" @click.prevent="changePage('add-task')">Add Task <span class="sr-only">(current)</span></a>
                 </li>
             </ul>
             <!-- Logout -->
@@ -37,6 +37,9 @@
             },
             logout() {
                 this.$emit('logout')
+            },
+            changePage(pageName) {
+                this.$emit('changePage', pageName)
             }
         }
     }

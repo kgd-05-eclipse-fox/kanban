@@ -11,7 +11,7 @@
                 <b>By:</b> {{ oneTask.User.email }}<br>
                 <b>Created:</b> {{ oneTask.createdAt }}
             </p>
-            <a href="/" class="card-link" @click.prevent="editTask"><font-awesome-icon icon="edit" :class="type" /></a>
+            <a href="/" class="card-link" v-b-modal.modal-prevent-closing @click.prevent="editTaskPage"><font-awesome-icon icon="edit" :class="type" /></a>
             <a href="/" class="card-link" @click.prevent="deleteTask"><font-awesome-icon icon="trash-alt" :class="type" /></a>
         </div>
     </div>
@@ -27,8 +27,8 @@ export default {
             evt.dataTransfer.dropEffect = 'move'
             evt.dataTransfer.effectAllowed = 'move'
         },
-        editTask() {
-            this.$emit('editTask', this.oneTask)
+        editTaskPage() {
+            this.$emit('editTaskPage', this.oneTask)
         },
         deleteTask() {
             this.$emit('deleteTask', this.oneTask.id)
