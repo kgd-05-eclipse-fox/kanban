@@ -7,6 +7,7 @@
                     v-for="task in filterTask"
                     :key="task.id"
                     :task="task"
+                    :userId="userId"
                     @changePage="changePage"
                     @deleteTask="deleteTask"
                     @updateCategory="updateCategory"
@@ -23,7 +24,7 @@ export default {
     components: {
         TaskCard
     },
-    props: ['category', 'allTask'],
+    props: ['category', 'allTask', 'userId'],
     computed: {
         filterTask() {
             return this.allTask.filter(task => task.category == this.category.name)

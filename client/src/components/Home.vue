@@ -11,6 +11,7 @@
                     :key="i"
                     :category="cat"
                     :allTask="allTask"
+                    :userId="userId"
                     @changePage="toEditPage"
                     @deleteTask="deleteTask"
                     @updateCategory="updateCategory"
@@ -28,7 +29,7 @@ export default {
     components: {
         Navbar, TaskCategory
     },
-    props: ['categories', 'allTask'],
+    props: ['categories', 'allTask', 'userId'],
     methods: {
         toAddPage() {
             let payload = {

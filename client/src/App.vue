@@ -3,12 +3,14 @@
        <LoginPage
             v-if="pageName === 'LoginPage'"
             @login="loginUser"
+            @loginGoogle="loginUserGoogle"
             @signUp="signUpUser"
         ></LoginPage>
        <HomePage
             v-else-if="pageName === 'HomePage'" 
             :categories="categories"
             :allTask="task"
+            :userId="userId"
             @changePage="changePage"
             @deleteTask="deleteTask"
             @updateCategory="updateCategory"
@@ -61,7 +63,8 @@ export default {
                 }
             ],
             task: [],
-            updatedTask: {}
+            updatedTask: {},
+            userId: 0
         };
     },
     components: {
@@ -105,10 +108,34 @@ export default {
                 }
             })
             .then(({ data }) => {
+                let id = data.id
                 let token = data.access_token
                 localStorage.setItem('token', token)
+                localStorage.setItem('id', id)
+                this.userId = localStorage.getItem('id')
                 this.fetchTask()
-                this.changePage('HomePage')
+                this.pageName = 'HomePage'
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        },
+        loginUserGoogle(googleToken) {
+            axios({
+                method: "POST",
+                url: "/users/loginGoogle",
+                data: {
+                    googleToken: googleToken
+                }
+            })
+            .then(({ data }) => {
+                let id = data.id
+                let token = data.access_token
+                localStorage.setItem('token', token)
+                localStorage.setItem('id', id)
+                this.userId = localStorage.getItem('id')
+                this.fetchTask()
+                this.pageName = 'HomePage'
             })
             .catch(err => {
                 console.log(err)
@@ -116,6 +143,7 @@ export default {
         },
         logoutUser() {
             localStorage.removeItem('token')
+            localStorage.removeItem('id')
             this.pageName = 'LoginPage'
         },
         

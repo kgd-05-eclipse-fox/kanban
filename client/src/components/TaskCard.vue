@@ -3,9 +3,9 @@
         <div class="card-body">
             <h5 class="card-title">{{ task.title }}</h5>
             <p class="card-text">{{ task.description }}</p>
-            <a href="#" class="card-link" @click="editTask" v-if="task.category !== 'Done'"><i class="fa fa-edit"></i></a>
-            <a href="#" class="card-link" @click="deleteTask"><i class="fa fa-trash"></i></a>
-            <a href="#" class="card-link" @click="updateCategory" v-if="task.category !== 'Done'"><i class="fa fa-check"></i></a>
+            <a href="#" class="card-link" @click="editTask" v-if="task.category !== 'Done' && task.UserId == userId"><i class="fa fa-edit"></i></a>
+            <a href="#" class="card-link" @click="deleteTask" v-if="task.UserId == userId"><i class="fa fa-trash"></i></a>
+            <a href="#" class="card-link" @click="updateCategory" v-if="task.category !== 'Done' && task.UserId == userId"><i class="fa fa-check"></i></a>
         </div>
     </div>
 </template>
@@ -13,7 +13,7 @@
 <script>
 export default {
     name: "TaskCard",
-    props: ['task'],
+    props: ['task', 'userId'],
     methods: {
         editTask() {
             let payload = {
