@@ -120,12 +120,12 @@ export default {
                 console.log(err)
             })
         },
-        loginUserGoogle(googleToken) {
+        loginUserGoogle(id_token) {
             axios({
                 method: "POST",
                 url: "/users/loginGoogle",
                 data: {
-                    googleToken: googleToken
+                    googleToken: id_token
                 }
             })
             .then(({ data }) => {
@@ -141,9 +141,16 @@ export default {
                 console.log(err)
             })
         },
+        logoutUserGoogle() {
+                var auth2 = gapi.auth2.getAuthInstance();
+                auth2.signOut().then(function () {
+                console.log('User signed out.');
+            });
+        },
         logoutUser() {
             localStorage.removeItem('token')
             localStorage.removeItem('id')
+            this.logoutUserGoogle()
             this.pageName = 'LoginPage'
         },
         

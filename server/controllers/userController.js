@@ -68,17 +68,21 @@ class Controller {
             })
         })
         .then(user => {
+            // console.log(user)
             if(user !== null) {
                 return user
             } else {
                 let newUser = {
                     email,
+                    firstName: "User",
+                    lastName: "Google",
                     password: "hanfarhan22"
                 }
                 return User.create(newUser)
             }
         })
         .then(data => {
+            console.log(data)
             let payload = { id: data.id, email: data.email }
             let token = getToken(payload)
             res.status(200).json({ access_token: token})
