@@ -1,21 +1,24 @@
 <template>
 <div>
-    <div class="card card-bordered py-2 mb-2">
+    <div class="card card-bordered py-2 mb-2 shadow"
+        draggable
+        @dragstart="startDrag($event, task)">
         <div class="card-body">
             <h6 class="card-title">{{task.title}}</h6>
             <hr>
             <p class="card-text">
                 {{task.description}} <br>
-                <span class="text-muted">createdBy: {{task.User.email}}</span>
+                <span class="text-muted">createdBy: {{task.User.email}}</span> <br>
+                <span class="text-muted">{{convertDate}}</span>
             </p>
             <div class="d-flex container" style="justify-content: space-between;">
                 <div>
-                    <i @click.prevent="updateTask(task.id)" class="fas fa-pencil-alt text-muted"></i>
-                    <i @click.prevent="deleteTask(task.id)" class="fas fa-trash text-muted"></i>
+                    <i @click.prevent="updateTask(task.id)" class="fas fa-pencil-alt text-muted" :class="hide"></i>
+                    <i @click.prevent="deleteTask(task.id)" class="fas fa-trash text-muted" :class="hide"></i>
                 </div>
                 <div>
                     <i class="fas fa-arrows-alt text-muted dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"></i>
+                        aria-expanded="false" :class="hide"></i>
                     <div class="dropdown-menu">
                         <a @click.prevent="changeCategory(task.id, dropdown[0])" href="#" class="dropdown-item">Move to
                             {{dropdown[0]}}</a>
@@ -33,7 +36,7 @@
 
 <script>
 export default {
-    name: 'Task',
+    name: 'TaskCard',
     data() {
         return {
             selected: {
@@ -62,13 +65,34 @@ export default {
             }
             this.$emit('updateTask', payload)
         },
+        startDrag(e, task) {
+            e.dataTransfer.setData('taskID', task.id)
+            e.dataTransfer.dropEffect = 'move'
+            e.dataTransfer.effectAllowed = 'move'
+        }
     },
-    props: ['kanban', 'task', 'dropdown']
+    props: ['kanban', 'task', 'dropdown', 'loggedIn'],
+    computed: {
+        convertDate() {
+            function pad(s) { return (s < 10) ? '0' + s : s; }
+            var d = new Date(this.task.createdAt)
+            return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/')
+        },
+        hide() {
+            const UserId = this.loggedIn.user.id
+            if (this.task.UserId !== +UserId) {
+                return 'hidden'
+            }
+        }
+    }
 }
 </script>
 
 <style>
 span{
     font-size: 12px;
+}
+.hidden{
+    opacity: 0;
 }
 </style>

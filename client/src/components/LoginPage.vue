@@ -20,7 +20,7 @@
                     <br>
                     <div class="container d-flex" style="justify-content: space-between;">
                         <button class="btn btn-outline-primary" type="submit">Login</button>
-                        <button v-google-signin-button="clientId" class="google-signin-button"><i class="fab fa-google"></i></button>
+                        <div v-google-signin-button="clientId" class="google-signin-button"><i class="fab fa-google"></i></div>
                     </div>
                 </form>
             </div>
@@ -30,7 +30,7 @@
 
 <script>
 export default {
-    name: 'Login',
+    name: 'LoginPage',
     data() {
         return {
             user: {
@@ -58,6 +58,8 @@ export default {
 
 <style>
 .google-signin-button {
+    padding-top: 15px;
+    padding-left: 17px;
     color: white;
     background-color: red;
     height: 50px;

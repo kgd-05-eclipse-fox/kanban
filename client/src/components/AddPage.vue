@@ -2,7 +2,7 @@
     <section class="container-fluid" id="add_task">
         <div class="mt-5">
             <div class="shadow bg-white rounded p-5 mb-5">
-                <h5 class="mb-4"><b>add a new task</b></h5>
+                <h5 class="mb-4"><b>Add A New Task</b></h5>
                 <form @submit.prevent="addTask">
                     <div class="form-group">
                         <label for="add_title">Title</label>

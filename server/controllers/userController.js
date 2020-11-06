@@ -105,7 +105,12 @@ class UserController {
                 id: data.id,
                 email: data.email
             })
-            return res.status(200).json({access_token, email: data.email})
+            const userdata = {
+                id: data.id,
+                email: data.email,
+                username: data.username
+            }
+            return res.status(200).json({access_token, user: userdata})
         })
         .catch(err => {
             next(err)

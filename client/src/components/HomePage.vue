@@ -11,6 +11,7 @@
                     :key="i"
                     :cat='el'
                     :kanban='kanban'
+                    :loggedIn='loggedIn'
                     @changeCategory='changeCategory'
                     @deleteTask='deleteTask'
                     @updateTask='updateTask'>
@@ -28,24 +29,28 @@ export default {
         return {
             category: [
                 {
+                    id: 1,
                     name: 'Back Log',
                     called: 'backlog',
                     color: 'bg-bl',
                     dropdown: ['todo', 'progress', 'completed']
                 },
                 {
+                    id:2,
                     name: 'To Do',
                     called: 'todo',
                     color: 'bg-td',
                     dropdown: ['backlog', 'progress', 'completed']
                 },
                 {
+                    id: 3,
                     name: 'Progress',
                     called: 'progress',
                     color: 'bg-pg',
                     dropdown: ['backlog', 'todo', 'completed']
                 },
                 {
+                    id: 4,
                     name: 'Completed',
                     called: 'completed',
                     color: 'bg-cm',
@@ -71,7 +76,7 @@ export default {
             this.$emit('updateTask', payload)
         }
     },
-    props: ['kanban']
+    props: ['kanban', 'loggedIn']
 }
 </script>
 

@@ -1,30 +1,24 @@
 <template>
   <div>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark shadow"
-            style="justify-content: space-between;">
-            <div>
-                <a class="navbar-brand text-light"><strong>KANBAN</strong></a>
-                <a @click.prevent="changePage('register-page')" v-show="!loggedIn.status" href="#" class="navbar-brand text-light">Register</a>
-                <a @click.prevent="changePage('login-page')" v-show="!loggedIn.status" href="#" class="navbar-brand text-light">Login</a>
-                <a @click.prevent="changePage('home-page')" v-show="loggedIn.status" href="#" class="navbar-brand text-light">{{loggedIn.user}}</a>
-            </div>
-            <div>
-                <a v-show="loggedIn.status" @click.prevent="logout" href="#" class="navbar-brand text-danger">Logout</a>
-            </div>
-        </nav>
-        <Register 
+        <NavBar
+            :loggedIn='loggedIn'
+            @changePage='changePage'
+            @logout='logout'>
+        </NavBar>
+        <RegisterPage 
             v-if="pageName === 'register-page'"
             @googleSignIn='googleSignIn'
             @register="register">
-        </Register>
-        <Login 
+        </RegisterPage>
+        <LoginPage 
             v-else-if="pageName === 'login-page'"
             @login="login"
             @googleSignIn='googleSignIn'>
-        </Login>
+        </LoginPage>
         <HomePage 
             v-else-if="pageName === 'home-page'"
             :kanban="kanban"
+            :loggedIn='loggedIn'
             @changeCategory="changeCategory"
             @changePage='changePage'
             @deleteTask='deleteTask'
@@ -50,8 +44,9 @@ const Toast = Swal.mixin({
         toast.addEventListener('mouseleave', Swal.resumeTimer)
     }
 })
-import Register from './components/Register'
-import Login from './components/Login'
+import NavBar from './components/NavBar'
+import RegisterPage from './components/RegisterPage'
+import LoginPage from './components/LoginPage'
 import HomePage from './components/HomePage'
 import AddPage from './components/AddPage'
 import axios from './config/axios'
@@ -63,14 +58,15 @@ export default {
             pageName: 'register-page',
             loggedIn: {
                 status: false,
-                user: null
+                user: null,
+                username: null
             },
             kanban: [],
 
         }
     },
     components: {
-        Register, Login, HomePage, AddPage
+        RegisterPage, LoginPage, HomePage, AddPage, NavBar
     },
     methods: {
         changePage(name) {
@@ -107,18 +103,19 @@ export default {
             })
             .then(response => {
                 const access_token = response.data.access_token
-                const user = response.data.user.username
+                const user = response.data.user
                 this.pageName = 'home-page'
 
                 localStorage.setItem('access_token', access_token)
-                localStorage.setItem('user', user)
+                localStorage.setItem('user', JSON.stringify(user, null, 2))
 
                 this.loggedIn.status = true
-                this.loggedIn.user = localStorage.user
+                this.loggedIn.user = JSON.parse(localStorage.user)
+                this.loggedIn.username = JSON.parse(localStorage.user).username
 
                 Toast.fire({
                     icon: 'success',
-                    title: `Welcome ${user}`
+                    title: `Welcome ${user.username}`
                 })
                 this.fetchKanban()
             })
@@ -138,15 +135,16 @@ export default {
             })
             .then(response => {
                 const access_token = response.data.access_token
-                const user = response.data.user.username
+                const user = response.data.user
 
                 localStorage.setItem('access_token', access_token)
-                localStorage.setItem('user', user)
+                localStorage.setItem('user', JSON.stringify(user, null, 2))
 
                 this.pageName = 'home-page'
 
                 this.loggedIn.status = true
-                this.loggedIn.user = localStorage.getItem('user')
+                this.loggedIn.user = JSON.parse(localStorage.user)
+                this.loggedIn.username = JSON.parse(localStorage.user).username
 
                 Toast.fire({
                     icon: 'success',
@@ -171,18 +169,18 @@ export default {
             })
             .then(({data}) => {
                 const access_token = data.access_token
-                const user = data.email.substring(0, data.email.indexOf('@'))
+                const user = data.user
                 
                 localStorage.setItem('access_token', access_token)
-                localStorage.setItem('user', user)
+                localStorage.setItem('user', JSON.stringify(user, null, 2))
                 
                 this.pageName = 'home-page'
-                this.loggedIn.status = true
-                this.loggedIn.user = localStorage.user
+                this.loggedIn.user = JSON.parse(localStorage.user)
+                this.loggedIn.username = JSON.parse(localStorage.user).username
 
                 Toast.fire({
                     icon: 'success',
-                    title: `Welcome ${user}`
+                    title: `Welcome ${user.username}`
                 })
                 this.fetchKanban()
             })
@@ -223,8 +221,8 @@ export default {
                     icon: 'success',
                     title: `${data.title} moved to ${payload.category}`
                 })
+                console.log(this.kanban)
                 this.fetchKanban()
-                this.socketio()
             })
             .catch(err => {
                 Swal.fire({
@@ -338,13 +336,14 @@ export default {
                     })
                 }
             })
-        }
+        },
     },
     created() {
         if (localStorage.access_token) {
             this.pageName = 'home-page'
             this.loggedIn.status = true
-            this.loggedIn.user = localStorage.getItem('user')
+            this.loggedIn.user = JSON.parse(localStorage.user)
+            this.loggedIn.username = JSON.parse(localStorage.user).username
 
             this.fetchKanban()
         } else {

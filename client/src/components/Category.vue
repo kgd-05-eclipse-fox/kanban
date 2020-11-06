@@ -4,30 +4,35 @@
             <div style="height: 3em;" class="card-head" :class="cat.color">
                 <h5 class="text-left ml-2 mt-2 text-light">{{cat.name}}</h5>
             </div>
-            <div class="card-body overflow-auto" style="height:60vh">
-                <Task
+            <div class="card-body overflow-auto" style="height:60vh"
+                @drop="onDrop($event, cat)"
+                @dragover.prevent
+                @dragenter.prevent>
+
+                <TaskCard
                     v-for="task in filterCategory"
                     :key='task.id'
                     :task='task'
+                    :loggedIn='loggedIn'
                     :dropdown='cat.dropdown'
                     @changeCategory="changeCategory"
                     @deleteTask='deleteTask'
                     @updateTask='updateTask'>
-                </Task>
+                </TaskCard>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import Task from './Task'
+import TaskCard from './TaskCard'
 
 export default {
     name: 'Category',
     components: {
-        Task
+        TaskCard
     },
-    props: ['cat', 'kanban'],
+    props: ['cat', 'kanban','loggedIn'],
     methods: {
         changeCategory(payload) {
             this.$emit('changeCategory', payload)
@@ -37,6 +42,17 @@ export default {
         },
         updateTask(payload) {
             this.$emit('updateTask', payload)
+        },
+        onDrop(e, category) {
+            const taskID = +e.dataTransfer.getData('taskID')
+            const task = this.kanban.find(el => el.id == taskID)
+
+            const payload = {
+                id: taskID,
+                category: category.called
+            }
+            
+            this.$emit('changeCategory', payload)
         }
     },
     computed: {
