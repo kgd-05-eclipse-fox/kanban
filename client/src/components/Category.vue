@@ -45,7 +45,6 @@ export default {
         },
         onDrop(e, category) {
             const taskID = +e.dataTransfer.getData('taskID')
-            const task = this.kanban.find(el => el.id == taskID)
 
             const payload = {
                 id: taskID,
