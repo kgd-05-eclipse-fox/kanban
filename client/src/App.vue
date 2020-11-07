@@ -62,9 +62,9 @@ export default {
 						timer: 1500
 					})
 					localStorage.setItem('token', data.token)
+					this.setUser(data.email)
 					this.showingPage = 'kanban'
 					this.showAllTask()
-					localStorage.setItem('email', data.email)
 				})
 				.catch(err => {
 					Swal.fire({
