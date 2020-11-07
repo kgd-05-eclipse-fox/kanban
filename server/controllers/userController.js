@@ -4,7 +4,7 @@ const { getToken } = require('../helpers/jwt')
 const {OAuth2Client} = require('google-auth-library')
 
 class Controller {
-    static async registerUser(req, res){
+    static async registerUser(req, res, next){
         try {
             const payload = {
                 firstName: req.body.firstName,
@@ -14,8 +14,9 @@ class Controller {
             }
             const result = await User.create(payload)
             res.status(201).json({id: result.id, email: result.email})
-        } catch (error) {
-            res.status(500).json("Internal Server Error")
+        } catch (err) {
+            next(err)
+            // res.status(500).json(err)
         }
     }
 
@@ -45,7 +46,8 @@ class Controller {
                 throw { name: "Wrong Data" }
             }
         } catch (error) {
-            res.status(500).json("Internal Server Error")
+            next(error)
+            // res.status(500).json("Internal Server Error")
         }
     }
 
@@ -88,7 +90,8 @@ class Controller {
             res.status(200).json({ access_token: token})
         })
         .catch(err => {
-            res.status(500).json("Internal Server Error")
+            next(err)
+            // res.status(500).json("Internal Server Error")
         })
     }
 }

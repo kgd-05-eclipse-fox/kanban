@@ -22,7 +22,7 @@ class Controller {
             const task = await Task.create(payload)
             res.status(201).json(task)
         } catch(err) {
-            res.status(500).json("Internal Server Error")
+            next(err)
         }
     }
 
@@ -45,7 +45,7 @@ class Controller {
                 res.status(200).json(task[1][0])
             }
         } catch (error) {
-            res.status(500).json("Internal Server Error")
+            next(error)
         }
     }
 
@@ -62,7 +62,7 @@ class Controller {
                 res.status(200).json({ message: 'To do success delete' })
             }
         } catch (error) {
-            res.status(500).json("Internal Server Error")
+            next(error)
         }
     }
 
@@ -82,7 +82,7 @@ class Controller {
                 res.status(200).json(task[1][0])
             }
         } catch (error) {
-            res.status(500).json("Internal Server Error")
+            next(error)
         }
     }
 }
