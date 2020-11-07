@@ -1,0 +1,85 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "A json-server",
+      "description": "A dummy server",
+      "CategoryId": 1,
+      "UserId": 1
+    },
+    {
+      "id": 2,
+      "title": "B json-server",
+      "description": "B dummy server",
+      "CategoryId": 2,
+      "UserId": 2
+    },
+    {
+      "id": 3,
+      "title": "C json-server",
+      "description": "C dummy server",
+      "CategoryId": 3,
+      "UserId": 3
+    },
+    {
+      "id": 4,
+      "title": "D json-server",
+      "description": "D dummy server",
+      "CategoryId": 4,
+      "UserId": 4
+    },
+    {
+      "id": 5
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "email": "test@mail",
+      "password": 12345
+    },
+    {
+      "id": 2,
+      "email": "test@mail",
+      "password": 12345
+    },
+    {
+      "id": 3,
+      "email": "test@mail",
+      "password": 12345
+    },
+    {
+      "id": 4,
+      "email": "test@mail",
+      "password": 12345
+    },
+    {
+      "id": 5,
+      "email": "test@mail",
+      "password": 12345
+    },
+    {
+      "id": 6,
+      "email": "test@mail",
+      "password": 12345
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "backlog"
+    },
+    {
+      "id": 2,
+      "name": "todo"
+    },
+    {
+      "id": 3,
+      "name": "doing"
+    },
+    {
+      "id": 4,
+      "name": "done"
+    }
+  ]
+}
