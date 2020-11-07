@@ -67,6 +67,9 @@ export default {
 		toRegister() {
 			this.$emit('changePage','register')
 		},
+		showAllTask() {
+			this.$emit('showAllTask')
+		},
 		enterLogin() {
 			let payload = {
 				email: this.logEmail,
@@ -75,13 +78,19 @@ export default {
 			this.$emit('login', payload)
 		},
 		onSuccess(googleUser) {
+			this.$emit('onSuccess', googleUser)
 			const gToken = googleUser.getAuthResponse().id_token
 			axios.post('https://k-a-n-b-a-n.herokuapp.com/googleSignIn', {gToken})
 			.then(({data}) => {
 				localStorage.setItem('token', data.accessToken)
 				this.$emit('changePage', 'HomePage')
-				this.$emit('showAllTask')
-				this.showAllTask()
+				this.$emit('setUser', data.email)
+				Swal.fire({
+					icon: 'success',
+					title: 'Login Success!!',
+					showConfirmButton: false,
+					timer: 1500
+				})
 			})
 			.catch(err => {
 				console.log(err)

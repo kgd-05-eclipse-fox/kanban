@@ -2,7 +2,8 @@
 	<div>
 		<Navbar 
 			@logout="logout"
-			@showAddForm="showAddForm">
+			@showAddForm="showAddForm"
+			:user='user'>
 		</Navbar>
 		<div class="container-fluid mt-3">
 			<div class="row mx-3">
@@ -13,7 +14,9 @@
 					:tasks='tasks'
 					:getDate="getDate"
 					@updateTask='updateTask'
-					@destroy="destroy">
+					@destroy="destroy"
+					@moveCategory="moveCategory"
+					>
 					</Category>
 			</div>
 		</div>
@@ -29,7 +32,7 @@ export default {
 		Category,
 		Navbar
 	},
-	props: ['categories', 'tasks', 'getDate'],
+	props: ['categories', 'tasks', 'getDate', 'user'],
 	methods: {
 		destroy(id) {
 			this.$emit('destroy', id)
@@ -42,6 +45,10 @@ export default {
 		},
 		updateTask(data) {
 			this.$emit('updateTask', data)
+		},
+		moveCategory(payLoad) {
+			console.log(payLoad, 'di homepage')
+			this.$emit('moveCategory', payLoad)
 		}
  	}
 }

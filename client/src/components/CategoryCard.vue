@@ -4,8 +4,10 @@
 		<div class='drag-el'>
 			<div v-if="!isEdit" class="card-container hiddenScroll scrollbar-rare-wind" style="margin-right: -20vh">
 				<div class="card-transparent shadow-lg mb-2 rounded hiddenScroll">
-					<a v-if="task.category !== 'backlog'" href="#"><i class="fa fa-arrow-left"></i></a>
-					<a v-if="task.category !== 'done'" href="#"><i class="fa fa-arrow-right"></i></a>
+					<div class="arrow row" >
+					<a class="col-7 ml-1" @click.prevent="moveCategory('left')" v-if="task.category !== 'backlog'" href="#"><i class="fa fa-arrow-left" style="color: black;"></i></a>
+					<a class="col-1 ml-2" @click.prevent="moveCategory('right')" v-if="task.category !== 'done'" href="#"><i class="fa fa-arrow-right" style="color: black;"></i></a>
+					</div>
 					<div class="card-title">
 					<strong>{{task.title}}</strong>
 					<hr>
@@ -63,6 +65,15 @@ export default {
       const itemID = evt.dataTransfer.getData('itemID')
       const item = this.items.find(task => task.id == itemID)
       item.list = list
+		},
+		moveCategory(movement) {
+			console.log(movement)
+			const payLoad = {
+				id: this.task.id,
+				category: this.task.category,
+				movement
+			}
+			this.$emit('moveCategory', payLoad)
 		}
 	},
 	components: {

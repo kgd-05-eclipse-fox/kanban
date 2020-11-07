@@ -5,6 +5,7 @@
 			@changePage="changePage"
 			@login="login"
 			@showAllTask='showAllTask'
+			@setUser='setUser'
 			>
 		</LoginPage>
 		<RegisterPage 
@@ -18,10 +19,12 @@
 			@showAddForm="showAddForm"
 			@destroy='destroy'
 			@updateTask='updateTask'
+			@moveCategory='moveCategory'
 			:categories="categories"
 			:getDate='getDate'
 			:showAllTask='showAllTask'
 			:tasks="tasks"
+			:user='user'
 			v-else>
 		</HomePage>
 		<div>
@@ -61,6 +64,7 @@ export default {
 					localStorage.setItem('token', data.token)
 					this.showingPage = 'kanban'
 					this.showAllTask()
+					localStorage.setItem('email', data.email)
 				})
 				.catch(err => {
 					Swal.fire({
@@ -262,7 +266,40 @@ export default {
 				})
 			})
 		},
-		
+		moveCategory(payLoad) {
+			console.log('di app')
+			const id = payLoad.id
+			let category
+			if (payLoad.movement === 'right') {
+				if (payLoad.category === 'backlog') {
+					category = 'product'
+				} else if (payLoad.category === 'product') {
+					category = 'development'
+				} else if (payLoad.category === 'development') {
+					category = 'done'
+				}
+			} else {
+				if (payLoad.category === 'done') {
+					category = 'development'
+				} else if (payLoad.category === 'development') {
+					category = 'product'
+				} else if (payLoad.category === 'product') {
+					category = 'backlog'
+				}
+			}
+			const token = localStorage.token
+			axios.patch(`/task/${id}`, { category }, { headers: { token } })
+			.then(data => {
+				this.reloadTask()
+			})
+			.catch(err => {
+				console.log(err, 'error')
+			})
+		},
+		setUser(user) {
+			localStorage.setItem('email', user)
+			this.user = localStorage.email
+		}
 	},
 	created() {
 		if (!localStorage.token) {
@@ -270,6 +307,7 @@ export default {
 		} else {
 			this.showingPage = 'kanban'
 			this.showAllTask()
+			this.user = localStorage.email
 		}
 	},
   data() {
@@ -277,6 +315,7 @@ export default {
 			showingPage: 'login',
 			categories: ['Backlog', 'Product', 'Development', 'Done'],
 			tasks: [],
+			user: ''
     };
   },
 };

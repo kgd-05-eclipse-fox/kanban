@@ -12,6 +12,7 @@
 					:getDate='getDate'
 					@destroy='destroy'
 					@updateTask='updateTask'
+					@moveCategory='moveCategory'
 					>
 				</CategoryCard>
 		</div>
@@ -37,6 +38,10 @@ export default {
 		},
 		updateTask(data) {
 			this.$emit('updateTask', data)
+		},
+		moveCategory(payLoad) {
+			console.log(payLoad, 'di category')
+			this.$emit('moveCategory', payLoad)
 		}
 	}
 }

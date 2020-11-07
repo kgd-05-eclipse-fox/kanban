@@ -39,7 +39,7 @@ class UserController {
 							id: findUser.id,
 							email: findUser.email
 					})
-					res.status(200).json({ id: findUser.id, token })
+					res.status(200).json({ id: findUser.id,email: findUser.email, token })
 			}
 		} catch (error) {
 				console.log(error)
@@ -70,17 +70,20 @@ class UserController {
 						}
 					})
 					if (find) {
+						console.log('di find')
 						const token = createToken({
 							id: find.id,
 							email: payload.email
 						})
-						res.status(200).json({ accessToken: token })
+						res.status(200).json({ accessToken: token, email: payload.email })
 					} else {
+						console.log('di else')
 						const newUser = await User.create({
 							email,
 							password: 'random'
 						})
 						if (newUser) {
+							console.log('di newUser')
 							let access_token = { id: newUser.id, email: newUser.email }
 							res.status(200).json({ accessToken: access_token })
 						}

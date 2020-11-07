@@ -8,7 +8,7 @@ router.get('/', TaskController.showTasks)
 router.post('/', TaskController.addTask)
 router.get('/:id', TaskController.showOne)
 router.put('/:id', authorization, TaskController.editTask)
-router.patch('/:id', authorization, TaskController.patchTodo)
+router.patch('/:id', authorization, TaskController.patchCategory)
 router.delete('/:id', authorization, TaskController.destroy)
 
 module.exports = router

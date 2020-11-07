@@ -85,12 +85,12 @@ class TaskController {
 			next(err)
 		}
 	}
-	static async patchTodo(req, res, next) {
+	static async patchCategory(req, res, next) {
 		try {
 				const id = +req.params.id
 				const UserId = req.loggedInUser.id
 				const category = req.body.category
-				const updateTodo = await Todo.update({
+				const updateCategory = await Task.update({
 						category
 				}, {
 						where: {
@@ -99,10 +99,10 @@ class TaskController {
 						},
 						returning: true
 				})
-				if (!updateTodo[0]){
-						res.status(404).json({ error: 'Todo not found' })
+				if (!updateCategory[0]){
+						res.status(404).json({ error: 'Not Authorize!' })
 				} else {
-						res.status(200).json(updateTodo[1][0])
+						res.status(200).json(updateCategory[1][0])
 				}
 		} catch (error) {
 				next(error)
