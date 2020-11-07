@@ -293,7 +293,11 @@ export default {
 				this.reloadTask()
 			})
 			.catch(err => {
-				console.log(err, 'error')
+				Swal.fire({
+					title: 'Oops!!',
+					text: err.response.data.error,
+					icon: 'error',
+				})
 			})
 		},
 		setUser(user) {
