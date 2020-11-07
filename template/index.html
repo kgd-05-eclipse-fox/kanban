@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./style.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+    <meta name="google-signin-client_id" content="1066799176404-vu94bkh7anjmkbnb6b58hgha6gcmi7im.apps.googleusercontent.com">
+
+    <title>KANBAN</title>
+</head>
+<body>
+    <div id = "app">
+
+    
+    <!-- NAVBAR HOMEPAGE-->
+    <section 
+        v-if="pageName === 'home-page'"
+    class = "mt-4" id="home-page">
+    <div class = "container"></div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <div id = "logo">
+            <a class ="nav-logo" ><img src="./newlogo.PNG">
+        </div>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+        <div>
+          <form class="form-inline my-2 my-lg-0">
+            <button class="btn btn-outline" id="add-task" type = "submit">Add Task</button>
+            <button class="btn btn-outline" id = "tombol-logout" type="submit">Logout</button>
+          </form>
+        </div>
+    </nav>
+        <div class = "container-navbar">
+            <div class = "flexbox-item-1">TODO</div>
+            <div class = "flexbox-item-2">IN PROGRES</div>
+            <div class = "flexbox-item-3">Review</div>
+            <div class = "flexbox-item-4">Complete</div>
+        </div>
+        <div class="item black"></div>
+    </section>
+    
+    <!--LOGIN PAGE-->
+    <section 
+    v-else-if ="pageName ==='login-page'" class="container" id="login-page">
+        <div class="row justify-content-center mt-5">
+            <div class = "container" id ="navbar-login">
+                <a class = "logo-logo" href ="#"><img src="./newlogo.PNG"; ></a>
+            </div><br><br>
+            <div class="col-4" style="background:  silver; border-radius: 8px; box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.65); height: 600px; margin: 10rem auto 10.1rem auto; width: 329px;">
+                <form onsubmit="login(event)"><br><br>
+                    <h3 class="text-center text-light font-weight-bold">Log In</h3>
+                    <div class="form-group">
+                        <label for="email" class="text-light">Email</label>
+                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" autocomplete="email">
+                        <small id="emailHelp" class="form-text text-light">We'll never share your email with anyone else.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="text-light">Password</label>
+                        <input type="password" class="form-control" id="password" autocomplete="current-password">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                </form>
+                <!-- Button Google Login -->
+                <small class="form-text text-light" style="line-height: 30px;">Sign in with your google account</small>
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            </div>
+        </div>
+    </section>
+    
+    
+    <!-- REGISTER FORM -->
+    <section 
+    v-else-if ="pageName === 'register'" class="container" id="register">
+        <div class="row justify-content-center mt-5">
+            <div class="col-4"style="background: silver; border-radius: 8px; box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.65); height: 600px; margin: 10rem auto 10.1rem auto; width: 329px;">
+                <form onsubmit="register(event)"><br><br><br>
+                    <h3 class="text-center text-light font-weight-bold">Create an Account</h3>
+                    <div class="form-group">
+    
+                        <label for="email_register" class="text-light">Email</label>
+                        <input type="email" class="form-control" id="email_register" aria-describedby="emailHelp" autocomplete="email">
+                        <small id="emailHelp" class="form-text text-light">We'll never share your email with anyone else.</small>
+    
+                    </div>
+                    <div class="form-group">
+                        <label for="password_register" class="text-light">Password</label>
+                        <input type="password" class="form-control" id="password_register" autocomplete="current-password">
+                    </div>
+                        <button type="submit" class="btn btn-primary btn-block">Create an account</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FORM ADD TASK -->
+    <section id = "main">
+        <div class ="btn-corner">
+            <i class = "far fa-plus-square"></i>
+        </div>
+        <!--ADD FORM-->
+        <div class = "addForm">
+            <div class = "addForm-container">
+                <div class = "addForm-head">
+                    <h3>Add New Task</h3>
+                </div>
+                <form @submit.prevent="addTask" class ="addForm-body">
+                    <div class = "addForm-input">
+                        <label for="name">
+                            <i class = "fas fa-user-graduate"></i>
+                            Title
+                        </label>
+                        <input v-model="title" type ="text">
+                    </div>
+                    <div class ="addForm-dropdown">
+                        <label for="cars">
+                            <i class = "fas fa-layer-group"></i>
+                            Choose a category:
+                        </label>
+                        <select name="category" id="category" v-model ="selected">
+                            <option disabled value ="">Please select one</option>
+                            <option value="todo">TODO</option>
+                            <option value="inprogres">IN PROGRES</option>
+                            <option value="review">REVIEW</option>
+                            <option value="complete">COMPLETE</option>
+                        </select>
+                    </div>
+                    <div class ="addForm-button">
+                        <button>Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    </div>
+    
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!--VUE JS-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src = "main.js"></script>
+  
+</body>
+</html>

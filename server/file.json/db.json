@@ -1,0 +1,44 @@
+{
+    "tasks" : [
+        {
+            "title" : "jemput adik",
+            "kategori" : "TODO"
+        },
+        {
+            "title" : "jemput kaka",
+            "kategori" : "IN PROGRES"
+        },
+        {
+            "title" : "maen sama adik",
+            "kategori" : "TODO"
+        },
+        {
+            "title" : "jemput adik",
+            "kategori" : "REVIEW"
+        },
+        {
+            "title" : "jemput adik",
+            "kategori" : "COMPLETE"
+        },
+        {
+            "title" : "nyayur sama adik",
+            "kategori" : "TODO"
+        },
+        {
+            "title" : "nyanyi sama adik",
+            "kategori" : "TODO"
+        },
+        {
+            "title" : "bola bareng adik",
+            "kategori" : "IN PROGRES"
+        },
+        {
+            "title" : "jalan jalan anter adik",
+            "kategori" : "REVIEW"
+        },
+        {
+            "title" : "naek mobil bareng adik",
+            "kategori" : "TODO"
+        }
+    ]
+}
