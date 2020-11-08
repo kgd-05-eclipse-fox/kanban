@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
+
+/* *{
+    margin: 0;
+    padding: 0;
+} */
+
+body {
+    background-image: url("http://getwallpapers.com/wallpaper/full/0/3/e/923812-amazing-mac-book-background-2880x1800-screen.jpg");
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: 'Comfortaa', cursive;
+    /* margin: 0;
+    padding: 0; */
+
+}
+
+.card {
+    background-image: url("https://i.imgur.com/5ehnBAe.jpg");
+    color: white;
+    width: 280px;
+    border-radius: 10px
+}
+
+.info {
+    text-align: center;
+    font-size: 13px
+}
+
+.form-group {
+    margin-top: 25px
+}
+
+.form {
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important
+}
+
+.btn {
+    background: #4527A0;
+    color: white;
+    border-radius: 20px;
+    font-size: 14px;
+    width: 100%
+}
+
+.strech {
+    font-size: 11px;
+    margin-top: 15px
+}
+
+.else {
+    font-size: 9px;
+    border-bottom: 1px solid #000;
+    line-height: 0.1em;
+    margin: 10px 0 20px;
+    text-align: center
+}
+
+.else2 {
+    padding: 0 10px;
+    background-image: url("https://i.imgur.com/5ehnBAe.jpg")
+}
+
+.fb {
+    background: 3B5998;
+    color: white;
+    border-radius: 25px;
+    font-size: 15px;
+    font-weight: bold
+}
+
+.fb:hover {
+    background: rgb(77, 183, 254)
+}
+
+.ggl {
+    background: #fff;
+    border-radius: 25px;
+    color: red;
+    font-size: 15px;
+    font-weight: bold
+}
+
+.ggl:hover {
+    background: #fff;
+    color: red
+}
+
+.shadowcard{
+    box-shadow: 0px 0px 22px 0px rgba(27,126,202,1);
+}
+/* .shadowNav{
+    box-shadow: 0px 13px 15px -13px rgba(27,126,202,1)
+} */
+.pContent{
+    font-size: 12px;
+    font-family: 'Source Code Pro', monospace;
+    color: snow;
+}
+.logo-nav{
+    width: 40px;
+}
+.logo-log{
+    width: 70px;
+}
+.c1{
+    background-color: rgb(19,119,197, 0.5)
+}
+/* .bgNav{
+    background-color: rgb(19,119,197, 0.5)
+} */
+
+.titleCard{
+    font-size: 80%;
+    color: black;
+}
+.log-User{
+    width: 50%;
+}
+.log-option{
+    width: 40%;
+}
+.bg1{
+    background-color: snow;
+}
+.tOption{
+    color: snow;
+}
+
+.hvr-grow:hover, .hvr-grow:focus, .hvr-grow:active {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
