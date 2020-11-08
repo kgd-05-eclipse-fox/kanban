@@ -34,19 +34,24 @@
                                 <div class="sign-up-form">
                                     <div class="group">
                                         <label for="first-name" class="label">First Name</label>
-                                        <input id="first-name" type="text" class="input" v-model="firstName">
+                                        <input
+                                        id="first-name"
+                                        type="text"
+                                        class="input"
+                                        v-model="firstName"
+                                        >
                                     </div>
                                     <div class="group">
                                         <label for="last-name" class="label">Last Name</label>
-                                        <input id="last-name" type="text" class="input" v-model="lastName">
+                                        <input id="last-name" type="text" class="input" v-model="lastName" required>
                                     </div>
                                     <div class="group">
                                         <label for="email-register" class="label">Email</label>
-                                        <input id="email-register" type="text" class="input" v-model="email">
+                                        <input id="email-register" type="text" class="input" v-model="email" required>
                                     </div>
                                     <div class="group">
                                         <label for="pass-register" class="label">Password</label>
-                                        <input id="pass-register" type="password" class="input" data-type="password" v-model="password">
+                                        <input id="pass-register" type="password" class="input" data-type="password" v-model="password" required>
                                     </div>
                                     <div class="group">
                                         <button type="submit" class="button" @click="signUpUser">Sign Up</button>

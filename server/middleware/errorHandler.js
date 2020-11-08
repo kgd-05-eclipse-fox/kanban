@@ -19,5 +19,5 @@ module.exports = function errorHandler(err, req, res, next) {
         statusCode = 401
         errMsg = "Wrong username / password"
     }
-    res.status(statusCode).json({ errMsg })
+    res.status(statusCode).json({ message: errMsg })
 }

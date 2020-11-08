@@ -38,6 +38,7 @@ import HomePage from "./components/Home"
 import AddTask from "./components/AddTask"
 import EditTask from "./components/EditTask"
 import axios from "./config/axios"
+import Swal from 'sweetalert2'
 
 export default {
     name: "App",
@@ -97,7 +98,12 @@ export default {
                 console.log(data)
             })
             .catch(err => {
-                console.log(err)
+                // console.log(err.response.data.message)
+                Swal.fire({
+                    title: 'Sorry...',
+                    text: err.response.data.message,
+                    icon: 'error',
+                })
             })
         },
         loginUser(payload) {
@@ -119,7 +125,11 @@ export default {
                 this.pageName = 'HomePage'
             })
             .catch(err => {
-                console.log(err)
+                Swal.fire({
+                    title: 'Sorry...',
+                    text: err.response.data.message,
+                    icon: 'error',
+                })
             })
         },
         loginUserGoogle(id_token) {
@@ -142,7 +152,11 @@ export default {
                 this.pageName = 'HomePage'
             })
             .catch(err => {
-                console.log(err)
+                Swal.fire({
+                    title: 'Sorry...',
+                    text: err.response.data.message,
+                    icon: 'error',
+                })
             })
         },
         logoutUserGoogle() {
@@ -169,7 +183,11 @@ export default {
                 this.task = data
             })
             .catch(err => {
-                console.log(data)
+                Swal.fire({
+                    title: 'Sorry...',
+                    text: err.response.data.message,
+                    icon: 'error',
+                })
             })
         },
         addNewTask(payload) {
@@ -188,7 +206,11 @@ export default {
                 this.pageName = 'HomePage'
             })
             .catch(err => {
-                console.log(err)
+                Swal.fire({
+                    title: 'Sorry...',
+                    text: err.response.data.message,
+                    icon: 'error',
+                })
             })
         },
 
@@ -210,7 +232,11 @@ export default {
                 this.pageName = 'HomePage'
             })
             .catch(err => {
-                console.log(err)
+                Swal.fire({
+                    title: 'Sorry...',
+                    text: err.response.data.message,
+                    icon: 'error',
+                })
             })
         },
         deleteTask(id) {
@@ -228,7 +254,11 @@ export default {
                 this.pageName = 'HomePage'
             })
             .catch(err => {
-                console.log(err)
+                Swal.fire({
+                    title: 'Sorry...',
+                    text: err.response.data.message,
+                    icon: 'error',
+                })
             })
         },
         updateCategory(payload) {
@@ -255,7 +285,11 @@ export default {
                 this.pageName = 'HomePage'
             })
             .catch(err => {
-                console.log(err)
+                Swal.fire({
+                    title: 'Sorry...',
+                    text: err.response.data.message,
+                    icon: 'error',
+                })
             })
         }
     },

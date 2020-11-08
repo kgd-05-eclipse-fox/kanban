@@ -1,8 +1,5 @@
 <template>
     <div class="add-page">
-        <Navbar
-            @logoutUser='logoutUser'
-        ></Navbar>
         <div class="container my-5 d-flex flex-column justify-content-center">
             <form @submit.prevent="saveTask">
                 <div class="form-group">
