@@ -23,7 +23,12 @@
                                         <button type="submit" class="button" @click="loginUser">SIGN IN</button>
                                     </div>
                                     <div class="group">
-                                         <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccess"></GoogleLogin>
+                                        <!-- <button type="submit" class="button"
+                                        @click="loginUser"
+                                        :params="params"
+                                        :onSuccess="onSuccess"
+                                        >SIGN IN WITH GOOGLE</button> -->
+                                        <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccess"></GoogleLogin>
                                     </div>
                                 </div>
                                 <div class="sign-up-form">
@@ -70,7 +75,7 @@ export default {
                 client_id: "223212081300-97e5g0dh9s4h0b1m88b06hhu4vdj36ja.apps.googleusercontent.com"
             },
             renderParams: {
-                    width: 250,
+                    width: 500,
                     height: 50,
                     longtitle: true
             }

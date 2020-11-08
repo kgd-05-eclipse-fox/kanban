@@ -11,6 +11,7 @@
             :categories="categories"
             :allTask="task"
             :userId="userId"
+            :userDataLogin="userDataLogin"
             @changePage="changePage"
             @deleteTask="deleteTask"
             @updateCategory="updateCategory"
@@ -64,7 +65,8 @@ export default {
             ],
             task: [],
             updatedTask: {},
-            userId: 0
+            userId: 0,
+            userDataLogin: {}
         };
     },
     components: {
@@ -108,11 +110,11 @@ export default {
                 }
             })
             .then(({ data }) => {
-                let id = data.id
                 let token = data.access_token
                 localStorage.setItem('token', token)
-                localStorage.setItem('id', id)
+                localStorage.setItem('id', data.id)
                 this.userId = localStorage.getItem('id')
+                this.userDataLogin = data
                 this.fetchTask()
                 this.pageName = 'HomePage'
             })
@@ -129,11 +131,13 @@ export default {
                 }
             })
             .then(({ data }) => {
+                // console.log(data)
                 let id = data.id
                 let token = data.access_token
                 localStorage.setItem('token', token)
                 localStorage.setItem('id', id)
                 this.userId = localStorage.getItem('id')
+                this.userDataLogin = data
                 this.fetchTask()
                 this.pageName = 'HomePage'
             })

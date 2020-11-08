@@ -2,7 +2,7 @@
     <div>
         <nav>
             <div>
-                <h2>Kanban Apps</h2>
+                <h2>Hello, {{fullname}}</h2>
             </div>
             <div class="task">
                 <ul>
@@ -20,7 +20,8 @@ export default {
         logoutUser() {
             this.$emit('logoutUser', 'LoginPage')
         }
-    }
+    },
+    props: ['fullname']
 }
 </script>
 

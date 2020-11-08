@@ -37,10 +37,19 @@ class Controller {
                 if(!result) {
                     throw { name: "Wrong Data" }
                 } else {
-                    const payload = { id: user.id, email: user.email }
+                    const payload = { 
+                        id: user.id, 
+                        email: user.email
+                    }
                     const token = getToken(payload)
                     const httpCode = 200
-                    res.status(httpCode).json({ access_token: token, id: user.id})
+                    const userData = {
+                        id: user.id,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        access_token: token
+                    }
+                    res.status(httpCode).json(userData)
                 }
             } else {
                 throw { name: "Wrong Data" }
@@ -56,12 +65,14 @@ class Controller {
         // console.log(google_token)
         const client = new OAuth2Client(process.env.CLIENT_ID)
         let email
+        let fullname
         client.verifyIdToken({
             idToken: google_token,
             audience: process.env.CLIENT_ID
         })
         .then(ticket => {
             let payload = ticket.getPayload()
+            fullname = payload.name
             email = payload.email
             return User.findOne({
                 where: {
@@ -70,24 +81,45 @@ class Controller {
             })
         })
         .then(user => {
-            // console.log(user)
+            let splitName = fullname.split(" ")
+            let firstName = splitName[0]
+            let lastName = splitName[1]
             if(user !== null) {
                 return user
             } else {
-                let newUser = {
-                    email,
-                    firstName: "User",
-                    lastName: "Google",
-                    password: "hanfarhan22"
+                if(lastName !== null) {
+                    let newUser = {
+                        email,
+                        firstName: firstName,
+                        lastName: lastName,
+                        password: "hanfarhan22"
+                    }
+                    return User.create(newUser)
+                } else {
+                    let newUser = {
+                        email,
+                        firstName: firstName,
+                        lastName: firstName,
+                        password: "hanfarhan22"
+                    }
+                    return User.create(newUser)
                 }
-                return User.create(newUser)
             }
         })
         .then(data => {
-            console.log(data)
-            let payload = { id: data.id, email: data.email }
+            // console.log(data)
+            let payload = { 
+                id: data.id, 
+                email: data.email
+            }
             let token = getToken(payload)
-            res.status(200).json({ access_token: token})
+            const userData = {
+                id: data.id,
+                firstName: data.firstName,
+                lastName: data.lastName,
+                access_token: token
+            }
+            res.status(200).json(userData)
         })
         .catch(err => {
             next(err)

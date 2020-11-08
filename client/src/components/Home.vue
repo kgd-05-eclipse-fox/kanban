@@ -1,6 +1,7 @@
 <template>
     <div class="home-page">
         <Navbar
+            :fullname="fullname"
             @logoutUser='logoutUser'
         ></Navbar>
         <div class="container opacity">
@@ -29,7 +30,7 @@ export default {
     components: {
         Navbar, TaskCategory
     },
-    props: ['categories', 'allTask', 'userId'],
+    props: ['categories', 'allTask', 'userId', 'userDataLogin'],
     methods: {
         toAddPage() {
             let payload = {
@@ -48,6 +49,11 @@ export default {
         },
         updateCategory(payload) {
             this.$emit('updateCategory', payload)
+        }
+    },
+    computed: {
+        fullname() {
+            return this.userDataLogin.firstName + ' ' + this.userDataLogin.lastName
         }
     }
 }
