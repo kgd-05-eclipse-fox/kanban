@@ -70,7 +70,6 @@ import HomePage from './components/HomePage'
 import AddPage from './components/AddPage'
 import EditPage from './components/EditPage'
 import ImformationPage from './components/InformationPage'
-
 import axios from './config/axios'
 
 export default {
@@ -399,7 +398,6 @@ export default {
         timer: 1500
       })
     },
-
     getKanbanById(data){
       let id = data
       let access_token = localStorage.acces_token
