@@ -236,27 +236,31 @@ export default {
             })
                 .then(({ isConfirmed }) => {
                     if (isConfirmed) {
-                        axios({
+                        return axios({
                             method: 'DELETE',
                             url: '/kanban/' + id,
                             headers: {
                                 access_token: access_token
                             }
                         })
-                            .then( _ => {
-                                this.fetchTask()
-                                Toast.fire({
-                                    icon: 'success',
-                                    title: 'Successfully Delete Task'
-                                })
-                            })
-                            .catch(err => {
-                                Swal.fire({
-                                    title: `Oopss..`,
-                                    text: err.response.data.message,
-                                    icon: `error`
-                                })
-                            })
+                    } else {
+                        throw null
+                    }
+                })
+                .then( _ => {
+                    this.fetchTask()
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Successfully Delete Task'
+                    })
+                })
+                .catch(err => {
+                    if (err) {
+                        Swal.fire({
+                            title: `Oopss..`,
+                            text: err.response.data.message,
+                            icon: `error`
+                        })
                     }
                 })
         },
@@ -277,14 +281,14 @@ export default {
                         localStorage.removeItem('email')
                         localStorage.removeItem('id')
 
-                        // * Google SignOut
-                        var auth2 = gapi.auth2.getAuthInstance()
-                        auth2.signOut()
-
                         this.tasks = []
                         this.user = {}
                         this.loginRegister = ''
                         this.pageRender = 'login-page'
+
+                        // * Google SignOut
+                        const auth2 = gapi.auth2.getAuthInstance()
+                        auth2.signOut()
                     }
                 })
         },

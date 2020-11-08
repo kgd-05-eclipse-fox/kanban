@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-trello bg-trello">
-        <a class="go-home navbar-brand" href="/">Kanban</a>
+        <a class="go-home navbar-brand" href="/" @click.prevent="changePage('kanban-page')">Kanban</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
