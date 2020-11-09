@@ -1,0 +1,114 @@
+[
+    {
+        "title": "Deploy Server FancyTodo",
+        "description": "Deploy server ke heroku sebelum melewati deadline",
+        "status": 1,
+        "UserId": 1,
+        "createdAt": "2020-11-03T16:47:35.940Z",
+        "updatedAt": "2020-11-03T16:47:35.940Z"
+    },
+    {
+        "title": "Design Kanban",
+        "description": "Design Kanban sebelum mempelajari Vue.js",
+        "status": 1,
+        "UserId": 1,
+        "createdAt": "2020-11-04T16:47:35.940Z",
+        "updatedAt": "2020-11-04T16:47:35.940Z"
+    },
+    {
+        "title": "류진과 함께 먹다",
+        "description": "언젠가 서울에서 류진 이랑 먹었어~~",
+        "status": 1,
+        "UserId": 1,
+        "createdAt": "2020-11-03T16:47:35.940Z",
+        "updatedAt": "2020-11-03T16:47:35.940Z"
+    },
+    {
+        "title": "Makan bersama anak Hacktiv8",
+        "description": "Makan bersama anak Hacktiv8 Kelapa Gading Batch-5 setelah semua tugas selesai",
+        "status": 2,
+        "UserId": 1,
+        "createdAt": "2020-11-04T16:47:35.940Z",
+        "updatedAt": "2020-11-04T16:47:35.940Z"
+    },
+    {
+        "title": "Jalan jalan bersama Farhan",
+        "description": "Jalan bersama Farhan untuk refeshing setelah mengerjakan tugas",
+        "status": 2,
+        "UserId": 1,
+        "createdAt": "2020-11-05T16:47:35.940Z",
+        "updatedAt": "2020-11-05T16:47:35.940Z"
+    },
+    {
+        "title": "Makan Sushi",
+        "description": "Mencari Sushi termurah di kawasan Jakarta",
+        "status": 2,
+        "UserId": 2,
+        "createdAt": "2020-11-04T16:47:35.940Z",
+        "updatedAt": "2020-11-04T16:47:35.940Z"
+    },
+    {
+        "title": "Beli Apple iPhone 12 Pro Max",
+        "description": "Membeli HP baru karena kebutuhan dan tertarik akan fitur yang ditawarkan",
+        "status": 2,
+        "UserId": 2,
+        "createdAt": "2020-11-03T16:47:35.940Z",
+        "updatedAt": "2020-11-03T16:47:35.940Z"
+    },
+    {
+        "title": "Beli Keychron K8",
+        "description": "Beli Keyboard agar ngoding lebih enak dan lebih cepat",
+        "status": 2,
+        "UserId": 1,
+        "createdAt": "2020-11-04T16:47:35.940Z",
+        "updatedAt": "2020-11-04T16:47:35.940Z"
+    },
+    {
+        "title": "Renovasi Kamar",
+        "description": "Renovasi Kamar setelah selesai Hacktiv8",
+        "status": 2,
+        "UserId": 2,
+        "createdAt": "2020-11-03T16:47:35.940Z",
+        "updatedAt": "2020-11-03T16:47:35.940Z"
+    },
+    {
+        "title": "Develop Client Kanban",
+        "description": "Kanban sedang dalam proses develop",
+        "status": 3,
+        "UserId": 1,
+        "createdAt": "2020-11-04T16:47:35.940Z",
+        "updatedAt": "2020-11-04T16:47:35.940Z"
+    },
+    {
+        "title": "Develop Server Kanban",
+        "description": "Server Kanban sedang dalam proses development oleh tim terkait",
+        "status": 3,
+        "UserId": 1,
+        "createdAt": "2020-11-04T16:47:35.940Z",
+        "updatedAt": "2020-11-04T16:47:35.940Z"
+    },
+    {
+        "title": "Setup Firebase & Heroku",
+        "description": "Setup Firebase dan Heroku agar dapat memahami tentang deploy dikemudian hari",
+        "status": 3,
+        "UserId": 1,
+        "createdAt": "2020-11-05T16:47:35.940Z",
+        "updatedAt": "2020-11-05T16:47:35.940Z"
+    },
+    {
+        "title": "Fix Bugs Portofolio-1",
+        "description": "Memperbaiki Bugs Portofolio-1 dimana setelah logout sistem menambahkan event listener lagi",
+        "status": 3,
+        "UserId": 2,
+        "createdAt": "2020-11-04T16:47:35.940Z",
+        "updatedAt": "2020-11-04T16:47:35.940Z"
+    },
+    {
+        "title": "Belajar Untuk LC-1",
+        "description": "Belajar untuk LC-1 Week-2 Phase-2 agar mendapatkan nilai maksimal",
+        "status": 4,
+        "UserId": 1,
+        "createdAt": "2020-11-03T16:47:35.940Z",
+        "updatedAt": "2020-11-03T16:47:35.940Z"
+    }
+]

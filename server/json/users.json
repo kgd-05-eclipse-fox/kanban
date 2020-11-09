@@ -1,0 +1,14 @@
+[
+    {
+        "email": "akbarhabiby@icloud.com",
+        "password": "$2a$10$mi.7QeSkKAkg7DgzlwevM.F6h1IMdgUNqkney.3Omc1U3cz15dYfu",
+        "createdAt": "2020-11-03T16:47:35.940Z",
+        "updatedAt": "2020-11-03T16:47:35.940Z"
+    },
+    {
+        "email": "admin@kanban.com",
+        "password": "$2a$10$6I.H6.8dXnegtdjRoBT1OOJZ8o2HFT9H9y.q7IAQcSXaxat8gTNmy",
+        "createdAt": "2020-11-03T16:47:35.940Z",
+        "updatedAt": "2020-11-03T16:47:35.940Z"
+    }
+]
