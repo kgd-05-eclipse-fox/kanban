@@ -5,6 +5,7 @@
             :menuLoginRegister="loginRegister"
             @menu="changeLoginRegister"
             @login="userLogin"
+            @register="userRegister"
             @googleLogin="googleLogin"
         ></LoginRegisterPage>
         <KanbanPage
@@ -104,6 +105,31 @@ export default {
 
                     this.fetchTask()
                     this.pageRender = 'kanban-page'
+                })
+                .catch(err => {
+                    Swal.fire({
+                        title: `Oopss..`,
+                        text: err.response.data.message,
+                        icon: `error`
+                    })
+                })
+        },
+        userRegister(payload) {
+            axios({
+                method: 'POST',
+                url: '/register',
+                data: {
+                    email: payload.email,
+                    password: payload.password
+                }
+            })
+                .then(({data}) => {
+                    Toast.fire({
+                        title: 'Success Register!',
+                        icon: 'success'
+                    })
+
+                    this.loginRegister = ''
                 })
                 .catch(err => {
                     Swal.fire({

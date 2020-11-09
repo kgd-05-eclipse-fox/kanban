@@ -2,15 +2,15 @@
     <div class="loginregister">
         <div class="container" :class="menuLoginRegister">
         <div class="form-container right-panel-active sign-up-container">
-            <form class="login-template-xd">
+            <form @submit.prevent="register" class="login-template-xd">
             <h1 class="login-template-xd">Create Account</h1>
             <div class="social-container">
                 <a class="login-template-xd social" href="/" @click.prevent="google"><GoogleLogin :params="params" :onSuccess="onSuccess" style="border: none; background-color: transparent;"><font-awesome-icon :icon="['fab', 'google-plus-g']" /></GoogleLogin></a>
                 <!-- <a class="login-template-xd social" href="/" @click.prevent="github"><font-awesome-icon :icon="['fab', 'github']" /></a> -->
             </div>
             <span class="login-template-xd">or use email to register</span>
-            <input class="login-template-xd" type="email" placeholder="Email" />
-            <input class="login-template-xd" type="password" placeholder="Password" />
+            <input class="login-template-xd" type="email" placeholder="Email" v-model="userRegister.email" />
+            <input class="login-template-xd" type="password" placeholder="Password" v-model="userRegister.password" />
             <button class="login-template-xd">Register</button>
             </form>
         </div>
@@ -84,6 +84,13 @@ export default {
                 password: this.userLogin.password
             }
             this.$emit('login', payload)
+        },
+        register() {
+            let payload = {
+                email: this.userRegister.email,
+                password: this.userRegister.password
+            }
+            this.$emit('register', payload)
         },
         google() {
             this.$emit('google')
