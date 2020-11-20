@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const instance = axios.create({
-    baseURL: 'https://kanban-tori.herokuapp.com',
+  baseURL: 'https://kanban-tori.herokuapp.com',
 });
 
 export default instance
