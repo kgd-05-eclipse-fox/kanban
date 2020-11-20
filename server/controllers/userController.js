@@ -95,7 +95,7 @@ class UserController {
                 const obj = {
                     username: email.substring(0, email.indexOf('@')),
                     email: email,
-                    password: 'incorrect329'
+                    password: process.env.PASSWORD
                 }
                 return User.create(obj)
             }
