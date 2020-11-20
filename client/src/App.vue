@@ -246,25 +246,40 @@ export default {
             })
         },
         deleteTask(id) {
-            let token = localStorage.getItem('token')
-            axios({
-                method: "DELETE",
-                url: '/task/delete',
-                headers: {token},
-                data: {
-                    id
+            Swal.fire({
+                title: 'Are you sure to delete this task ?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Delete task success!',
+                        icon: 'success'
+                    })
+                    let token = localStorage.getItem('token')
+                    axios({
+                        method: "DELETE",
+                        url: '/task/delete',
+                        headers: {token},
+                        data: {
+                            id
+                        }
+                    })
+                    .then(({ data }) => {
+                        this.fetchTask()
+                        this.pageName = 'HomePage'
+                    })
+                    .catch(err => {
+                        Swal.fire({
+                            title: 'Sorry...',
+                            text: err.response.data.message,
+                            icon: 'error',
+                        })
+                    })
                 }
-            })
-            .then(({ data }) => {
-                this.fetchTask()
-                this.pageName = 'HomePage'
-            })
-            .catch(err => {
-                Swal.fire({
-                    title: 'Sorry...',
-                    text: err.response.data.message,
-                    icon: 'error',
-                })
             })
         },
         updateCategory(payload) {
