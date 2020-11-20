@@ -2,14 +2,14 @@
   <div>
     <NavBar
       :showContet='showContet'
-      @gantiHalaman='backToHome'
+      @changePage='backToHome'
       @logout='logout'
     ></NavBar>
 
     <LoginPage 
       v-if="showContet === 'login-page'"
       @dataUserLogin='loginUser'
-      @registerpage=gantiHalaman
+      @registerpage=changePage
       @googleSignIn='googleSignIn'
     >
     </LoginPage>
@@ -17,28 +17,19 @@
     <RegisterPage 
       v-else-if="showContet === 'register-page'"
       @register='register'
-      @login=gantiHalaman
+      @login=changePage
     >
     </RegisterPage>
 
-
-    <HomePage
+    <CardByStatus
       v-else-if="showContet === 'home-page'"
-      @editPage='gantiHalaman'
-      @GoUpdate='update'
+      :categories="categories"
+      :dataKanbans="dataKanbans"
       @deleteBacklog='deleteKanban'
-      @deleteProduct='deleteKanban'
-      @deleteDevelopment='deleteKanban'
-      @deleteDone='deleteKanban'
-      @editKanban='getKanbanById'
-      :kanban='{
-        backlog: this.backlog,
-        product: this.product,
-        development: this.development,
-        done: this.done
-      }'
+      @getKanbanById='getKanbanById'
+      @GoUpdate='update'
     >
-    </HomePage>
+    </CardByStatus>
 
     <AddPage
       v-else-if="showContet === 'add-page'"
@@ -66,52 +57,55 @@
 import LoginPage from './components/LoginPage'
 import RegisterPage from './components/RegisterPage'
 import NavBar from './components/NavBar'
-import HomePage from './components/HomePage'
 import AddPage from './components/AddPage'
 import EditPage from './components/EditPage'
 import ImformationPage from './components/InformationPage'
+import CardByStatus from './components/CardByStatus'
 import axios from './config/axios'
 
 export default {
   name: 'App',
   data() {
     return {
+      categories: [
+          {
+              title: "Backlog"
+          },
+          {
+              title: "Product"
+          },
+          {
+              title: "Development"
+          },
+          {
+              title: "Done"
+          }
+      ],
+      dataKanbans: [], // data kanban
       showNav: '',
       showContet: 'login-page',
-      conten: false,
       kanban: [],
-      server: 'http://localhost:3000',
       email: '',
       password: '',
       title: '',
       description: '',
       addEmail: '',
       addPassword: '',
-      backlog: [],
-      product: [],
-      development: [],
-      done: [],
       editKanban: []
     };
   },
   methods: {
-    gantiHalaman(name){
-      console.log(name)
+    changePage(name){
       this.showContet = name,
-      this.backlog = []
-      this.product = []
-      this.development = []
-      this.done = []
+      this.dataKanbans = []
     },
     googleSignIn(google_access_token) {
-      // console.log(google_access_token, '<<<<<<<<<<<<<<<<<<<<<<<<<')
       axios({
         method: 'POST',
         url: '/loginGoogle',
         data:  { google_access_token }
       })
       .then(data => {
-        console.log(data, '<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
         const acces_token = data.data.access_token
         localStorage.setItem('acces_token', acces_token)
         this.showContet = 'home-page'
@@ -126,7 +120,6 @@ export default {
         })
       })
       .catch(err => {
-        console.log(err)
         Swal.fire({
             position: 'top-end',
             icon: 'error',
@@ -140,14 +133,14 @@ export default {
       let userEmail = localStorage.getItem('email')
         axios({
             method: 'POST',
-            url: '/resgister',
+            url: '/register',
             data: {
                 email: data.addEmail,
                 password: data.addPassword
             }
         })
         .then(res=>{
-            this.gantiHalaman('login-page')
+            this.changePage('login-page')
             this.addEmail = ''
             this.addPassword = ''
 
@@ -160,8 +153,6 @@ export default {
             })
         })
         .catch(err=>{
-            console.log(err)
-
             Swal.fire({
               position: 'top-end',
               icon: 'error',
@@ -172,11 +163,10 @@ export default {
         })
     },
     backToHome(data){
-      this.gantiHalaman(data)
+      this.changePage(data)
       this.getDataAllkanban()
     },
     addKanban(data){
-      console.log(data, 'data add kanban <<<<<<<<<<<<<<,')
         let access_token = localStorage.acces_token
         axios({
             method: 'POST',
@@ -188,7 +178,7 @@ export default {
             }
         })
         .then(res=>{
-            this.gantiHalaman('home-page')
+            this.changePage('home-page')
             this.showNav = 'navBar'
             this.getDataAllkanban()
             this.title = ''
@@ -203,8 +193,6 @@ export default {
             })
         })
         .catch(err=>{
-            console.log(err)
-
             Swal.fire({
               position: 'top-end',
               icon: 'error',
@@ -214,50 +202,32 @@ export default {
             })
         })
     },
-    getDataAllkanban(){
-        const access_token = localStorage.acces_token
-        this.backlog = []
-        this.product = []
-        this.development = []
-        this.done = []
-        axios({
-            method: 'GET',
-            url: `/tasks`,
-            headers: {access_token}
-        })
-        .then(res=>{
-            this.kanban = res.data
-            this.showNav = 'navBar'
-            for(let i in res.data){
-              if(res.data[i].status === 'backlog'){
-                this.backlog.push(res.data[i])
-              }else if(res.data[i].status === 'product'){
-                this.product.push(res.data[i])
-              }else if(res.data[i].status === 'development'){
-                this.development.push(res.data[i])
-              }else if(res.data[i].status === 'done'){
-                this.done.push(res.data[i])
-              }
-            }
-            // console.log(res.data)
-        })
-        .catch(err=>{
-            console.log(err)
-
-            Swal.fire({
-              position: 'top-end',
-              icon: 'error',
-              title: `Sorry`,
-              showConfirmButton: false,
-              timer: 1500
-            })
-        })
+    getDataAllkanban(){  
+      const access_token = localStorage.acces_token
+      axios({
+          method: 'GET',
+          url: `/tasks`,
+          headers: {access_token}
+      })
+      .then(res=>{
+        this.dataKanbans = res.data
+        this.showNav = 'navBar'
+            
+      })
+      .catch(err=>{
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: `Sorry`,
+            showConfirmButton: false,
+            timer: 1500
+          })
+      })
     },
+    
     loginUser(data){
-      console.log(data)
       let nameUser = data.email
       localStorage.setItem('email', nameUser)
-      console.log(nameUser)
         axios({
             method: 'POST',
             url: '/login',
@@ -272,7 +242,7 @@ export default {
             let acces_token = data.access_token
             localStorage.setItem('acces_token', acces_token)
             localStorage.setItem('localId', localId)
-            this.gantiHalaman('home-page')
+            this.changePage('home-page')
             this.getDataAllkanban()
             this.email = ''
             this.password = ''
@@ -286,8 +256,6 @@ export default {
             })
         })
         .catch(err=>{
-            console.log(err)
-
             Swal.fire({
               position: 'top-end',
               icon: 'error',
@@ -301,46 +269,52 @@ export default {
       let id = localStorage.localId
       let access_token = localStorage.acces_token
       let idKanban = data
-      console.log(id, '\n', access_token, '\n', idKanban)
-      axios({
-          method: 'DELETE',
-          url: `/tasks/${idKanban}`,
-          headers: {access_token}
-      })
-      .then(res=>{
-          this.gantiHalaman('home-page')
-          this.getDataAllkanban()
-          
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Your Kanban has been Delete',
-            showConfirmButton: false,
-            timer: 1500
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios({
+              method: 'DELETE',
+              url: `/tasks/${idKanban}`,
+              headers: {access_token}
           })
-      })
-      .catch(err=>{
-          console.log(err)
-
-          Swal.fire({
-            position: 'top-end',
-            icon: 'error',
-            title: `Sorry Not your Kanban`,
-            showConfirmButton: false,
-            timer: 1500
+          .then(res=>{
+              this.changePage('home-page')
+              this.getDataAllkanban()
+              
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Your Kanban has been Delete',
+                showConfirmButton: false,
+                timer: 1500
+              })
           })
+          .catch(err=>{
+              Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: `Sorry Not your Kanban`,
+                showConfirmButton: false,
+                timer: 1500
+              })
+          })
+        }
       })
     },
     logout(){
         localStorage.removeItem('acces_token');
         localStorage.removeItem('localId');
         localStorage.removeItem('email');
-        this.gantiHalaman('login-page')
+        this.changePage('login-page')
         this.showNav = ''
-        this.backlog = []
-        this.product = []
-        this.development = []
-        this.done = []
+        this.dataKanbans = []
 
         Swal.fire({
           position: 'top-end',
@@ -351,19 +325,18 @@ export default {
         })
     },
     update(data){
-      let id = +data.id
+      let id = +data.status.id
       let access_token = localStorage.acces_token
       let newData = ''
-      if(data.status === 'backlog'){
+      if(data.status.status === 'backlog'){
         newData = 'product'
-      }else if(data.status === 'product'){
+      }else if(data.status.status === 'product'){
         newData = 'development'
-      }else if(data.status === 'development'){
+      }else if(data.status.status === 'development'){
         newData = 'done'
-      }else if(data.status === 'done'){
+      }else if(data.status.status === 'done'){
         newData = 'done'
       }
-      console.log(`${data.status} >>> ${newData}`)
 
       axios({
           method: 'patch',
@@ -374,8 +347,7 @@ export default {
           }
       })
       .then(res=>{
-        console.log(res.data)
-        this.gantiHalaman('home-page')
+        this.changePage('home-page')
         this.getDataAllkanban()
         
         Swal.fire({
@@ -387,16 +359,15 @@ export default {
         })
       })
       .catch(err=>{
-          console.log(err)
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: `Sorry internal server Error`,
+          showConfirmButton: false,
+          timer: 1500
+        })
       })
 
-      Swal.fire({
-        position: 'top-end',
-        icon: 'error',
-        title: `Sorry internal server Error`,
-        showConfirmButton: false,
-        timer: 1500
-      })
     },
     getKanbanById(data){
       let id = data
@@ -409,12 +380,9 @@ export default {
       .then(res=>{
         let data = res.data
         this.editKanban = data
-        this.gantiHalaman('edit-page')
-        console.log(this.editKanban)
+        this.changePage('edit-page')
       })
       .catch(err=>{
-        console.log(err)
-
         Swal.fire({
           position: 'top-end',
           icon: 'error',
@@ -428,7 +396,6 @@ export default {
     editDataKanban(data){
       let newData = data
       let access_token = localStorage.acces_token
-      console.log(newData)
       axios({
         method: 'PUT',
         url: `/tasks/${newData.id}`,
@@ -439,8 +406,7 @@ export default {
         }
       })
       .then(res=>{
-        console.log(res.data)
-        this.gantiHalaman('home-page')
+        this.changePage('home-page')
         this.getDataAllkanban()
 
         Swal.fire({
@@ -452,8 +418,6 @@ export default {
         })
       })
       .catch(err=>{
-        console.log(err)
-
         Swal.fire({
           position: 'top-end',
           icon: 'error',
@@ -466,10 +430,10 @@ export default {
   },
   created(){
       if(!localStorage.acces_token){
-          this.gantiHalaman('login-page')
+          this.changePage('login-page')
           this.showNav = ''
       }else{
-          this.gantiHalaman('home-page')
+          this.changePage('home-page')
           this.getDataAllkanban()
           this.showNav = 'navBar'
       }
@@ -478,10 +442,10 @@ export default {
     RegisterPage,
     LoginPage,
     NavBar,
-    HomePage,
     AddPage,
     EditPage,
-    ImformationPage
+    ImformationPage,
+    CardByStatus
   }
 };
 </script>

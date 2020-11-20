@@ -1,10 +1,9 @@
 <template>
     <div class="c1 shadowcard overflow-auto" style="height: 70vh;">
         <div id="board-1" class=" card-body text-light">
-            <div v-for="el in kanban.backlog" :key="el.id" id="card-1" draggable="true" class=" card-body mb-2 text-center flex-column pb-0 px-0" style="border-bottom: solid;">
+            <div v-for="el in dataFilter" :key="el.id" id="card-1" draggable="true" class=" card-body mb-2 text-center flex-column pb-0 px-0" style="border-bottom: solid;">
                 <div class="hvr-grow">
-                    <div class="col titleCard bg-white">
-                        {{el.title}}
+                    <div class="col titleCard bg-white">{{el.title}}
                     </div>
                     <div class="col bg-dark">
                         <p class="pContent">{{el.description}}</p>
@@ -31,14 +30,31 @@ export default {
     name: 'DataKanban',
     data(){
         return{
-
+            UserId: localStorage.localId
         }
     },
+    props: ['dataKanbans', 'categories'],
     methods: {
-
+        deleteKanban(data){
+            this.$emit('deleteBacklog', data)
+        },
+        editKanban(id){
+            this.$emit('editKanban', id)
+        },
+        changeStatus(status, id){
+            let data = {
+                id: id,
+                status: status
+            }
+            this.$emit('GoUpdate', data)
+        }
     },
     components: {
-
+    },
+    computed: {
+        dataFilter() {
+            return this.dataKanbans.filter(dataKanbans => dataKanbans.status === this.categories.toLowerCase())
+        }
     },
     created(){
 

@@ -5,7 +5,7 @@ const KanbanConteroller = require('../controller/kanban-controller.js')
 const authentication = require('../middlewares/authentication.js')
 const authorization = require('../middlewares/authorization.js')
 
-routers.post('/resgister', UserController.userRegister)
+routers.post('/register', UserController.userRegister)
 routers.post('/login', UserController.userLogin)
 routers.post('/loginGoogle', UserController.googleSignin)
 

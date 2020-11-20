@@ -15,7 +15,6 @@ class UserController{
             }
             res.status(201).json(showData)
         } catch (err) {
-            // res.status(500).json(err)
             next(err)
         }
     }
@@ -27,9 +26,9 @@ class UserController{
                 where: {email: dataBody.email}
             })
             if(!cekData){
-                throw {status: 401, msg: 'emial / password tidak valid'}
+                throw {status: 401, msg: 'Email / password tidak valid'}
             }else if(!BcryptUser.conperPassword(dataBody.password, cekData.password)){
-                throw {status: 401, msg: 'emial / password tidak valid'}
+                throw {status: 401, msg: 'Email / password tidak valid'}
             }else{
                 let saveData = {
                     id: cekData.id,
@@ -41,7 +40,6 @@ class UserController{
             }
             res.status(200).json(dataBody)
         } catch (err) {
-            // res.status(500).json(err)
             next(err)
         }
     }
@@ -84,7 +82,6 @@ class UserController{
             return res.status(200).json({ access_token })
         })
         .catch(err => {
-            console.log(err);
             next(err)
         })
 

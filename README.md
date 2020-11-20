@@ -14,7 +14,7 @@ https://wolf-kanban-naim.web.app
 
 * ## Method:
 
-     `GET`
+     `POST`
 
 * ## URL Params
 
@@ -153,7 +153,7 @@ https://wolf-kanban-naim.web.app
 ```json
     Status: 200
 
-    ===INPUR===
+    ===INPUT===
 
     {
         "title": "terbang",
@@ -266,7 +266,7 @@ https://wolf-kanban-naim.web.app
 
 * ## URL Params
 
-    `http:localhost:3000/tasks/54`
+    `id: integer`
 
 * ## Headers
 
@@ -320,7 +320,7 @@ https://wolf-kanban-naim.web.app
 
 * ## URL Params
 
-    `http:localhost:3000/tasks/54`
+    `id: integer`
 
 * ## Headers
 
@@ -341,7 +341,7 @@ https://wolf-kanban-naim.web.app
 ```json
     Status: 200
 
-    ===INPUR===
+    ===INPUT===
 
     {
         "title": "mendaki",
@@ -394,7 +394,7 @@ https://wolf-kanban-naim.web.app
 
 * ## URL Params
 
-    `http:localhost:3000/tasks/54`
+    `id: integer`
 
 * ## Headers
 
@@ -415,7 +415,7 @@ https://wolf-kanban-naim.web.app
 ```json
     Status: 201
 
-    ===INPUR===
+    ===INPUT===
 
     {
         "title": "mendaki",
@@ -468,7 +468,7 @@ https://wolf-kanban-naim.web.app
 
 * ## URL Params
 
-    `http:localhost:3000/tasks/54`
+    `id: integer`
 
 * ## Headers
 
