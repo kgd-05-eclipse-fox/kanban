@@ -1,0 +1,12 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "saragih21!",
+    "database": "kanban_board",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "use_env_variable": "DATABASE_URL"
+  }
+}
