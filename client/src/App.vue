@@ -15,6 +15,7 @@
             @changePage="changePage"
             @deleteTask="deleteTask"
             @updateCategory="updateCategory"
+            @updateCategoryUndo="updateCategoryUndo"
             @logout="logoutUser"
         ></HomePage>
        <AddTask
@@ -128,6 +129,11 @@ export default {
                 localStorage.setItem('id', data.id)
                 localStorage.setItem('firstName', data.firstName)
                 localStorage.setItem('lastName', data.lastName)
+                this.userId = localStorage.getItem('id')
+                this.userDataLogin = {
+                    firstName: localStorage.getItem('firstName'),
+                    lastName: localStorage.getItem('lastName')
+                }
                 this.fetchTask()
                 this.pageName = 'HomePage'
             })
@@ -148,12 +154,16 @@ export default {
                 }
             })
             .then(({ data }) => {
-                let id = data.id
                 let token = data.access_token
                 localStorage.setItem('token', token)
-                localStorage.setItem('id', id)
+                localStorage.setItem('id', data.id)
+                localStorage.setItem('firstName', data.firstName)
+                localStorage.setItem('lastName', data.lastName)
                 this.userId = localStorage.getItem('id')
-                this.userDataLogin = data
+                this.userDataLogin = {
+                    firstName: localStorage.getItem('firstName'),
+                    lastName: localStorage.getItem('lastName')
+                }
                 this.fetchTask()
                 this.pageName = 'HomePage'
             })
@@ -165,16 +175,15 @@ export default {
                 })
             })
         },
-        logoutUserGoogle() {
-                var auth2 = gapi.auth2.getAuthInstance();
-                auth2.signOut().then(function () {
-                console.log('User signed out.');
-            });
-        },
+        // logoutUserGoogle() {
+        //         var auth2 = gapi.auth2.getAuthInstance();
+        //         auth2.signOut().then(function () {
+        //         console.log('User signed out.');
+        //     });
+        // },
         logoutUser() {
-            localStorage.removeItem('token')
-            localStorage.removeItem('id')
-            this.logoutUserGoogle()
+            localStorage.clear()
+            // this.logoutUserGoogle()
             this.pageName = 'LoginPage'
         },
         
@@ -256,7 +265,9 @@ export default {
                 if (result.isConfirmed) {
                     Swal.fire({
                         title: 'Delete task success!',
-                        icon: 'success'
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 2000
                     })
                     let token = localStorage.getItem('token')
                     axios({
@@ -294,6 +305,37 @@ export default {
             axios({
                 method: "PATCH",
                 url: '/task/patch',
+                headers: {token},
+                data: {
+                    id: payload.id,
+                    category: newCategory
+                }
+            })
+            .then(({ data }) => {
+                this.fetchTask()
+                this.pageName = 'HomePage'
+            })
+            .catch(err => {
+                Swal.fire({
+                    title: 'Sorry...',
+                    text: err.response.data.message,
+                    icon: 'error',
+                })
+            })
+        },
+        updateCategoryUndo(payload) {
+            let token = localStorage.getItem('token')
+            let newCategory = ''
+            if(payload.category == 'Done') {
+                newCategory = 'On Progress'
+            } else if (payload.category == 'On Progress') {
+                newCategory = 'To Do'
+            } else {
+                newCategory = 'Back Log'
+            }
+            axios({
+                method: "PATCH",
+                url: '/task/undo',
                 headers: {token},
                 data: {
                     id: payload.id,

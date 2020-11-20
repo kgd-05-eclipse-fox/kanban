@@ -11,6 +11,7 @@
                     @changePage="changePage"
                     @deleteTask="deleteTask"
                     @updateCategory="updateCategory"
+                    @updateCategoryUndo="updateCategoryUndo"
                 ></TaskCard>
             </div>
         </div>
@@ -39,6 +40,9 @@ export default {
         },
         updateCategory(payload) {
             this.$emit('updateCategory', payload)
+        },
+        updateCategoryUndo(payload) {
+            this.$emit('updateCategoryUndo', payload)
         }
     }
 }

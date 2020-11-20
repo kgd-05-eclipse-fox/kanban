@@ -30,7 +30,6 @@ async function authorization(req, res, next) {
     const taskId = Number(req.body.id)
     try {
         const task = await Task.findByPk(taskId)
-        // console.log(todo)
         if(task == null) {
             throw { msg: "Data not found", status: 404 }
         } else {

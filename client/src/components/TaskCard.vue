@@ -3,9 +3,10 @@
         <div class="card-body">
             <h5 class="card-title">{{ task.title }}</h5>
             <p class="card-text">{{ task.description }}</p>
+            <a href="#" class="card-link" @click="updateCategoryUndo" v-if="task.category !== 'Back Log' && task.UserId == userId"><i class="fa fa-arrow-left"></i></a>
             <a href="#" class="card-link" @click="editTask" v-if="task.category !== 'Done' && task.UserId == userId"><i class="fa fa-edit"></i></a>
             <a href="#" class="card-link" @click="deleteTask" v-if="task.UserId == userId"><i class="fa fa-trash"></i></a>
-            <a href="#" class="card-link" @click="updateCategory" v-if="task.category !== 'Done' && task.UserId == userId"><i class="fa fa-check"></i></a>
+            <a href="#" class="card-link" @click="updateCategory" v-if="task.category !== 'Done' && task.UserId == userId"><i class="fa fa-arrow-right"></i></a>
         </div>
     </div>
 </template>
@@ -32,6 +33,13 @@ export default {
                 category: this.task.category
             }
             this.$emit('updateCategory', payload)
+        },
+        updateCategoryUndo() {
+            let payload = {
+                id: this.task.id,
+                category: this.task.category
+            }
+            this.$emit('updateCategoryUndo', payload)
         }
     }
 }

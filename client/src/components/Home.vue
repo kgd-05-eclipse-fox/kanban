@@ -2,7 +2,7 @@
     <div class="home-page">
         <Navbar
             :fullname="fullname"
-            @logoutUser='logoutUser'
+            @logoutUser="logoutUser"
         ></Navbar>
         <div class="container opacity">
             <button class="btn btn-primary" @click="toAddPage">Add New Task</button>
@@ -16,6 +16,7 @@
                     @changePage="toEditPage"
                     @deleteTask="deleteTask"
                     @updateCategory="updateCategory"
+                    @updateCategoryUndo="updateCategoryUndo"
                 ></TaskCategory>
             </div>
         </div>
@@ -49,6 +50,9 @@ export default {
         },
         updateCategory(payload) {
             this.$emit('updateCategory', payload)
+        },
+        updateCategoryUndo(payload) {
+            this.$emit('updateCategoryUndo', payload)
         }
     },
     computed: {
