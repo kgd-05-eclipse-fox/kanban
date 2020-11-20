@@ -95,7 +95,13 @@ export default {
                 }
             })
             .then(data => {
-                console.log(data)
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Thank you',
+                    text: 'Register Success',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
             })
             .catch(err => {
                 // console.log(err.response.data.message)
