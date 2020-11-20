@@ -67,7 +67,10 @@ export default {
             task: [],
             updatedTask: {},
             userId: 0,
-            userDataLogin: {}
+            userDataLogin: {
+                firstName: localStorage.getItem('firstName'),
+                lastName: localStorage.getItem('lastName')
+            }
         };
     },
     components: {
@@ -126,7 +129,8 @@ export default {
                 localStorage.setItem('token', token)
                 localStorage.setItem('id', data.id)
                 this.userId = localStorage.getItem('id')
-                this.userDataLogin = data
+                localStorage.setItem('firstName', data.firstName)
+                localStorage.setItem('lastName', data.lastName)
                 this.fetchTask()
                 this.pageName = 'HomePage'
             })
