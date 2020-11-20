@@ -16,10 +16,13 @@ https://kanvan-app.herokuapp.com/
     
   * **Data Params**
 
-      firstName,
-      lastName,
-      email,
-      password
+      firstName=[string],
+
+      lastName=[string],
+
+      email=[string],
+
+      password=[string]
 
   * **Success Response:**  
 
@@ -122,8 +125,9 @@ https://kanvan-app.herokuapp.com/
     
   * **Data Params**
 
-      email,
-      password
+      email=[string],
+
+      password=[string]
 
   * **Success Response:**  
 
@@ -254,8 +258,9 @@ https://kanvan-app.herokuapp.com/
   
   * **Data Params**
 
-    title,
-    description
+    title=[string],
+
+    description=[string]
 
   * **Success Response:**  
 
@@ -333,9 +338,11 @@ https://kanvan-app.herokuapp.com/
   
   * **Data Params**
 
-    id,
-    title,
-    description
+    id=[number],
+
+    title=[string],
+
+    description=[string]
 
   * **Success Response:**  
 
@@ -404,7 +411,7 @@ https://kanvan-app.herokuapp.com/
   
   * **Data Params**
 
-    id
+    id=[number]
 
   * **Success Response:**  
 
@@ -469,8 +476,9 @@ https://kanvan-app.herokuapp.com/
   
   * **Data Params**
 
-    id,
-    category
+    id=[number],
+    
+    category=[string]
 
   * **Success Response:**  
 
