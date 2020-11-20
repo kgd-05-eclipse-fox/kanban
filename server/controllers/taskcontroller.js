@@ -44,22 +44,22 @@ class TaskController {
 	}
 
 	static async destroy(req, res, next) {
-			try {
-				const id = +req.params.id
-				const UserId = req.loggedInUser.id
-				const destroy = await Task.destroy({
-						where: {
-								id,
-								UserId
-						}
-				})
-				if (destroy) {
-						res.status(200).json({ message: 'Task success to delete' })
-				} else {
-						res.status(404).json({ error: 'todo not found' })
+		try {
+			const id = +req.params.id
+			const UserId = req.loggedInUser.id
+			const destroy = await Task.destroy({
+				where: {
+					id,
+					UserId
 				}
+			})
+			if (destroy) {
+				res.status(200).json({ message: 'Task success to delete' })
+			} else {
+				res.status(404).json({ error: 'todo not found' })
+			}
 		} catch (error) {
-				next(error)
+			next(error)
 		}
 	}
 
@@ -79,7 +79,7 @@ class TaskController {
 			if (updateTask[0]) {
 				res.status(200).json(updateTask[1][0])
 			} else {
-					res.status(500).json({ error: 'Internal Server Error'})
+				res.status(500).json({ error: 'Internal Server Error' })
 			}
 		} catch (err) {
 			next(err)
@@ -87,25 +87,25 @@ class TaskController {
 	}
 	static async patchCategory(req, res, next) {
 		try {
-				const id = +req.params.id
-				const UserId = req.loggedInUser.id
-				const category = req.body.category
-				const updateCategory = await Task.update({
-						category
-				}, {
-						where: {
-								id,
-								UserId
-						},
-						returning: true
-				})
-				if (!updateCategory[0]){
-						res.status(404).json({ error: 'Not Authorize!' })
-				} else {
-						res.status(200).json(updateCategory[1][0])
-				}
+			const id = +req.params.id
+			const UserId = req.loggedInUser.id
+			const category = req.body.category
+			const updateCategory = await Task.update({
+				category
+			}, {
+				where: {
+					id,
+					UserId
+				},
+				returning: true
+			})
+			if (!updateCategory[0]) {
+				res.status(404).json({ error: 'Not Authorize!' })
+			} else {
+				res.status(200).json(updateCategory[1][0])
+			}
 		} catch (error) {
-				next(error)
+			next(error)
 		}
 	}
 }

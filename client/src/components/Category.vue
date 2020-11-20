@@ -10,6 +10,7 @@
 					:key="task.id"
 					:task="task"
 					:getDate='getDate'
+					:user='user'
 					@destroy='destroy'
 					@updateTask='updateTask'
 					@moveCategory='moveCategory'
@@ -20,33 +21,33 @@
 </template>
 
 <script>
-import CategoryCard from './CategoryCard'
+import CategoryCard from "./CategoryCard";
 export default {
-	name: 'Category',
-	components: {
-		CategoryCard
-	},
-	props: ['category', 'tasks', 'getDate'],
-	computed: {
-		filterByCategory() {
-			return this.tasks.filter(tasks => tasks.category == this.category.toLowerCase())
-		}
-	},
-	methods: {
-		destroy(id) {
-			this.$emit('destroy', id)
-		},
-		updateTask(data) {
-			this.$emit('updateTask', data)
-		},
-		moveCategory(payLoad) {
-			console.log(payLoad, 'di category')
-			this.$emit('moveCategory', payLoad)
-		}
-	}
-}
+  name: "Category",
+  components: {
+    CategoryCard,
+  },
+  props: ["category", "tasks", "getDate", "user"],
+  computed: {
+    filterByCategory() {
+      return this.tasks.filter(
+        (tasks) => tasks.category == this.category.toLowerCase()
+      );
+    },
+  },
+  methods: {
+    destroy(id) {
+      this.$emit("destroy", id);
+    },
+    updateTask(data) {
+      this.$emit("updateTask", data);
+    },
+    moveCategory(payLoad) {
+      this.$emit("moveCategory", payLoad);
+    },
+  },
+};
 </script>
 
 <style>
-
 </style>

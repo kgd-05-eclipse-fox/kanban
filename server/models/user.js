@@ -1,21 +1,21 @@
 'use strict';
 const {
-  Model
+	Model
 } = require('sequelize');
 const { hashPassword } = require('../helpers/bcrypt')
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
+	class User extends Model {
+		/**
+		 * Helper method for defining associations.
+		 * This method is not a part of Sequelize lifecycle.
+		 * The `models/index` file will call this method automatically.
+		 */
+		static associate(models) {
 			// define association here
 			User.hasMany(models.Task)
-    }
-  };
-  User.init({
+		}
+	};
+	User.init({
 		email: {
 			type: DataTypes.STRING,
 			allowNull: false,
@@ -47,18 +47,18 @@ module.exports = (sequelize, DataTypes) => {
 					msg: 'Password cannot be blank'
 				},
 				len: {
-					args: [6,12],
+					args: [6, 12],
 					msg: 'Password value should be at least between 6 and 12 characters'
 				}
 			}
 		},
-  }, {
-    sequelize,
-    modelName: 'User',
+	}, {
+		sequelize,
+		modelName: 'User',
 	});
 	User.addHook('beforeCreate', instance => {
-    const hashed = hashPassword(instance.password)
-    instance.password = hashed
-  })
-  return User;
+		const hashed = hashPassword(instance.password)
+		instance.password = hashed
+	})
+	return User;
 };
