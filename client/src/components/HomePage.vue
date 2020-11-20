@@ -76,7 +76,14 @@ export default {
             this.$emit('updateTask', payload)
         }
     },
-    props: ['kanban', 'loggedIn']
+    props: ['kanban', 'loggedIn'],
+    created () {
+      if (localStorage.access_token) {
+        this.$emit('fetchKanban')
+      } else {
+        this.$emit('changePage', 'login-page')
+      }
+    }
 }
 </script>
 

@@ -19,6 +19,7 @@
       v-else-if="pageName === 'home-page'"
       :kanban="kanban"
       :loggedIn='loggedIn'
+      @fetchKanban="fetchKanban"
       @changeCategory="changeCategory"
       @changePage='changePage'
       @deleteTask='deleteTask'
