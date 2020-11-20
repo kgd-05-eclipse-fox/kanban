@@ -9,7 +9,7 @@
                 <Category 
                     v-for="(el, i) in category" 
                     :key="i"
-                    :cat='el'
+                    :category_detail='el'
                     :kanban='kanban'
                     :loggedIn='loggedIn'
                     @changeCategory='changeCategory'

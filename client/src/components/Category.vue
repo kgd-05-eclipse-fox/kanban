@@ -5,7 +5,7 @@
                 <h5 class="text-left ml-2 mt-2 text-light">{{cat.name}}</h5>
             </div>
             <div class="card-body overflow-auto" style="height:60vh"
-                @drop="onDrop($event, cat)"
+                @drop="onDrop($event, category_detail)"
                 @dragover.prevent
                 @dragenter.prevent>
 
@@ -14,7 +14,7 @@
                     :key='task.id'
                     :task='task'
                     :loggedIn='loggedIn'
-                    :dropdown='cat.dropdown'
+                    :dropdown='category_detail.dropdown'
                     @changeCategory="changeCategory"
                     @deleteTask='deleteTask'
                     @updateTask='updateTask'>
@@ -32,7 +32,7 @@ export default {
     components: {
         TaskCard
     },
-    props: ['cat', 'kanban','loggedIn'],
+    props: ['category_detail', 'kanban','loggedIn'],
     methods: {
         changeCategory(payload) {
             this.$emit('changeCategory', payload)
