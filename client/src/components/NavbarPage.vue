@@ -4,21 +4,18 @@
             <div id="logo" class="links">
                 <ul>
                     <li>
-                        <a @click="changeToHome" href="#">
-                            <img
-                                src="../assets/pics/logo.png" 
-                                alt="" 
-                                width="70px" 
-                                class="rounded"
-                            >
-                        </a>
-                        
+                        <img
+                            src="../assets/pics/logo.png" 
+                            alt="" 
+                            width="70px" 
+                            class="rounded"
+                        >
                     </li>
                     <li>
                         <a 
                             v-if="pageName === 'kanbanPage'" 
                             href="#"
-                            @click="changeToAddPage"
+                            @click="changePage('addPage')"
                         >
                             <i class="fa fa-plus" style="font-size:18px"></i> Task
                         </a>
@@ -26,7 +23,7 @@
                     <li>
                         <a
                             v-if="pageName === 'kanbanPage' || pageName === 'editPage' || pageName === 'addPage'" 
-                            @click="changeToKanban" 
+                            @click="changePage('kanbanPage')" 
                             href="#"
                             >
                             Board
@@ -41,7 +38,7 @@
                         pageName === 'loginPage' || 
                         pageName === 'registerPage'"
                     > 
-                        <a @click.prevent="changeToLogin" href="#">Sign In</a>
+                        <a @click="changePage('loginPage')" href="#">Sign In</a>
                     </li>
                     <li  
                         v-if="pageName === 'homePage' || 
@@ -49,9 +46,8 @@
                         pageName === 'registerPage'"> 
                         <a href="#">
                             <button
-                                @click="changeToRegister" 
-                                class="btn btn-info btn-md" 
-                                
+                                @click="changePage('registerPage')" 
+                                class="btn btn-info btn-md"
                                 >
                                 Sign Up
                             </button>
@@ -74,31 +70,12 @@
 <script>
 export default {
     name: 'NavbarPage',
-    data() {
-        return {
-         
-                
-        }
-    },
     methods: {
-        changeToHome() {
-            this.$emit('changePage', 'homePage')
+        changePage(pageName) {
+            this.$emit('changePage', pageName)
         },
         clearStorage() {
-            let clear = localStorage.clear()
-            this.$emit('clearStorage', clear)
-        },
-        changeToRegister() {
-            this.$emit('changePage', 'registerPage')
-        },
-        changeToKanban() {
-            this.$emit('changePage', 'kanbanPage')
-        },
-        changeToAddPage() {
-            this.$emit('changePage', 'addPage')
-        },
-        changeToLogin() {
-            this.$emit('changePage', 'loginPage')
+            this.$emit('clearStorage', 'loginPage')
         }
     },
     props: ['pageName']

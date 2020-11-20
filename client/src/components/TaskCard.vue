@@ -1,6 +1,6 @@
 <template>
     <div class="card border rounded shadow" draggable @dragstart="dragging($event,task)">
-        <div class="card-body">
+        <div class="card-body pl-4 pt-3 pr-4 pb-3" style="width: 18rem">
             <h4 class="card-title">
                 <span 
                     class="badge "

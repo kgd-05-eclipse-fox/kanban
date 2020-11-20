@@ -5,9 +5,7 @@
             v-on:changePage="changePage"
             @clearStorage="logout">
         </NavbarPage>
-        
-        
-
+              
         <HomePage 
             v-if="pageName === 'homePage'"
             @changePage="changePage">
@@ -110,8 +108,8 @@ export default {
                 method: 'POST',
                 data:  { google_access_token }
             })
-            .then(data => {
-                const token = data.data.access_token
+            .then(({data}) => {
+                const token = data.access_token
                 localStorage.setItem('token', token)
                 this.pageName = 'kanbanPage'
                 this.fetchTask()
@@ -161,7 +159,6 @@ export default {
                     title: 'ERROR',
                     text: err.response.data.msg
                 })
-                console.log(err.response);
             })
         },
         toEditPage(payload) {
@@ -169,43 +166,49 @@ export default {
             this.detailTask = payload.task
         },
         deleteTask(id) {
-            console.log(id, 'app');
-            const token = localStorage.getItem('token')
-            axios({
-                url: `/tasks/${id}`,
-                method: 'DELETE',
-                headers: {
-                    token: token
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const token = localStorage.getItem('token')
+                    axios({
+                        url: `/tasks/${id}`,
+                        method: 'DELETE',
+                        headers: {
+                            token: token
+                        }
+                    })
+                    .then(_ => {
+                        this.fetchTask()
+                        Swal.fire({
+                            position: 'top',
+                            icon: 'success',
+                            title: 'Task has been delete',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    })
+                    .catch(err => {
+        
+                         Swal.fire({
+                            position: 'top',
+                            icon: 'error',
+                            title: 'Error',
+                            text: err.response.data.msg,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }) 
+                    })
                 }
-            })
-            .then(_ => {
-                this.fetchTask()
-
-                Swal.fire({
-                    position: 'top',
-                    icon: 'success',
-                    title: 'Task has been delete',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-
-                
-            })
-            .catch(err => {
-
-                 Swal.fire({
-                    position: 'top',
-                    icon: 'error',
-                    title: 'Error',
-                    text: err.response.data.msg,
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-                
             })
         },
         editTask(payload) {
-            console.log('editTask');
             const token = localStorage.getItem('token')
             axios({
                 url: `/tasks/${payload.id}`,
@@ -220,7 +223,6 @@ export default {
                 }
             })
             .then(response => {
-                console.log(response);
                 this.fetchTask()
                 this.pageName = 'kanbanPage'
 
@@ -262,7 +264,6 @@ export default {
                 })
             })
             .catch(err => {
-                console.log(err);
                 Swal.fire({
                     position: 'top',
                     icon: 'error',
@@ -280,7 +281,6 @@ export default {
                 data: user
             })
             .then(response => {
-                console.log(user);
                 const token = response.data.access_token
                 localStorage.setItem('token', token)
                 this.pageName = 'kanbanPage'
@@ -302,10 +302,9 @@ export default {
                 })
             })
         },
-        logout(clear) {
-            console.log('logout sukses');
-            clear
-            this.pageName = 'loginPage'
+        logout(pageName) {
+            localStorage.clear()
+            this.pageName = pageName
             Swal.fire({
                 position: 'top',
                 icon: 'success',
@@ -341,7 +340,6 @@ export default {
                 data: task
             })
             .then(({data}) => {
-                console.log(data);
                 this.fetchTask()
                 this.pageName = 'kanbanPage'
 
