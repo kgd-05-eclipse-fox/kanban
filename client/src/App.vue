@@ -59,14 +59,14 @@ export default {
                     name: 'On Progress',
                     bg: "bg-warning"
                 },
-                {
+                {   
                     name: 'Done',
                     bg: "bg-success"
                 }
             ],
             task: [],
             updatedTask: {},
-            userId: 0,
+            userId: localStorage.getItem('id'),
             userDataLogin: {
                 firstName: localStorage.getItem('firstName'),
                 lastName: localStorage.getItem('lastName')
@@ -86,7 +86,6 @@ export default {
             }
         },
         signUpUser(payload) {
-            // console.log(payload)
             axios({
                 method: "POST",
                 url: '/users/register',
@@ -107,7 +106,6 @@ export default {
                 })
             })
             .catch(err => {
-                // console.log(err.response.data.message)
                 Swal.fire({
                     title: 'Sorry...',
                     text: err.response.data.message,
@@ -128,7 +126,6 @@ export default {
                 let token = data.access_token
                 localStorage.setItem('token', token)
                 localStorage.setItem('id', data.id)
-                this.userId = localStorage.getItem('id')
                 localStorage.setItem('firstName', data.firstName)
                 localStorage.setItem('lastName', data.lastName)
                 this.fetchTask()
@@ -151,7 +148,6 @@ export default {
                 }
             })
             .then(({ data }) => {
-                // console.log(data)
                 let id = data.id
                 let token = data.access_token
                 localStorage.setItem('token', token)
@@ -237,7 +233,6 @@ export default {
                 }
             })
             .then(({ data }) => {
-                console.log(data)
                 this.fetchTask()
                 this.pageName = 'HomePage'
             })
