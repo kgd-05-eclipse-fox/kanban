@@ -175,15 +175,8 @@ export default {
                 })
             })
         },
-        // logoutUserGoogle() {
-        //         var auth2 = gapi.auth2.getAuthInstance();
-        //         auth2.signOut().then(function () {
-        //         console.log('User signed out.');
-        //     });
-        // },
         logoutUser() {
             localStorage.clear()
-            // this.logoutUserGoogle()
             this.pageName = 'LoginPage'
         },
         
@@ -209,7 +202,7 @@ export default {
             let token = localStorage.getItem('token')
             axios({
                 method: "POST",
-                url: '/task/add',
+                url: '/task',
                 headers: {token},
                 data: {
                     title: payload.title,
@@ -233,10 +226,9 @@ export default {
             let token = localStorage.getItem('token')
             axios({
                 method: "PUT",
-                url: '/task/edit',
+                url: `/task/${payload.id}`,
                 headers: {token},
                 data: {
-                    id: payload.id,
                     title: payload.title,
                     description: payload.description
                 }
@@ -272,11 +264,8 @@ export default {
                     let token = localStorage.getItem('token')
                     axios({
                         method: "DELETE",
-                        url: '/task/delete',
-                        headers: {token},
-                        data: {
-                            id
-                        }
+                        url: `/task/${id}`,
+                        headers: {token}
                     })
                     .then(({ data }) => {
                         this.fetchTask()
@@ -304,10 +293,9 @@ export default {
             }
             axios({
                 method: "PATCH",
-                url: '/task/patch',
+                url: `/task/${payload.id}`,
                 headers: {token},
                 data: {
-                    id: payload.id,
                     category: newCategory
                 }
             })
@@ -335,10 +323,9 @@ export default {
             }
             axios({
                 method: "PATCH",
-                url: '/task/undo',
+                url: `/task/${payload.id}/undo`,
                 headers: {token},
                 data: {
-                    id: payload.id,
                     category: newCategory
                 }
             })

@@ -27,7 +27,7 @@ async function authentication(req, res, next) {
 }
 
 async function authorization(req, res, next) {
-    const taskId = Number(req.body.id)
+    const taskId = +req.params.id
     try {
         const task = await Task.findByPk(taskId)
         if(task == null) {

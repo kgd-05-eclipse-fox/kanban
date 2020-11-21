@@ -16,7 +16,6 @@ class Controller {
             res.status(201).json({id: result.id, email: result.email})
         } catch (err) {
             next(err)
-            // res.status(500).json(err)
         }
     }
 
@@ -56,13 +55,11 @@ class Controller {
             }
         } catch (error) {
             next(error)
-            // res.status(500).json("Internal Server Error")
         }
     }
 
     static async loginGoogle(req, res, next) {
         let google_token = req.body.googleToken
-        // console.log(google_token)
         const client = new OAuth2Client(process.env.CLIENT_ID)
         let email
         let fullname
@@ -92,7 +89,7 @@ class Controller {
                         email,
                         firstName: firstName,
                         lastName: lastName,
-                        password: "hanfarhan22"
+                        password: process.env.GOOGLE_PASSWORD
                     }
                     return User.create(newUser)
                 } else {
@@ -100,14 +97,13 @@ class Controller {
                         email,
                         firstName: firstName,
                         lastName: firstName,
-                        password: "hanfarhan22"
+                        password: process.env.GOOGLE_PASSWORD
                     }
                     return User.create(newUser)
                 }
             }
         })
         .then(data => {
-            // console.log(data)
             let payload = { 
                 id: data.id, 
                 email: data.email

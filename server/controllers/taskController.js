@@ -3,7 +3,9 @@ const  { Task } = require('../models')
 class Controller {
     static async fetchAllTask(req, res, next) {
         try {
-            const allTask = await Task.findAll()
+            const allTask = await Task.findAll({
+                order: [['id', 'ASC']]
+            })
             res.status(200).json(allTask)
         } catch (error) {
             res.status(500).json("Internal Server Error")
@@ -18,7 +20,6 @@ class Controller {
                 description: req.body.description,
                 UserId: userId
             }
-            // console.log(payload)
             const task = await Task.create(payload)
             res.status(201).json(task)
         } catch(err) {
@@ -28,14 +29,14 @@ class Controller {
 
     static async editTask(req, res, next) {
         try {
-            const id = Number(req.body.id)
+            const id = +req.params.id
             const payload = {
                 title: req.body.title,
                 description: req.body.description
             }
             const task = await Task.update(payload, {
                 where: {
-                    id: id
+                    id
                 },
                 returning: true
             })
@@ -51,9 +52,10 @@ class Controller {
 
     static async deleteTask(req, res, next) {
         try {
+            let id = +req.params.id
             const task = await Task.destroy({
                 where: {
-                    id: req.body.id
+                    id
                 }
             })
             if(task == 0) {
@@ -68,11 +70,11 @@ class Controller {
 
     static async updateTask(req, res, next) {
         try {
-            const id = Number(req.body.id)
+            const id = +req.params.id
             const payload = { category: req.body.category }
             const task = await Task.update(payload, {
                 where: {
-                    id: id
+                    id
                 },
                 returning: true
             })
