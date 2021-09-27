@@ -1,10 +1,10 @@
 {
   "development": {
     "username": "postgres",
-    "password": "dacokeh21",
+    "password": "postgres",
     "database": "kanban",
     "host": "127.0.0.1",
-    "port": 8080,
+    "port": 5432,
     "dialect": "postgres"
   },
   "test": {
@@ -15,6 +15,6 @@
     "dialect": "mysql"
   },
   "production": {
-		"use_env_variable": "DATABASE_URL"
+    "use_env_variable": "DATABASE_URL"
   }
 }

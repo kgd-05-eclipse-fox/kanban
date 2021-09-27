@@ -21,6 +21,7 @@
     "vuedraggable": "^2.24.3"
   },
   "devDependencies": {
+    "@parcel/transformer-vue": "^2.0.0-rc.0",
     "@vue/component-compiler-utils": "^3.2.0",
     "cssnano": "^4.1.10",
     "vue-template-compiler": "^2.6.12"
