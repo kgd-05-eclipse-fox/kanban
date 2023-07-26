@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--BootsTrap-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <!-- Main CSS-->
+    <link href="style.css" rel="stylesheet" media="all">
+    <!-- sweetalert -->
+    <!-- <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet"> -->
+
+    <!-- Icon -->
+    <link rel="Icon" href="./img/klipartz.com.png">
+
+    <title>Kaban App</title>
+</head>
+<body>
+<div id="app">
+
+    <!-- NAVBAR -->
+    <div v-if="showNav === 'navBar'" id="navBar">
+        <nav class="mb-1 navbar navbar-expand-lg navbar-dark secondary-color lighten-1 shadowNav bgNav">
+            <a v-on:click.prevent="gantiHalaman('home-page')" id="listAll-todo" class="navbar-brand" href="#"><img class="logo-nav" src="./img//klipartz.com.png" alt=""></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-555"
+              aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent-555">
+              <ul class="navbar-nav mr-auto">
+                  <!--Add Kanban-->
+                <li class="nav-item active">
+                  <a v-on:click.prevent="gantiHalaman('add-page')"  id="add-todo" class="nav-link" href="#">Add Kanban
+                    <span class="sr-only">(current)</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a v-on:click.prevent="gantiHalaman('information-page')" class="nav-link" href="#">Information</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-555" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">Dropdown
+                  </a>
+                  <div class="dropdown-menu dropdown-secondary" aria-labelledby="navbarDropdownMenuLink-555">
+                    <a v-on:click.prevent="gantiHalaman('login-page')" class="dropdown-item" href="#">Log In</a>
+                    <a v-on:click.prevent="gantiHalaman('register-page')" class="dropdown-item" href="#">Register</a>
+                    <a v-on:click.prevent="gantiHalaman('edit-page')" class="dropdown-item" href="#">Edit</a>
+                  </div>
+                </li>
+              </ul>
+              <ul class="navbar-nav ml-auto nav-flex-icons">
+                  <!--Log out-->
+                <li class="nav-item">
+                    <a v-on:click.prevent="logout()" id="btn-logout" class="nav-link" href="#">Log Out</a>
+                  </li>
+                <li class="nav-item avatar dropdown">
+                  <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary"
+                    aria-labelledby="navbarDropdownMenuLink-55">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </nav>
+    </div>
+    <!-- END NAVBAR -->
+
+    <!--login Page-->
+    <div v-if="showContet === 'login-page'" id="login-page">
+        <div class="container d-flex justify-content-center" style="margin-top: 15vh;">
+            <div class="card">
+                <h4 class="text-center pt-4"><img class="logo-log" src="./img//klipartz.com.png" alt=""></h4> 
+                <span class="info">To all special dicounts and more <br> become to login!<span>
+                <div class="text-center container"> 
+                <div class="form-group container">
+    
+                    <!-- form login -->
+                    <form>
+                        <input v-model="email" type="email" name="email" placeholder="email address" class="form-control form mb-2"> 
+                        <input v-model="password" type="password" name="password" placeholder="password" class="form-control"> </div>
+                        <button v-on:click.prevent="loginUser()" type="submit" class="btn">Login</button>
+                    </form>
+                    <!-- END form login -->
+    
+                    <div class="d-flex justify-content-between container strech">
+                        <!-- goto login -->
+                            <span><a v-on:click.prevent="gantiHalaman('register-page')" href="#" style="text-decoration: none; color: whitesmoke;">Go To Register</a></span>
+                        <!-- END goto login -->
+                        <span>Forgot Password</span>
+                    </div>
+                </div>
+                <div class="text-center pb-4 pt-3">
+                    <div class="px-3">
+                        <h4 class="else"><span class="else2"> Or use these to login </span></h4>
+                    </div>
+                    <div class="pt-3 d-flex flex-row px-3"> 
+                        <button type="button" class="btn btn-success fb mr-2">Facebook</button> 
+                        <button type="button" class="btn btn-succes ggl">Google</button> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END login page-->
+    
+    <!--Register Page-->
+    <div v-else-if="showContet === 'register-page'" id="register-page">
+        <div class="container d-flex justify-content-center" style="margin-top: 15vh;">
+            <div class="card">
+                <h4 class="text-center pt-4"><img class="logo-log" src="./img//klipartz.com.png" alt=""></h4> 
+                <span class="info">To all special dicounts and more <br> become a member!<span>
+                <div class="text-center container"> 
+                <div class="form-group container">
+    
+                    <!-- form register -->
+                    <form action="" method="post">
+                        <input v-model="addEmail" type="email" name="email" placeholder="email address" class="form-control form mb-2"> 
+                        <input v-model="addPassword" type="password" name="password" placeholder="password" class="form-control"> </div>
+                        <button v-on:click.prevent="register()" type="submit" class="btn">Register</button>
+                    </form>
+                    <!-- END form register -->
+    
+                    <div class="d-flex justify-content-between container strech">
+                        <!-- goto login -->
+                            <span><a v-on:click.prevent="gantiHalaman('login-page')" href="#" style="text-decoration: none; color: whitesmoke;">Go To Login</a></span>
+                        <!-- END goto login -->
+                        <span>Forgot Password</span>
+                    </div>
+                </div>
+                <div class="text-center pb-4 pt-3">
+                    <div class="px-3">
+                        <h4 class="else"><span class="else2"> Or use these to login </span></h4>
+                    </div>
+                    <div class="pt-3 d-flex flex-row px-3"> 
+                        <button type="button" class="btn btn-success fb mr-2">Facebook</button> 
+                        <button type="button" class="btn btn-succes ggl">Google</button> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END register page-->
+
+    <!-- Home page -->
+    <div v-else-if="showContet === 'home-page'" id="home-page">
+        <div class="container justify-content-center">
+            <div class="row d-flex mt-3">
+                <div class="col-sm-3">
+                    <div class="bg1 card-header text-center shadowcard">
+                        <h4>Backlog</h4>
+                    </div>
+                    <div class="c1 shadowcard overflow-auto" style="height: 70vh;">
+                        <div id="board-1" class=" card-body text-light">
+                            <!-- CARD -->
+                            <div v-for="el in kanban" :key="el.id" id="card-1" draggable="true" class=" card-body mb-2 text-center flex-column pb-0 px-0" style="border-bottom: solid;">
+                                <div class="hvr-grow">
+                                    <!-- Title Card -->
+                                    <div class="col titleCard bg-white">
+                                        {{el.title}}
+                                    </div>
+                                    <div class="col bg-dark">
+                                    <!-- Description Card -->
+                                        <p class="pContent">{{el.description}}</p>
+                                    </div>
+                                </div>
+                                <div class="col d-flex" style="padding-left: 0%; padding-right: 0%;">
+                                <!-- Options Card -->
+                                <div class="col" style="padding-left: 0%; padding-right: 0%;">
+                                    <a href="#"><img class="log-User mt-3" :src="el.imgUser" alt=""></a>
+                                </div>
+                                <div class="col d-flex mt-3 text-center" style="padding: 0%;">
+                                    <a v-on:click.prevent="gantiHalaman('edit-page')" href="#"><p class="tOption rounded bg-info mx-1 py-2 px-1">e</p></a>
+                                    <a v-on:click.prevent="deleteKanban()" href="#"><p class="tOption rounded bg-danger mx-1 py-2 px-1">d</p></a>
+                                    <a href="#"><p class="tOption rounded bg-success mx-1 py-2 px-1">m</p></a>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="bg1 card-header text-center shadowcard">
+                        <h4>Product</h4>
+                    </div>
+                    <div class="c1 shadowcard overflow-auto" style="height: 70vh;">
+                        <div id="board-2" class=" card-body text-light">
+                            <!-- CARD -->
+                            <div v-for="el in kanban" :key="el.id" id="card-1" draggable="true" class=" card-body mb-2 text-center flex-column pb-0 px-0" style="border-bottom: solid;">
+                                <div class="hvr-grow">
+                                    <!-- Title Card -->
+                                    <div class="col titleCard bg-white">
+                                        {{el.title}}
+                                    </div>
+                                    <div class="col bg-dark">
+                                    <!-- Description Card -->
+                                        <p class="pContent">{{el.description}}</p>
+                                    </div>
+                                </div>
+                                <div class="col d-flex" style="padding-left: 0%; padding-right: 0%;">
+                                <!-- Options Card -->
+                                <div class="col" style="padding-left: 0%; padding-right: 0%;">
+                                    <a href="#"><img class="log-User mt-3" :src="el.imgUser" alt=""></a>
+                                </div>
+                                <div class="col d-flex mt-3 text-center" style="padding: 0%;">
+                                    <a v-on:click.prevent="gantiHalaman('edit-page')" href="#"><p class="tOption rounded bg-info mx-1 py-2 px-1">e</p></a>
+                                    <a href="#"><p class="tOption rounded bg-danger mx-1 py-2 px-1">d</p></a>
+                                    <a href="#"><p class="tOption rounded bg-success mx-1 py-2 px-1">m</p></a>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="bg1 card-header text-center shadowcard">
+                        <h4>Development</h4>
+                    </div>
+                    <div class="c1 shadowcard overflow-auto" style="height: 70vh;">
+                        <div id="board-3" class=" card-body text-light">
+                            <!-- CARD -->
+                            <div v-for="el in kanban" :key="el.id" id="card-1" draggable="true" class=" card-body mb-2 text-center flex-column pb-0 px-0" style="border-bottom: solid;">
+                                <div class="hvr-grow">
+                                    <!-- Title Card -->
+                                    <div class="col titleCard bg-white">
+                                        {{el.title}}
+                                    </div>
+                                    <div class="col bg-dark">
+                                    <!-- Description Card -->
+                                        <p class="pContent">{{el.description}}</p>
+                                    </div>
+                                </div>
+                                <div class="col d-flex" style="padding-left: 0%; padding-right: 0%;">
+                                <!-- Options Card -->
+                                <div class="col" style="padding-left: 0%; padding-right: 0%;">
+                                    <a href="#"><img class="log-User mt-3" :src="el.imgUser" alt=""></a>
+                                </div>
+                                <div class="col d-flex mt-3 text-center" style="padding: 0%;">
+                                    <a v-on:click.prevent="gantiHalaman('edit-page')" href="#"><p class="tOption rounded bg-info mx-1 py-2 px-1">e</p></a>
+                                    <a href="#"><p class="tOption rounded bg-danger mx-1 py-2 px-1">d</p></a>
+                                    <a href="#"><p class="tOption rounded bg-success mx-1 py-2 px-1">m</p></a>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="bg1 card-header text-center shadowcard">
+                        <h4>Done</h4>
+                    </div>
+                    <div class="c1 shadowcard overflow-auto" style="height: 70vh;">
+                        <div id="board-4" class=" card-body text-light">
+                            <!-- CARD -->
+                            <div v-for="el in kanban" :key="el.id" id="card-1" draggable="true" class=" card-body mb-2 text-center flex-column pb-0 px-0" style="border-bottom: solid;">
+                                <div class="hvr-grow">
+                                    <!-- Title Card -->
+                                    <div class="col titleCard bg-white">
+                                        {{el.title}}
+                                    </div>
+                                    <div class="col bg-dark">
+                                    <!-- Description Card -->
+                                        <p class="pContent">{{el.description}}</p>
+                                    </div>
+                                </div>
+                                <div class="col d-flex" style="padding-left: 0%; padding-right: 0%;">
+                                <!-- Options Card -->
+                                <div class="col" style="padding-left: 0%; padding-right: 0%;">
+                                    <a href="#"><img class="log-User mt-3" :src="el.imgUser" alt=""></a>
+                                </div>
+                                <div class="col d-flex mt-3 text-center" style="padding: 0%;">
+                                    <a v-on:click.prevent="gantiHalaman('edit-page')" href="#"><p class="tOption rounded bg-info mx-1 py-2 px-1">e</p></a>
+                                    <a href="#"><p class="tOption rounded bg-danger mx-1 py-2 px-1">d</p></a>
+                                    <a href="#"><p class="tOption rounded bg-success mx-1 py-2 px-1">m</p></a>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Home page -->
+
+    <!-- add-page -->
+    <div v-else-if="showContet === 'add-page'" id="add-page">
+        <div class=" container">
+            <div class=" flex-column my-5">
+                <div class=" col-12 d-flex justify-content-center">
+                    <div class=" card">
+                        <div class=" card-header text-center">
+                            <h4>Add You'r Project</h4>
+                            <img class="logo-log" src="./img//klipartz.com.png" alt="">
+                        </div>
+                        <div class=" card-footer">
+                            <form action="" method="post">
+                                <!-- add Title -->
+                                <input v-model="title" type="text" name="title" id="" placeholder="Title" class=" my-4 input-group form-control">
+                                <input v-model="description" type="text" name="descriptin" id="" placeholder="Descriptin" class=" my-4 input-group form-control">
+                                <button v-on:click.prevent="addkanban()" type="submit" class="btn">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END add-page -->
+
+    <!-- edit-page -->
+    <div v-else-if="showContet === 'edit-page'" id="edit-page">
+        <div class=" container">
+            <div class=" flex-column my-5">
+                <div class=" col-12 d-flex justify-content-center">
+                    <div class=" card">
+                        <div class=" card-header text-center">
+                            <h4>Edit You'r Project</h4>
+                            <img class="logo-log" src="./img//klipartz.com.png" alt="">
+                        </div>
+                        <div class=" card-footer">
+                            <form action="" method="post">
+                                <!-- edit Title -->
+                                <input type="text" name="title" id="" placeholder="Title" class=" my-4 input-group form-control">
+                                <input type="text" name="descriptin" id="" placeholder="Descriptin" class=" my-4 input-group form-control">
+                                <button type="submit" class="btn">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END edit-page -->
+
+    <!-- Information -->
+    <div v-else-if="showContet === 'information-page'" id="information-page">
+        <div class=" container">
+            <div class=" flex-column my-5">
+                <div class=" col-12 d-flex justify-content-center">
+                    <div class=" card">
+                        <div class=" card-header text-center">
+                            <h4>information Aplication</h4>
+                            <img class="logo-log" src="./img//klipartz.com.png" alt="">
+                        </div>
+                        <div class=" card-footer">
+                            <ul class=" text-center">
+                                <!-- Options Card information -->
+                                <li>
+                                    <a href="#"><img class="log-User mt-3" src="./img/l1.png" alt=""></a>
+                                    <label for="">Icon User</label>
+                                </li>
+                                <li>
+                                    <a href="#"><p class="tOption rounded bg-info mx-1 py-2 px-1">e</p></a>
+                                    <label for="">Icon "e"dit</label>
+                                </li>
+                                <li>
+                                    <a href="#"><p class="tOption rounded bg-danger mx-1 py-2 px-1">d</p></a>
+                                    <label for="">Icon "d"elete</label>
+                                </li>
+                                <li>
+                                    <a href="#"><p class="tOption rounded bg-success mx-1 py-2 px-1">m</p></a>
+                                    <label for="">Icon "m"ove/status</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Information -->
+</div>
+
+
+    <!--Script BootsTrap-->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+    <!-- sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script> -->
+
+    <!-- Vuejs -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>   
+    <!-- END Vuejs -->
+
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- index.js -->
+    <script src="./index.js"></script>
+    <!-- END index.js -->
+
+</body>
+</html>
